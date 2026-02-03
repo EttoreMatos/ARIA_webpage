@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARIA - Bot Discord de IA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #FF6B35;
+            --secondary: #9B59B6;
+            --accent: #FFB347;
+            --dark: #1A1A2E;
+            --darker: #0F0F1E;
+            --light: #F8F9FA;
+            --purple-glow: #C77DFF;
+            --gradient-1: linear-gradient(135deg, #FF6B35 0%, #FFB347 100%);
+            --gradient-2: linear-gradient(135deg, #9B59B6 0%, #C77DFF 100%);
+            --gradient-3: linear-gradient(135deg, #1A1A2E 0%, #2D2D44 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--darker);
+            color: var(--light);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.15;
+            background: 
+                radial-gradient(circle at 20% 50%, var(--secondary) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, var(--primary) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, var(--accent) 0%, transparent 50%);
+            animation: bgPulse 20s ease-in-out infinite;
+        }
+
+        @keyframes bgPulse {
+            0%, 100% { opacity: 0.15; transform: scale(1); }
+            50% { opacity: 0.25; transform: scale(1.1); }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(26, 26, 46, 0.85);
+            backdrop-filter: blur(20px);
+            padding: 1.5rem 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 107, 53, 0.2);
+        }
+
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-1);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 80px;
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            padding: 4rem 2rem;
+            position: relative;
+        }
+
+        .hero .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: 4.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .hero-content .subtitle {
+            font-size: 1.3rem;
+            color: rgba(248, 249, 250, 0.8);
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .hero-content .tagline {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.95rem;
+            color: var(--accent);
+            margin-bottom: 2.5rem;
+            animation: fadeInUp 0.8s ease-out 0.3s both;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--gradient-1);
+            color: white;
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(255, 107, 53, 0.5);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--light);
+            border: 2px solid rgba(255, 107, 53, 0.4);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            background: rgba(255, 107, 53, 0.1);
+        }
+
+        .hero-image {
+            position: relative;
+            animation: fadeInRight 1s ease-out 0.3s both;
+        }
+
+        .hero-image img {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            border: 3px solid rgba(255, 107, 53, 0.3);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Features Section */
+        .features {
+            padding: 6rem 2rem;
+            background: var(--dark);
+        }
+
+        .features .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 1rem;
+            background: var(--gradient-2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: rgba(248, 249, 250, 0.7);
+            font-size: 1.1rem;
+            margin-bottom: 4rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .feature-card {
+            background: var(--gradient-3);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 107, 53, 0.2);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-1);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(255, 107, 53, 0.3);
+        }
+
+        .feature-card:hover::before {
+            opacity: 0.05;
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-card h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-card p {
+            color: rgba(248, 249, 250, 0.8);
+            line-height: 1.7;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Commands Section */
+        .commands {
+            padding: 6rem 2rem;
+            background: var(--darker);
+        }
+
+        .commands .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .command-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .command-item {
+            background: var(--gradient-3);
+            padding: 1.5rem 2rem;
+            border-radius: 15px;
+            border-left: 4px solid var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .command-item:hover {
+            transform: translateX(10px);
+            border-left-width: 6px;
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.2);
+        }
+
+        .command-item code {
+            font-family: 'IBM Plex Mono', monospace;
+            color: var(--accent);
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .command-item p {
+            color: rgba(248, 249, 250, 0.8);
+            margin-top: 0.5rem;
+        }
+
+        /* Legal Section */
+        .legal {
+            padding: 6rem 2rem;
+            background: var(--dark);
+        }
+
+        .legal .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .legal-content {
+            background: var(--gradient-3);
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid rgba(155, 89, 182, 0.3);
+            margin-bottom: 2rem;
+        }
+
+        .legal-content h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.8rem;
+            color: var(--purple-glow);
+            margin-bottom: 1.5rem;
+        }
+
+        .legal-content h4 {
+            font-family: 'Syne', sans-serif;
+            color: var(--accent);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .legal-content p, .legal-content ul {
+            color: rgba(248, 249, 250, 0.85);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .legal-content ul {
+            padding-left: 2rem;
+        }
+
+        .legal-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--darker);
+            padding: 3rem 2rem;
+            border-top: 1px solid rgba(255, 107, 53, 0.2);
+        }
+
+        footer .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        footer p {
+            color: rgba(248, 249, 250, 0.6);
+            margin-bottom: 1rem;
+        }
+
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: var(--accent);
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .hero .container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-content h1 {
+                font-size: 3rem;
+            }
+
+            .hero-image {
+                order: -1;
+            }
+
+            .cta-buttons {
+                justify-content: center;
+            }
+
+            .nav-links {
+                gap: 1.5rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .section-title {
+                font-size: 2.2rem;
+            }
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        .scroll-indicator::before {
+            content: '↓';
+            font-size: 2rem;
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+
+    <nav>
+        <div class="container">
+            <div class="logo">ARIA</div>
+            <ul class="nav-links">
+                <li><a href="#home">Início</a></li>
+                <li><a href="#features">Recursos</a></li>
+                <li><a href="#commands">Comandos</a></li>
+                <li><a href="#legal">Legal</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Conheça ARIA</h1>
+                <p class="subtitle">Sou a ARIA (Automated Response & Interaction Assistant), uma Bot integrada com IA desenvolvida por Ettore. Para falar comigo, basta me mencionar: @ARIA</p>
+                <p class="tagline">Tento ser esperta, mas às vezes troco as patinhas! Se eu disser algo estranho, dê uma conferida nos fatos, tá bem? 🦊</p>
+                <div class="cta-buttons">
+                    <a href="https://discord.com/oauth2/authorize?client_id=1439670009147293906&permissions=8&integration_type=0&scope=bot" target="_blank" class="btn btn-primary">Adicionar ao Discord</a>
+                    <a href="https://discord.gg/E99uQdfCvB" target="_blank" class="btn btn-secondary">Server Oficial</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="https://videos.openai.com/az/vg-assets/task_01kgj2ydzxf0nbdxvggpn43d04%2F1770133742_img_1.webp?se=2026-02-06T00%3A00%3A00Z&sp=r&sv=2024-08-04&sr=b&skoid=3d249c53-07fa-4ba4-9b65-0bf8eb4ea46a&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-02-03T17%3A43%3A03Z&ske=2026-02-10T17%3A48%3A03Z&sks=b&skv=2024-08-04&sig=caJm1sbOksKcNq/Q/GP3t5iDa6QiKYHnB8VmkJ0DyxI%3D&ac=oaivgprodscus2" alt="ARIA - Raposa">
+            </div>
+        </div>
+        <div class="scroll-indicator"></div>
+    </section>
+
+    <section style="background: var(--dark); padding: 2rem; text-align: center; border-top: 1px solid rgba(255, 107, 53, 0.2); border-bottom: 1px solid rgba(255, 107, 53, 0.2);">
+        <div class="container" style="max-width: 900px; margin: 0 auto;">
+            <p style="color: var(--accent); font-family: 'IBM Plex Mono', monospace; font-size: 0.95rem; margin: 0;">
+                💡 <strong>Dica:</strong> Para ver meus comandos, digite "/" no campo de texto e clique na minha foto ;)
+            </p>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title">Recursos Incríveis</h2>
+            <p class="section-subtitle">ARIA oferece uma experiência completa e personalizada</p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">💬</div>
+                    <h3>Conversas Inteligentes</h3>
+                    <p>Mantenha diálogos naturais e contextualizados. ARIA lembra de conversas anteriores para oferecer uma experiência personalizada.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">💻</div>
+                    <h3>Assistência Técnica</h3>
+                    <p>Ajuda com programação, debugging e soluções técnicas. Perfeita para desenvolvedores e estudantes.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🎮</div>
+                    <h3>Modo Interativo</h3>
+                    <p>Jogos, diversão e comandos interativos para tornar seu servidor mais dinâmico e engajante.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Privacidade Garantida</h3>
+                    <p>Seus dados são protegidos e nunca compartilhados com terceiros. Total conformidade com LGPD.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <h3>Memória Contextual</h3>
+                    <p>ARIA se lembra de suas preferências e contexto das conversas para oferecer respostas mais relevantes.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Respostas Rápidas</h3>
+                    <p>Processamento otimizado para respostas instantâneas, mesmo em servidores movimentados.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="commands" id="commands">
+        <div class="container">
+            <h2 class="section-title">Comandos Principais</h2>
+            <p class="section-subtitle">Descubra tudo que ARIA pode fazer</p>
+            
+            <div class="command-list">
+                <div class="command-item">
+                    <code>/relembrar</code>
+                    <p>Veja todo o seu histórico de conversas com a ARIA</p>
+                </div>
+
+                <div class="command-item">
+                    <code>/esquecer</code>
+                    <p>Apaga uma parte específica do seu histórico de conversas com a ARIA</p>
+                </div>
+
+                <div class="command-item">
+                    <code>/codificar</code>
+                    <p>Codifica um texto em base16</p>
+                </div>
+
+                <div class="command-item">
+                    <code>/decodificar</code>
+                    <p>Decodifica um texto em base16 para texto normal</p>
+                </div>
+
+                <div class="command-item">
+                    <code>/jogar</code>
+                    <p>Envia um link para jogar Bitspace</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="legal" id="legal">
+        <div class="container">
+            <h2 class="section-title">Termos & Privacidade</h2>
+            
+            <div class="legal-content">
+                <h3>📋 Política de Privacidade</h3>
+                <p><em>Versão: 02/02/2026 – Modo Técnica Ativado</em></p>
+                
+                <h4>Dados Coletados</h4>
+                <ul>
+                    <li><strong>Histórico de conversas:</strong> Armazenado temporariamente apenas para continuidade do diálogo (excluído via /esquecer ou após inatividade prolongada)</li>
+                    <li><strong>Metadados:</strong> IDs de usuário/Discord, timestamps e comandos usados (para funcionalidades como /relembrar)</li>
+                    <li><strong>Conteúdo técnico:</strong> Códigos ou logs compartilhados são analisados apenas no contexto da conversa e não são armazenados permanentemente</li>
+                    <li><strong>Não coletamos:</strong> Dados sensíveis (senhas, IPs, localização física) ou informações fora do Discord</li>
+                </ul>
+
+                <h4>Uso dos Dados</h4>
+                <ul>
+                    <li><strong>Personalização:</strong> Melhorar respostas com base em interações anteriores</li>
+                    <li><strong>Funcionalidades:</strong> Executar comandos como /codificar ou /jogar</li>
+                    <li><strong>Pesquisa:</strong> Anonimamente para aprimorar a IA (sem vinculação a usuários)</li>
+                </ul>
+
+                <h4>Compartilhamento</h4>
+                <p>Nunca vendemos ou compartilhamos dados com terceiros.</p>
+                <p><strong>Exceções:</strong></p>
+                <ul>
+                    <li>Se exigido por lei (ex.: ordem judicial)</li>
+                    <li>Para proteger direitos (ex.: abuso de comandos maliciosos)</li>
+                </ul>
+
+                <h4>Segurança</h4>
+                <ul>
+                    <li>Criptografia em trânsito (Discord)</li>
+                    <li>Acesso restrito ao desenvolvedor (Ettore Bruno) e apenas para manutenção</li>
+                    <li><strong>Importante:</strong> O banco de dados não é criptografado</li>
+                </ul>
+
+                <h4>Seus Direitos</h4>
+                <ul>
+                    <li><strong>Acesso:</strong> Veja seu histórico com /relembrar</li>
+                    <li><strong>Exclusão:</strong> Apague dados com /esquecer ou peça via DM ao desenvolvedor</li>
+                    <li><strong>Recusa:</strong> Não use comandos que exigem armazenamento (ex.: /relembrar)</li>
+                </ul>
+
+                <h4>Menores de Idade</h4>
+                <p>Criada por um menor (12 anos), mas segue as diretrizes do Discord's ToS e LGPD. Recomendação: Uso supervisionado para menores de 13 anos.</p>
+
+                <h4>Contato</h4>
+                <p>Dúvidas? Fale com o desenvolvedor: <strong>@46_6f_78</strong> (Ettore)</p>
+                
+                <p style="margin-top: 2rem;"><em>Última atualização: 02/02/2026</em></p>
+            </div>
+
+            <div class="legal-content">
+                <h3>📜 Termos de Serviço</h3>
+                <p><em>Versão: 02/02/2026 – Modo Técnica Ativado</em></p>
+                
+                <h4>Aceitação dos Termos</h4>
+                <p>Ao interagir com ARIA, você concorda com estes Termos e a Política de Privacidade. Se discordar, não use os comandos ou recursos.</p>
+
+                <h4>Uso Permitido</h4>
+                <p><strong>Finalidade:</strong> Assistência técnica, conversas casuais e comandos listados (ex.: /codificar, /jogar).</p>
+                <p><strong>Proibido:</strong></p>
+                <ul>
+                    <li>Compartilhar dados sensíveis (senhas, informações pessoais)</li>
+                    <li>Usar para atividades ilegais (ex.: hacking não ético, spam)</li>
+                    <li>Sobrecarregar o sistema com requisições excessivas</li>
+                </ul>
+
+                <h4>Limitações</h4>
+                <ul>
+                    <li><strong>Disponibilidade:</strong> ARIA pode ficar offline para manutenção sem aviso prévio</li>
+                    <li><strong>Precisão:</strong> Não garantimos 100% de exatidão em respostas técnicas ou traduções</li>
+                    <li><strong>Responsabilidade:</strong> Não nos responsabilizamos por danos decorrentes do uso de códigos ou conselhos fornecidos</li>
+                </ul>
+
+                <h4>Conteúdo do Usuário</h4>
+                <p>Você mantém os direitos sobre o conteúdo que compartilha (ex.: códigos, mensagens). Ao enviar, concede permissão para processamento apenas durante a conversa.</p>
+
+                <h4>Modificações</h4>
+                <p>Podemos atualizar estes Termos a qualquer momento. Uso contínuo = aceitação das mudanças.</p>
+
+                <h4>Encerramento</h4>
+                <p>Podemos suspender o acesso se violar estes Termos (ex.: abuso de comandos). Você pode parar de interagir a qualquer momento.</p>
+
+                <h4>Isenção de Garantias</h4>
+                <p>ARIA é fornecida "como está", sem garantias de funcionamento ininterrupto ou livre de erros.</p>
+
+                <h4>Lei Aplicável</h4>
+                <p>Estes Termos são regidos pelas leis do Brasil.</p>
+
+                <p style="margin-top: 2rem;"><em>Última atualização: 02/02/2026</em></p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 ARIA Discord Bot. Desenvolvida com ❤️ por <a href="#">Ettore Bruno (@46_6f_78)</a></p>
+            <p>Todos os direitos reservados. | <a href="#legal">Política de Privacidade</a> | <a href="#legal">Termos de Serviço</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Animate on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.feature-card, .command-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
