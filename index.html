@@ -29,16 +29,14 @@
         }
 
         body {
-            /* Alterado para manter um sistema "bem Dancing Script" no geral */
             font-family: 'Dancing Script', cursive;
             background: var(--darker);
             color: var(--light);
             overflow-x: hidden;
             line-height: 1.6;
-            font-size: 1.3rem; /* Aumentado para garantir legibilidade na fonte cursiva */
+            font-size: 1.3rem;
         }
 
-        /* Animated Background */
         .bg-animation {
             position: fixed;
             top: 0;
@@ -59,7 +57,6 @@
             50% { opacity: 0.25; transform: scale(1.1); }
         }
 
-        /* Navigation */
         nav {
             position: fixed;
             top: 0;
@@ -81,14 +78,14 @@
         }
 
         .logo {
-            font-family: 'Dancing Script', cursive;
-            font-size: 2.2rem;
-            font-weight: 700;
+            font-family: 'Caveat', cursive;
+            font-size: 2.8rem;
+            font-weight: 400; /* Removido bold */
             background: var(--gradient-1);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
-            letter-spacing: 0.02em;
+            letter-spacing: 0.05em;
         }
 
         .nav-links {
@@ -103,7 +100,7 @@
             font-weight: 500;
             transition: all 0.3s ease;
             position: relative;
-            font-size: 1.3rem; /* Ajustado para Dancing Script */
+            font-size: 1.3rem;
         }
 
         .nav-links a::after {
@@ -121,7 +118,6 @@
             width: 100%;
         }
 
-        /* Hero Section */
         .hero {
             margin-top: 80px;
             min-height: 90vh;
@@ -141,7 +137,7 @@
         }
 
         .hero-content h1 {
-            font-family: 'Caveat', cursive; /* Caveat nos títulos */
+            font-family: 'Caveat', cursive;
             font-size: 5.5rem;
             font-weight: 700;
             line-height: 1.1;
@@ -152,9 +148,14 @@
             -webkit-text-fill-color: transparent;
             animation: fadeInUp 0.8s ease-out;
         }
+        
+        /* Ajuste específico para o nome ARIA nos títulos */
+        .hero-content h1 span.aria-name {
+            font-weight: 400;
+        }
 
         .hero-content .subtitle {
-            font-family: 'Caveat', cursive; /* Caveat nas descrições */
+            font-family: 'Caveat', cursive;
             font-size: 1.8rem;
             color: rgba(248, 249, 250, 0.8);
             margin-bottom: 2rem;
@@ -180,7 +181,7 @@
             border-radius: 12px;
             text-decoration: none;
             font-weight: 600;
-            font-size: 1.3rem; /* Ajustado para Dancing Script */
+            font-size: 1.3rem;
             transition: all 0.3s ease;
             border: none;
             cursor: pointer;
@@ -229,28 +230,15 @@
         }
 
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes fadeInRight {
-            from {
-                opacity: 0;
-                transform: translateX(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
         }
 
-        /* Features Section */
         .features {
             padding: 6rem 2rem;
             background: var(--dark);
@@ -262,7 +250,7 @@
         }
 
         .section-title {
-            font-family: 'Caveat', cursive; /* Caveat nos títulos */
+            font-family: 'Caveat', cursive;
             font-size: 4rem;
             font-weight: 700;
             text-align: center;
@@ -274,7 +262,7 @@
         }
 
         .section-subtitle {
-            font-family: 'Caveat', cursive; /* Caveat nas descrições */
+            font-family: 'Caveat', cursive;
             text-align: center;
             color: rgba(248, 249, 250, 0.7);
             font-size: 1.6rem;
@@ -327,7 +315,7 @@
         }
 
         .feature-card h3 {
-            font-family: 'Caveat', cursive; /* Caveat nos títulos */
+            font-family: 'Caveat', cursive;
             font-size: 2.2rem;
             margin-bottom: 1rem;
             color: var(--accent);
@@ -336,7 +324,7 @@
         }
 
         .feature-card p {
-            font-family: 'Caveat', cursive; /* Caveat nas descrições */
+            font-family: 'Caveat', cursive;
             font-size: 1.4rem;
             color: rgba(248, 249, 250, 0.8);
             line-height: 1.5;
@@ -344,7 +332,6 @@
             z-index: 1;
         }
 
-        /* Commands Section */
         .commands {
             padding: 6rem 2rem;
             background: var(--darker);
@@ -383,13 +370,12 @@
         }
 
         .command-item p {
-            font-family: 'Caveat', cursive; /* Caveat nas descrições */
+            font-family: 'Caveat', cursive;
             font-size: 1.4rem;
             color: rgba(248, 249, 250, 0.8);
             margin-top: 0.5rem;
         }
 
-        /* Legal Section */
         .legal {
             padding: 6rem 2rem;
             background: var(--dark);
@@ -409,22 +395,22 @@
         }
 
         .legal-content h3 {
-            font-family: 'Caveat', cursive; /* Caveat nos títulos */
+            font-family: 'Caveat', cursive;
             font-size: 2.8rem;
             color: var(--purple-glow);
             margin-bottom: 1.5rem;
         }
 
         .legal-content h4 {
-            font-family: 'Caveat', cursive; /* Caveat nos títulos */
+            font-family: 'Caveat', cursive;
             color: var(--accent);
             font-size: 2.2rem;
             margin-top: 2rem;
             margin-bottom: 1rem;
         }
 
-        .legal-content p, .legal-content ul {
-            /* Herda Dancing Script do body */
+        /* Removida fonte Caveat dos textos de legal (usando Dancing Script padrão do body) */
+        .legal-content p, .legal-content ul, .legal-content li {
             color: rgba(248, 249, 250, 0.85);
             line-height: 1.6;
             margin-bottom: 1rem;
@@ -438,7 +424,6 @@
             margin-bottom: 0.5rem;
         }
 
-        /* Footer */
         footer {
             background: var(--darker);
             padding: 3rem 2rem;
@@ -467,59 +452,23 @@
             color: var(--accent);
         }
 
-        /* Responsive */
         @media (max-width: 968px) {
-            .hero .container {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-
-            .hero-content h1 {
-                font-size: 4rem;
-            }
-
-            .hero-image {
-                order: -1;
-            }
-
-            .cta-buttons {
-                justify-content: center;
-            }
-
-            .nav-links {
-                gap: 1.5rem;
-            }
-
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
+            .hero .container { grid-template-columns: 1fr; text-align: center; }
+            .hero-content h1 { font-size: 4rem; }
+            .hero-image { order: -1; }
+            .cta-buttons { justify-content: center; }
+            .nav-links { gap: 1.5rem; }
+            .features-grid { grid-template-columns: 1fr; }
         }
 
         @media (max-width: 640px) {
-            .hero-content h1 {
-                font-size: 3.5rem;
-            }
-
-            .cta-buttons {
-                flex-direction: column;
-                width: 100%;
-            }
-
-            .btn {
-                width: 100%;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .section-title {
-                font-size: 3rem;
-            }
-
+            .hero-content h1 { font-size: 3.5rem; }
+            .cta-buttons { flex-direction: column; width: 100%; }
+            .btn { width: 100%; }
+            .nav-links { display: none; }
+            .section-title { font-size: 3rem; }
         }
 
-        /* Scroll indicator */
         .scroll-indicator {
             position: absolute;
             bottom: 2rem;
@@ -559,8 +508,8 @@
     <section class="hero" id="home">
         <div class="container">
             <div class="hero-content">
-                <h1>Conheça ARIA</h1>
-                <p class="subtitle">Sou a ARIA (Automated Response & Interaction Assistant), uma Bot integrada com IA desenvolvida para ser a melhor assistente no seu servidor.</p>
+                <h1>Conheça <span class="aria-name">ARIA</span></h1>
+                <p class="subtitle">Sou a <span style="font-weight: 400;">ARIA</span> (Automated Response & Interaction Assistant), uma Bot integrada com IA desenvolvida para ser a melhor assistente no seu servidor.</p>
                 <p class="tagline">Tento ser esperta, mas às vezes troco as patinhas! Se eu disser algo estranho, dê uma conferida nos fatos, tá bem? 🦊💜</p>
                 <div class="cta-buttons">
                     <a href="https://discord.com/oauth2/authorize?client_id=1439670009147293906&permissions=5419235387371120&integration_type=0&scope=bot" target="_blank" class="btn btn-primary">Adicionar ao Discord</a>
@@ -815,7 +764,6 @@
     </footer>
 
     <script>
-        // Smooth scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -829,7 +777,6 @@
             });
         });
 
-        // Animate on scroll
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
