@@ -7,7 +7,7 @@
     <link rel="icon" href="https://raw.githubusercontent.com/EttoreMatos/ARIA_webpage/refs/heads/main/aria.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;700&family=Dancing+Script:wght@500;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #FF6B35;
@@ -29,11 +29,12 @@
         }
 
         body {
-            font-family: 'Outfit', sans-serif;
+            font-family: 'Caveat', cursive;
             background: var(--darker);
             color: var(--light);
             overflow-x: hidden;
             line-height: 1.6;
+            font-size: 1.25rem;
         }
 
         /* Animated Background */
@@ -79,14 +80,14 @@
         }
 
         .logo {
-            font-family: 'Syne', sans-serif;
-            font-size: 1.8rem;
-            font-weight: 800;
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.1rem;
+            font-weight: 700;
             background: var(--gradient-1);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
-            letter-spacing: -1px;
+            letter-spacing: 0.02em;
         }
 
         .nav-links {
@@ -101,7 +102,7 @@
             font-weight: 500;
             transition: all 0.3s ease;
             position: relative;
-            font-size: 0.95rem;
+            font-size: 1.2rem;
         }
 
         .nav-links a::after {
@@ -139,9 +140,9 @@
         }
 
         .hero-content h1 {
-            font-family: 'Syne', sans-serif;
-            font-size: 4.5rem;
-            font-weight: 800;
+            font-family: 'Dancing Script', cursive;
+            font-size: 5rem;
+            font-weight: 700;
             line-height: 1.1;
             margin-bottom: 1.5rem;
             background: var(--gradient-1);
@@ -152,17 +153,16 @@
         }
 
         .hero-content .subtitle {
-            font-size: 1.3rem;
+            font-size: 1.6rem;
             color: rgba(248, 249, 250, 0.8);
             margin-bottom: 2rem;
             animation: fadeInUp 0.8s ease-out 0.2s both;
         }
 
         .hero-content .tagline {
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.95rem;
+            font-size: 1.15rem;
             color: var(--accent);
-            margin-bottom: 2.5rem;
+            margin-bottom: 1rem;
             animation: fadeInUp 0.8s ease-out 0.3s both;
         }
 
@@ -177,7 +177,7 @@
             border-radius: 12px;
             text-decoration: none;
             font-weight: 600;
-            font-size: 1rem;
+            font-size: 1.3rem;
             transition: all 0.3s ease;
             border: none;
             cursor: pointer;
@@ -259,8 +259,8 @@
         }
 
         .section-title {
-            font-family: 'Syne', sans-serif;
-            font-size: 3rem;
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.7rem;
             font-weight: 700;
             text-align: center;
             margin-bottom: 1rem;
@@ -273,7 +273,7 @@
         .section-subtitle {
             text-align: center;
             color: rgba(248, 249, 250, 0.7);
-            font-size: 1.1rem;
+            font-size: 1.35rem;
             margin-bottom: 4rem;
         }
 
@@ -323,8 +323,8 @@
         }
 
         .feature-card h3 {
-            font-family: 'Syne', sans-serif;
-            font-size: 1.5rem;
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
             margin-bottom: 1rem;
             color: var(--accent);
             position: relative;
@@ -370,9 +370,9 @@
         }
 
         .command-item code {
-            font-family: 'IBM Plex Mono', monospace;
+            font-family: 'Dancing Script', cursive;
             color: var(--accent);
-            font-size: 1.1rem;
+            font-size: 1.6rem;
             font-weight: 600;
         }
 
@@ -401,17 +401,18 @@
         }
 
         .legal-content h3 {
-            font-family: 'Syne', sans-serif;
-            font-size: 1.8rem;
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.4rem;
             color: var(--purple-glow);
             margin-bottom: 1.5rem;
         }
 
         .legal-content h4 {
-            font-family: 'Syne', sans-serif;
+            font-family: 'Dancing Script', cursive;
             color: var(--accent);
             margin-top: 2rem;
             margin-bottom: 1rem;
+            font-size: 1.8rem;
         }
 
         .legal-content p, .legal-content ul {
@@ -465,7 +466,7 @@
             }
 
             .hero-content h1 {
-                font-size: 3rem;
+                font-size: 3.8rem;
             }
 
             .hero-image {
@@ -487,7 +488,7 @@
 
         @media (max-width: 640px) {
             .hero-content h1 {
-                font-size: 2.5rem;
+                font-size: 3rem;
             }
 
             .cta-buttons {
@@ -504,8 +505,9 @@
             }
 
             .section-title {
-                font-size: 2.2rem;
+                font-size: 2.7rem;
             }
+
         }
 
         /* Scroll indicator */
@@ -565,7 +567,7 @@
 
     <section style="background: var(--dark); padding: 2rem; text-align: center; border-top: 1px solid rgba(255, 107, 53, 0.2); border-bottom: 1px solid rgba(255, 107, 53, 0.2);">
         <div class="container" style="max-width: 900px; margin: 0 auto;">
-            <p style="color: var(--accent); font-family: 'IBM Plex Mono', monospace; font-size: 0.95rem; margin: 0;">
+            <p style="color: var(--accent); font-family: 'Caveat', cursive; font-size: 1.2rem; margin: 0;">
                 💡 <strong>Dica:</strong> Para ver meus comandos, digite <strong>"/"</strong> no campo de texto e clique na minha foto ;)
             </p>
         </div>
@@ -621,10 +623,20 @@
     <section class="commands" id="commands">
       <div class="container">
         <h2 class="section-title">Meus Comandos</h2>
-        <p class="section-subtitle">Olha só tudo o que eu posso fazer por você ✨</p>
+        <p class="section-subtitle">Comandos atualizados em 27/02/2026 ✨</p>
     
         <div class="command-list">
     
+          <div class="command-item">
+            <code>/help</code>
+            <p>Exibe todas as categorias de comandos da ARIA em formato interativo.</p>
+          </div>
+
+          <div class="command-item">
+            <code>/ping</code>
+            <p>Mostra latência da ARIA em tempo real com atualização contínua.</p>
+          </div>
+
           <div class="command-item">
             <code>/configurar_servidor</code>
             <p>Me adicione em um servidor vazio, diga o tema e eu monto tudo pra você: nome do servidor, cargos e canais.</p>
@@ -646,23 +658,38 @@
           </div>
     
           <div class="command-item">
-            <code>/relembrar</code>
-            <p>Mostro todo o nosso histórico de conversas.</p>
+            <code>/criar_onboarding</code>
+            <p>Prepara onboarding automático para novos membros (funcionalidade em evolução).</p>
           </div>
-    
+
+          <div class="command-item">
+            <code>/relembrar</code>
+            <p>Mostra o seu histórico de conversas comigo.</p>
+          </div>
+
           <div class="command-item">
             <code>/esquecer</code>
-            <p>Apago partes específicas da nossa conversa, se você quiser.</p>
+            <p>Apaga um intervalo específico do seu histórico.</p>
           </div>
-    
+
           <div class="command-item">
-            <code>/help</code>
-            <p>Te explico todos os comandos disponíveis.</p>
+            <code>/topico_privado</code>
+            <p>Cria seu tópico privado para conversar sem precisar me mencionar.</p>
           </div>
-    
+
           <div class="command-item">
-            <code>/ping</code>
-            <p>Te mostro minha latência em tempo real.</p>
+            <code>/fechar_topico_privado</code>
+            <p>Encerra o seu tópico privado ativo com segurança.</p>
+          </div>
+
+          <div class="command-item">
+            <code>/conectar_voz</code>
+            <p>Conecta a ARIA no seu canal de voz para conversa por áudio (uso interno com token).</p>
+          </div>
+
+          <div class="command-item">
+            <code>/desconectar_voz</code>
+            <p>Desconecta a ARIA do canal de voz atual.</p>
           </div>
     
         </div>
@@ -675,93 +702,98 @@
             
             <div class="legal-content">
                 <h3>📋 Política de Privacidade</h3>
-                <p><em>Versão: 02/02/2026</em></p>
+                <p><em>Versão: 27/02/2026</em></p>
                 
+                <h4>Escopo</h4>
+                <p>Esta política descreve como a ARIA trata dados quando você usa comandos, menciona o bot ou conversa em canais autorizados no Discord.</p>
+
                 <h4>Dados Coletados</h4>
                 <ul>
-                    <li><strong>Histórico de conversas:</strong> Armazenado temporariamente apenas para continuidade do diálogo (excluído via /esquecer ou após inatividade prolongada)</li>
-                    <li><strong>Metadados:</strong> IDs de usuário/Discord, timestamps e comandos usados (para funcionalidades como /relembrar)</li>
-                    <li><strong>Conteúdo técnico:</strong> Códigos ou logs compartilhados são analisados apenas no contexto da conversa e não são armazenados permanentemente</li>
-                    <li><strong>Não coletamos:</strong> Dados sensíveis (senhas, IPs, localização física) ou informações fora do Discord</li>
+                    <li><strong>Mensagens e contexto:</strong> Conteúdo enviado para interação com a ARIA, inclusive trechos de código e arquivos de texto compatíveis.</li>
+                    <li><strong>Metadados técnicos:</strong> IDs do Discord, horário de interação, servidor/canal e comandos executados.</li>
+                    <li><strong>Dados de voz:</strong> Áudio processado durante sessões de voz para transcrição e resposta. O processamento é operacional e não tem finalidade comercial.</li>
+                    <li><strong>Não coletamos intencionalmente:</strong> Senhas, dados bancários, localização física precisa ou dados fora do ecossistema Discord.</li>
                 </ul>
 
                 <h4>Uso dos Dados</h4>
                 <ul>
-                    <li><strong>Personalização:</strong> Melhorar respostas com base em interações anteriores</li>
-                    <li><strong>Funcionalidades:</strong> Executar comandos como /codificar ou /decodificar</li>
-                    <li><strong>Pesquisa:</strong> Anonimamente para aprimorar a IA (sem vinculação a usuários)</li>
+                    <li><strong>Execução dos recursos:</strong> Responder perguntas, rodar comandos e manter continuidade de contexto.</li>
+                    <li><strong>Segurança e integridade:</strong> Prevenir abuso, spam e uso malicioso dos serviços.</li>
+                    <li><strong>Melhoria técnica:</strong> Ajustar desempenho e qualidade de resposta, com minimização de dados quando possível.</li>
                 </ul>
 
-                <h4>Compartilhamento</h4>
-                <p>Nunca vendemos ou compartilhamos dados com terceiros.</p>
-                <p><strong>Exceções:</strong></p>
+                <h4>Compartilhamento e Base Legal</h4>
+                <p>A ARIA não vende dados pessoais. O tratamento ocorre para execução do serviço e legítimo interesse técnico-operacional.</p>
                 <ul>
-                    <li>Se exigido por lei (ex.: ordem judicial)</li>
-                    <li>Para proteger direitos (ex.: abuso de comandos maliciosos)</li>
+                    <li>Cumprimento de obrigação legal, regulatória ou ordem judicial.</li>
+                    <li>Proteção de direitos e prevenção de fraude/abuso.</li>
+                </ul>
+
+                <h4>Retenção e Exclusão</h4>
+                <ul>
+                    <li><strong>/relembrar</strong> permite visualizar histórico disponível vinculado ao seu usuário.</li>
+                    <li><strong>/esquecer</strong> remove intervalos do histórico conforme solicitado.</li>
+                    <li>Registros técnicos podem ser mantidos por tempo limitado para diagnóstico e segurança.</li>
                 </ul>
 
                 <h4>Segurança</h4>
                 <ul>
-                    <li>Criptografia em trânsito (Discord)</li>
-                    <li>Acesso restrito ao desenvolvedor (Ettore Bruno) e apenas para manutenção</li>
-                    <li>Segue as diretrizes do Discord's ToS e LGPD.</li>
+                    <li>Transmissão por canais protegidos do Discord.</li>
+                    <li>Acesso administrativo restrito para manutenção e suporte.</li>
+                    <li>Boas práticas de minimização e proteção de dados no ambiente do bot.</li>
                 </ul>
 
                 <h4>Seus Direitos</h4>
-                <ul>
-                    <li><strong>Acesso:</strong> Veja seu histórico com /relembrar</li>
-                    <li><strong>Exclusão:</strong> Apague dados com /esquecer ou peça via DM ao desenvolvedor</li>
-                    <li><strong>Recusa:</strong> Não use comandos que exigem armazenamento (ex.: /relembrar)</li>
-                </ul>
-
-                <h4>Menores de Idade</h4>
-                <p>Recomendação: Uso supervisionado para menores de 13 anos.</p>
+                <p>Você pode solicitar acesso, correção e exclusão de dados aplicáveis pelos comandos disponíveis ou contato direto com o desenvolvedor.</p>
 
                 <h4>Contato</h4>
                 <p>Dúvidas? Fale com o desenvolvedor: <strong>@46_6f_78</strong> (Ettore)</p>
                 
-                <p style="margin-top: 2rem;"><em>Última atualização: 02/02/2026</em></p>
+                <p style="margin-top: 2rem;"><em>Última atualização: 27/02/2026</em></p>
             </div>
 
             <div class="legal-content">
                 <h3>📜 Termos de Serviço</h3>
-                <p><em>Versão: 02/02/2026 – Modo Técnica Ativado</em></p>
+                <p><em>Versão: 27/02/2026</em></p>
                 
                 <h4>Aceitação dos Termos</h4>
-                <p>Ao interagir com ARIA, você concorda com estes Termos e a Política de Privacidade. Se discordar, não use os comandos ou recursos.</p>
+                <p>Ao usar a ARIA, você concorda com estes Termos e com a Política de Privacidade. Se não concordar, interrompa o uso.</p>
 
                 <h4>Uso Permitido</h4>
-                <p><strong>Finalidade:</strong> Assistência técnica, conversas casuais e comandos listados (ex.: /codificar, /decodificar).</p>
+                <p><strong>Finalidade:</strong> assistência técnica, automação de servidor, histórico contextual e comandos oficiais do bot.</p>
                 <p><strong>Proibido:</strong></p>
                 <ul>
-                    <li>Compartilhar dados sensíveis (senhas, informações pessoais)</li>
-                    <li>Usar para atividades ilegais (ex.: hacking não ético, spam)</li>
-                    <li>Sobrecarregar o sistema com requisições excessivas</li>
+                    <li>Uso para atividades ilegais, assédio, spam, engenharia social ou exploração maliciosa.</li>
+                    <li>Compartilhar dados sensíveis de terceiros sem autorização.</li>
+                    <li>Tentar quebrar, sobrecarregar ou contornar limites técnicos e de segurança.</li>
                 </ul>
 
-                <h4>Limitações</h4>
+                <h4>Comandos e Permissões</h4>
                 <ul>
-                    <li><strong>Disponibilidade:</strong> ARIA pode ficar offline para manutenção sem aviso prévio</li>
-                    <li><strong>Precisão:</strong> Não garantimos 100% de exatidão em respostas técnicas ou traduções</li>
-                    <li><strong>Responsabilidade:</strong> Não nos responsabilizamos por danos decorrentes do uso de códigos ou conselhos fornecidos</li>
+                    <li>Alguns comandos exigem permissões específicas no Discord (ex.: administração de servidor).</li>
+                    <li>Recursos de voz e automação podem ter requisitos adicionais e limitações operacionais.</li>
+                    <li>Comandos experimentais podem mudar, ser pausados ou removidos sem aviso prévio.</li>
                 </ul>
+
+                <h4>Disponibilidade e Precisão</h4>
+                <p>A ARIA pode ficar offline por manutenção, falhas de terceiros ou atualizações. Respostas podem conter imprecisões e devem ser revisadas antes de decisões importantes.</p>
 
                 <h4>Conteúdo do Usuário</h4>
-                <p>Você mantém os direitos sobre o conteúdo que compartilha (ex.: códigos, mensagens). Ao enviar, concede permissão para processamento apenas durante a conversa.</p>
+                <p>Você mantém seus direitos sobre o conteúdo enviado. Ao interagir, concede autorização para processamento técnico desse conteúdo para execução do serviço.</p>
 
-                <h4>Modificações</h4>
-                <p>Podemos atualizar estes Termos a qualquer momento. Uso contínuo = aceitação das mudanças.</p>
+                <h4>Limitação de Responsabilidade</h4>
+                <p>A ARIA é fornecida no estado em que se encontra. O uso de códigos, sugestões e respostas é de responsabilidade do usuário.</p>
 
-                <h4>Encerramento</h4>
-                <p>Podemos suspender o acesso se violar estes Termos (ex.: abuso de comandos). Você pode parar de interagir a qualquer momento.</p>
+                <h4>Suspensão e Encerramento</h4>
+                <p>Uso abusivo pode resultar em restrição ou bloqueio de acesso ao bot. Você pode interromper o uso a qualquer momento.</p>
 
-                <h4>Isenção de Garantias</h4>
-                <p>ARIA é fornecida "como está", sem garantias de funcionamento ininterrupto ou livre de erros.</p>
+                <h4>Alterações</h4>
+                <p>Estes termos podem ser atualizados periodicamente. A continuação do uso após a publicação representa concordância com a versão vigente.</p>
 
-                <h4>Lei Aplicável</h4>
-                <p>Estes Termos são regidos pelas leis do Brasil.</p>
+                <h4>Legislação Aplicável</h4>
+                <p>Estes Termos são regidos pela legislação brasileira aplicável.</p>
 
-                <p style="margin-top: 2rem;"><em>Última atualização: 02/02/2026</em></p>
+                <p style="margin-top: 2rem;"><em>Última atualização: 27/02/2026</em></p>
             </div>
         </div>
     </section>
