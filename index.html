@@ -7,7 +7,7 @@
     <link rel="icon" href="https://raw.githubusercontent.com/EttoreMatos/ARIA_webpage/refs/heads/main/aria.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;700&family=Dancing+Script:wght@500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;700&family=Dancing+Script:wght@700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #FF6B35;
@@ -35,6 +35,18 @@
             overflow-x: hidden;
             line-height: 1.6;
             font-size: 1.3rem;
+        }
+
+        /* --- CLASSE ESTILIZADA PARA O NOME ARIA --- */
+        .aria-name-styled {
+            font-family: 'Dancing Script', cursive;
+            font-weight: 700;
+            background: var(--gradient-1);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 0.02em;
+            display: inline-block;
         }
 
         .bg-animation {
@@ -78,14 +90,7 @@
         }
 
         .logo {
-            font-family: 'Caveat', cursive;
             font-size: 2.8rem;
-            font-weight: 400; /* Removido bold */
-            background: var(--gradient-1);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: 0.05em;
         }
 
         .nav-links {
@@ -137,21 +142,10 @@
         }
 
         .hero-content h1 {
-            font-family: 'Caveat', cursive;
             font-size: 5.5rem;
-            font-weight: 700;
             line-height: 1.1;
             margin-bottom: 1.5rem;
-            background: var(--gradient-1);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
             animation: fadeInUp 0.8s ease-out;
-        }
-        
-        /* Ajuste específico para o nome ARIA nos títulos */
-        .hero-content h1 span.aria-name {
-            font-weight: 400;
         }
 
         .hero-content .subtitle {
@@ -409,7 +403,6 @@
             margin-bottom: 1rem;
         }
 
-        /* Removida fonte Caveat dos textos de legal (usando Dancing Script padrão do body) */
         .legal-content p, .legal-content ul, .legal-content li {
             color: rgba(248, 249, 250, 0.85);
             line-height: 1.6;
@@ -486,6 +479,7 @@
         .scroll-indicator::before {
             content: '↓';
             font-size: 2rem;
+            font-style: bold;
             color: var(--primary);
         }
     </style>
@@ -495,7 +489,7 @@
 
     <nav>
         <div class="container">
-            <div class="logo">ARIA</div>
+            <div class="logo aria-name-styled">ARIA</div>
             <ul class="nav-links">
                 <li><a href="#home">Início</a></li>
                 <li><a href="#features">Recursos</a></li>
@@ -508,8 +502,8 @@
     <section class="hero" id="home">
         <div class="container">
             <div class="hero-content">
-                <h1>Conheça <span class="aria-name">ARIA</span></h1>
-                <p class="subtitle">Sou a <span style="font-weight: 400;">ARIA</span> (Automated Response & Interaction Assistant), uma Bot integrada com IA desenvolvida para ser a melhor assistente no seu servidor.</p>
+                <h1>Conheça <span class="aria-name-styled">ARIA</span></h1>
+                <p class="subtitle">Sou a <span class="aria-name-styled" style="font-size: inherit;">ARIA</span> (Automated Response & Interaction Assistant), uma Bot integrada com IA desenvolvida para ser a melhor assistente no seu servidor.</p>
                 <p class="tagline">Tento ser esperta, mas às vezes troco as patinhas! Se eu disser algo estranho, dê uma conferida nos fatos, tá bem? 🦊💜</p>
                 <div class="cta-buttons">
                     <a href="https://discord.com/oauth2/authorize?client_id=1439670009147293906&permissions=5419235387371120&integration_type=0&scope=bot" target="_blank" class="btn btn-primary">Adicionar ao Discord</a>
@@ -587,12 +581,12 @@
     
           <div class="command-item">
             <code>/help</code>
-            <p>Exibe todas as categorias de comandos da ARIA em formato interativo.</p>
+            <p>Exibe todas as categorias de comandos da <span class="aria-name-styled" style="font-size: 1.4rem;">ARIA</span> em formato interativo.</p>
           </div>
 
           <div class="command-item">
             <code>/ping</code>
-            <p>Mostra latência da ARIA em tempo real com atualização contínua.</p>
+            <p>Mostra latência da <span class="aria-name-styled" style="font-size: 1.4rem;">ARIA</span> em tempo real com atualização contínua.</p>
           </div>
 
           <div class="command-item">
@@ -642,12 +636,12 @@
 
           <div class="command-item">
             <code>/conectar_voz</code>
-            <p>Conecta a ARIA no seu canal de voz para conversa por áudio (uso interno com token).</p>
+            <p>Conecta a <span class="aria-name-styled" style="font-size: 1.4rem;">ARIA</span> no seu canal de voz para conversa por áudio (uso interno com token).</p>
           </div>
 
           <div class="command-item">
             <code>/desconectar_voz</code>
-            <p>Desconecta a ARIA do canal de voz atual.</p>
+            <p>Desconecta a <span class="aria-name-styled" style="font-size: 1.4rem;">ARIA</span> do canal de voz atual.</p>
           </div>
     
         </div>
@@ -663,11 +657,11 @@
                 <p><em>Versão: 27/02/2026</em></p>
                 
                 <h4>Escopo</h4>
-                <p>Esta política descreve como a ARIA trata dados quando você usa comandos, menciona o bot ou conversa em canais autorizados no Discord.</p>
+                <p>Esta política descreve como a <span class="aria-name-styled" style="font-size: 1.6rem;">ARIA</span> trata dados quando você usa comandos, menciona o bot ou conversa em canais autorizados no Discord.</p>
 
                 <h4>Dados Coletados</h4>
                 <ul>
-                    <li><strong>Mensagens e contexto:</strong> Conteúdo enviado para interação com a ARIA, inclusive trechos de código e arquivos de texto compatíveis.</li>
+                    <li><strong>Mensagens e contexto:</strong> Conteúdo enviado para interação com a <span class="aria-name-styled" style="font-size: 1.6rem;">ARIA</span>, inclusive trechos de código e arquivos de texto compatíveis.</li>
                     <li><strong>Metadados técnicos:</strong> IDs do Discord, horário de interação, servidor/canal e comandos executados.</li>
                     <li><strong>Dados de voz:</strong> Áudio processado durante sessões de voz para transcrição e resposta. O processamento é operacional e não tem finalidade comercial.</li>
                     <li><strong>Não coletamos intencionalmente:</strong> Senhas, dados bancários, localização física precisa ou dados fora do ecossistema Discord.</li>
@@ -681,7 +675,7 @@
                 </ul>
 
                 <h4>Compartilhamento e Base Legal</h4>
-                <p>A ARIA não vende dados pessoais. O tratamento ocorre para execução do serviço e legítimo interesse técnico-operacional.</p>
+                <p>A <span class="aria-name-styled" style="font-size: 1.6rem;">ARIA</span> não vende dados pessoais. O tratamento ocorre para execução do serviço e legítimo interesse técnico-operacional.</p>
                 <ul>
                     <li>Cumprimento de obrigação legal, regulatória ou ordem judicial.</li>
                     <li>Proteção de direitos e prevenção de fraude/abuso.</li>
@@ -715,7 +709,7 @@
                 <p><em>Versão: 27/02/2026</em></p>
                 
                 <h4>Aceitação dos Termos</h4>
-                <p>Ao usar a ARIA, você concorda com estes Termos e com a Política de Privacidade. Se não concordar, interrompa o uso.</p>
+                <p>Ao usar a <span class="aria-name-styled" style="font-size: 1.6rem;">ARIA</span>, você concorda com estes Termos e com a Política de Privacidade. Se não concordar, interrompa o uso.</p>
 
                 <h4>Uso Permitido</h4>
                 <p><strong>Finalidade:</strong> assistência técnica, automação de servidor, histórico contextual e comandos oficiais do bot.</p>
@@ -734,13 +728,13 @@
                 </ul>
 
                 <h4>Disponibilidade e Precisão</h4>
-                <p>A ARIA pode ficar offline por manutenção, falhas de terceiros ou atualizações. Respostas podem conter imprecisões e devem ser revisadas antes de decisões importantes.</p>
+                <p>A <span class="aria-name-styled" style="font-size: 1.6rem;">ARIA</span> pode ficar offline por manutenção, falhas de terceiros ou atualizações. Respostas podem conter imprecisões e devem ser revisadas antes de decisões importantes.</p>
 
                 <h4>Conteúdo do Usuário</h4>
                 <p>Você mantém seus direitos sobre o conteúdo enviado. Ao interagir, concede autorização para processamento técnico desse conteúdo para execução do serviço.</p>
 
                 <h4>Limitação de Responsabilidade</h4>
-                <p>A ARIA é fornecida no estado em que se encontra. O uso de códigos, sugestões e respostas é de responsabilidade do usuário.</p>
+                <p>A <span class="aria-name-styled" style="font-size: 1.6rem;">ARIA</span> é fornecida no estado em que se encontra. O uso de códigos, sugestões e respostas é de responsabilidade do usuário.</p>
 
                 <h4>Suspensão e Encerramento</h4>
                 <p>Uso abusivo pode resultar em restrição ou bloqueio de acesso ao bot. Você pode interromper o uso a qualquer momento.</p>
@@ -758,7 +752,7 @@
 
     <footer>
         <div class="container">
-            <p>&copy; 2026 ARIA Discord Bot. Desenvolvida por <a href="#">Ettore Bruno (@46_6f_78)</a></p>
+            <p>&copy; 2026 <span class="aria-name-styled" style="font-size: 1.4rem;">ARIA</span> Discord Bot. Desenvolvida por <a href="#">Ettore Bruno (@46_6f_78)</a></p>
             <p>Todos os direitos reservados. | <a href="#legal">Política de Privacidade</a> | <a href="#legal">Termos de Serviço</a></p>
         </div>
     </footer>
