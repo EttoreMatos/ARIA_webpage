@@ -29,12 +29,13 @@
         }
 
         body {
-            font-family: 'Caveat', cursive;
+            /* Alterado para manter um sistema "bem Dancing Script" no geral */
+            font-family: 'Dancing Script', cursive;
             background: var(--darker);
             color: var(--light);
             overflow-x: hidden;
             line-height: 1.6;
-            font-size: 1.08rem;
+            font-size: 1.3rem; /* Aumentado para garantir legibilidade na fonte cursiva */
         }
 
         /* Animated Background */
@@ -81,7 +82,7 @@
 
         .logo {
             font-family: 'Dancing Script', cursive;
-            font-size: 2rem;
+            font-size: 2.2rem;
             font-weight: 700;
             background: var(--gradient-1);
             -webkit-background-clip: text;
@@ -102,7 +103,7 @@
             font-weight: 500;
             transition: all 0.3s ease;
             position: relative;
-            font-size: 1.05rem;
+            font-size: 1.3rem; /* Ajustado para Dancing Script */
         }
 
         .nav-links a::after {
@@ -140,8 +141,8 @@
         }
 
         .hero-content h1 {
-            font-family: 'Dancing Script', cursive;
-            font-size: 5rem;
+            font-family: 'Caveat', cursive; /* Caveat nos títulos */
+            font-size: 5.5rem;
             font-weight: 700;
             line-height: 1.1;
             margin-bottom: 1.5rem;
@@ -153,7 +154,8 @@
         }
 
         .hero-content .subtitle {
-            font-size: 1.45rem;
+            font-family: 'Caveat', cursive; /* Caveat nas descrições */
+            font-size: 1.8rem;
             color: rgba(248, 249, 250, 0.8);
             margin-bottom: 2rem;
             animation: fadeInUp 0.8s ease-out 0.2s both;
@@ -161,7 +163,7 @@
 
         .hero-content .tagline {
             font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.82rem;
+            font-size: 0.85rem;
             color: var(--accent);
             margin-bottom: 1rem;
             animation: fadeInUp 0.8s ease-out 0.3s both;
@@ -178,7 +180,7 @@
             border-radius: 12px;
             text-decoration: none;
             font-weight: 600;
-            font-size: 1.08rem;
+            font-size: 1.3rem; /* Ajustado para Dancing Script */
             transition: all 0.3s ease;
             border: none;
             cursor: pointer;
@@ -260,8 +262,8 @@
         }
 
         .section-title {
-            font-family: 'Dancing Script', cursive;
-            font-size: 3.3rem;
+            font-family: 'Caveat', cursive; /* Caveat nos títulos */
+            font-size: 4rem;
             font-weight: 700;
             text-align: center;
             margin-bottom: 1rem;
@@ -272,9 +274,10 @@
         }
 
         .section-subtitle {
+            font-family: 'Caveat', cursive; /* Caveat nas descrições */
             text-align: center;
             color: rgba(248, 249, 250, 0.7);
-            font-size: 1.2rem;
+            font-size: 1.6rem;
             margin-bottom: 4rem;
         }
 
@@ -324,8 +327,8 @@
         }
 
         .feature-card h3 {
-            font-family: 'Dancing Script', cursive;
-            font-size: 1.65rem;
+            font-family: 'Caveat', cursive; /* Caveat nos títulos */
+            font-size: 2.2rem;
             margin-bottom: 1rem;
             color: var(--accent);
             position: relative;
@@ -333,8 +336,10 @@
         }
 
         .feature-card p {
+            font-family: 'Caveat', cursive; /* Caveat nas descrições */
+            font-size: 1.4rem;
             color: rgba(248, 249, 250, 0.8);
-            line-height: 1.7;
+            line-height: 1.5;
             position: relative;
             z-index: 1;
         }
@@ -373,11 +378,13 @@
         .command-item code {
             font-family: 'IBM Plex Mono', monospace;
             color: var(--accent);
-            font-size: 0.9rem;
+            font-size: 1rem;
             font-weight: 600;
         }
 
         .command-item p {
+            font-family: 'Caveat', cursive; /* Caveat nas descrições */
+            font-size: 1.4rem;
             color: rgba(248, 249, 250, 0.8);
             margin-top: 0.5rem;
         }
@@ -402,28 +409,29 @@
         }
 
         .legal-content h3 {
-            font-family: 'Dancing Script', cursive;
-            font-size: 2rem;
+            font-family: 'Caveat', cursive; /* Caveat nos títulos */
+            font-size: 2.8rem;
             color: var(--purple-glow);
             margin-bottom: 1.5rem;
         }
 
         .legal-content h4 {
-            font-family: 'Dancing Script', cursive;
+            font-family: 'Caveat', cursive; /* Caveat nos títulos */
             color: var(--accent);
-            font-size: 1.55rem;
+            font-size: 2.2rem;
             margin-top: 2rem;
             margin-bottom: 1rem;
         }
 
         .legal-content p, .legal-content ul {
+            /* Herda Dancing Script do body */
             color: rgba(248, 249, 250, 0.85);
-            line-height: 1.8;
+            line-height: 1.6;
             margin-bottom: 1rem;
         }
 
         .legal-content ul {
-            padding-left: 2rem;
+            padding-left: 2.5rem;
         }
 
         .legal-content li {
@@ -445,7 +453,6 @@
 
         footer p {
             color: rgba(248, 249, 250, 0.6);
-            font-size: 1rem;
             margin-bottom: 1rem;
         }
 
@@ -468,7 +475,7 @@
             }
 
             .hero-content h1 {
-                font-size: 3.4rem;
+                font-size: 4rem;
             }
 
             .hero-image {
@@ -490,7 +497,7 @@
 
         @media (max-width: 640px) {
             .hero-content h1 {
-                font-size: 2.8rem;
+                font-size: 3.5rem;
             }
 
             .cta-buttons {
@@ -507,7 +514,7 @@
             }
 
             .section-title {
-                font-size: 2.4rem;
+                font-size: 3rem;
             }
 
         }
@@ -569,7 +576,7 @@
 
     <section style="background: var(--dark); padding: 2rem; text-align: center; border-top: 1px solid rgba(255, 107, 53, 0.2); border-bottom: 1px solid rgba(255, 107, 53, 0.2);">
         <div class="container" style="max-width: 900px; margin: 0 auto;">
-            <p style="color: var(--accent); font-family: 'IBM Plex Mono', monospace; font-size: 0.82rem; margin: 0;">
+            <p style="color: var(--accent); font-family: 'IBM Plex Mono', monospace; font-size: 0.9rem; margin: 0;">
                 💡 <strong>Dica:</strong> Para ver meus comandos, digite <strong>"/"</strong> no campo de texto e clique na minha foto ;)
             </p>
         </div>
