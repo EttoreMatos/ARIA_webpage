@@ -29,6 +29,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Dancing+Script:wght@700&family=IBM+Plex+Mono:wght@400;600&family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
+
     <style>
         :root {
             --primary: #FF6B35;
@@ -43,11 +44,9 @@
             --gradient-3: linear-gradient(135deg, #1A1A2E 0%, #2D2D44 100%);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
 
         body {
             font-family: 'Sora', sans-serif;
@@ -55,10 +54,41 @@
             color: var(--light);
             overflow-x: hidden;
             line-height: 1.6;
-            font-size: 1.15rem;
+            font-size: 1.05rem;
+            cursor: none;
         }
 
-        /* --- CLASSE ESTILIZADA PARA O NOME ARIA --- */
+        /* ── CURSOR PATINHA ── */
+        * { cursor: none !important; }
+        .cursor {
+            position: fixed;
+            width: 32px;
+            height: 32px;
+            pointer-events: none;
+            z-index: 99999;
+            transform: translate(-50%, -50%);
+            transition: width 0.18s ease, height 0.18s ease, filter 0.18s ease;
+            filter: drop-shadow(0 0 6px rgba(255,107,53,0.8));
+        }
+        .cursor svg { width: 100%; height: 100%; }
+        .cursor.hover {
+            width: 42px;
+            height: 42px;
+            filter: drop-shadow(0 0 12px rgba(255,179,71,1));
+        }
+        .cursor-ring {
+            position: fixed;
+            width: 52px;
+            height: 52px;
+            border: 2px solid rgba(255,107,53,0.35);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 99997;
+            transform: translate(-50%, -50%);
+            transition: width 0.22s ease, height 0.22s ease, border-color 0.22s ease;
+        }
+
+        /* ── NOME ARIA ── */
         .aria-name-styled {
             font-family: 'Dancing Script', cursive;
             font-weight: 700;
@@ -70,37 +100,45 @@
             display: inline-block;
         }
 
+        /* ── PARTÍCULAS ── */
+        #particles-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ── BG GRADIENTE ── */
         .bg-animation {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             z-index: -1;
-            opacity: 0.15;
-            background: 
+            opacity: 0.18;
+            background:
                 radial-gradient(circle at 20% 50%, var(--secondary) 0%, transparent 50%),
                 radial-gradient(circle at 80% 80%, var(--primary) 0%, transparent 50%),
                 radial-gradient(circle at 40% 20%, var(--accent) 0%, transparent 50%);
             animation: bgPulse 20s ease-in-out infinite;
         }
-
         @keyframes bgPulse {
-            0%, 100% { opacity: 0.15; transform: scale(1); }
-            50% { opacity: 0.25; transform: scale(1.1); }
+            0%, 100% { opacity: 0.18; transform: scale(1); }
+            50% { opacity: 0.28; transform: scale(1.08); }
         }
 
+        /* ── NAV ── */
         nav {
             position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(26, 26, 46, 0.85);
-            backdrop-filter: blur(20px);
+            top: 0; width: 100%;
+            background: rgba(15,15,30,0.75);
+            backdrop-filter: blur(24px);
             padding: 0.75rem 0;
             z-index: 1000;
-            border-bottom: 1px solid rgba(255, 107, 53, 0.2);
+            border-bottom: 1px solid rgba(255,107,53,0.2);
+            transition: background 0.3s;
         }
-
+        nav.scrolled { background: rgba(15,15,30,0.95); }
         nav .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -109,17 +147,8 @@
             justify-content: space-between;
             align-items: center;
         }
-
-        .logo {
-            font-size: 2.8rem;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2.5rem;
-            list-style: none;
-        }
-
+        .logo { font-size: 2.8rem; }
+        .nav-links { display: flex; gap: 2.5rem; list-style: none; }
         .nav-links a {
             color: var(--light);
             text-decoration: none;
@@ -127,24 +156,18 @@
             transition: all 0.3s ease;
             position: relative;
             font-size: 0.85rem;
-            font-family: 'Sora', sans-serif;
         }
-
         .nav-links a::after {
             content: '';
             position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
+            bottom: -5px; left: 0;
+            width: 0; height: 2px;
             background: var(--gradient-1);
             transition: width 0.3s ease;
         }
+        .nav-links a:hover::after { width: 100%; }
 
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
+        /* ── HERO ── */
         .hero {
             margin-top: 56px;
             min-height: 90vh;
@@ -152,8 +175,8 @@
             align-items: center;
             padding: 4rem 2rem;
             position: relative;
+            z-index: 1;
         }
-
         .hero .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -162,8 +185,6 @@
             gap: 4rem;
             align-items: center;
         }
-
-        /* CAVEAT: título principal "Conheça ARIA" */
         .hero-content h1 {
             font-family: 'Caveat', cursive;
             font-size: 5.5rem;
@@ -171,16 +192,13 @@
             margin-bottom: 1.5rem;
             animation: fadeInUp 0.8s ease-out;
         }
-
         .hero-content .subtitle {
-            font-family: 'Sora', sans-serif;
             font-size: 0.95rem;
-            color: rgba(248, 249, 250, 0.8);
+            color: rgba(248,249,250,0.8);
             margin-bottom: 2rem;
             animation: fadeInUp 0.8s ease-out 0.2s both;
             line-height: 1.8;
         }
-
         .hero-content .tagline {
             font-family: 'IBM Plex Mono', monospace;
             font-size: 0.78rem;
@@ -188,13 +206,11 @@
             margin-bottom: 1rem;
             animation: fadeInUp 0.8s ease-out 0.3s both;
         }
-
         .cta-buttons {
             display: flex;
             gap: 1.5rem;
             animation: fadeInUp 0.8s ease-out 0.4s both;
         }
-
         .btn {
             padding: 1rem 2.5rem;
             border-radius: 12px;
@@ -203,73 +219,135 @@
             font-size: 0.9rem;
             transition: all 0.3s ease;
             border: none;
-            cursor: pointer;
+            cursor: none;
             display: inline-block;
             font-family: 'Sora', sans-serif;
+            position: relative;
+            overflow: hidden;
         }
-
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 0; height: 0;
+            background: rgba(255,255,255,0.15);
+            border-radius: 50%;
+            transform: translate(-50%,-50%);
+            transition: width 0.5s ease, height 0.5s ease, opacity 0.5s;
+            opacity: 0;
+        }
+        .btn:hover::after { width: 300px; height: 300px; opacity: 1; }
         .btn-primary {
             background: var(--gradient-1);
             color: white;
-            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.3);
+            box-shadow: 0 8px 25px rgba(255,107,53,0.3);
         }
-
         .btn-primary:hover {
             transform: translateY(-3px);
-            box-shadow: 0 12px 35px rgba(255, 107, 53, 0.5);
+            box-shadow: 0 12px 35px rgba(255,107,53,0.5);
         }
-
         .btn-secondary {
             background: transparent;
             color: var(--light);
-            border: 2px solid rgba(255, 107, 53, 0.4);
+            border: 2px solid rgba(255,107,53,0.4);
         }
-
         .btn-secondary:hover {
             border-color: var(--primary);
-            background: rgba(255, 107, 53, 0.1);
+            background: rgba(255,107,53,0.1);
         }
 
+        /* ── HERO IMAGE — sem float, com glow e parallax ── */
         .hero-image {
             position: relative;
             animation: fadeInRight 1s ease-out 0.3s both;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-
+        .hero-image::before {
+            content: '';
+            position: absolute;
+            width: 85%;
+            height: 85%;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,107,53,0.35) 0%, rgba(155,89,182,0.2) 50%, transparent 75%);
+            filter: blur(40px);
+            z-index: 0;
+            animation: glowPulse 4s ease-in-out infinite;
+        }
+        @keyframes glowPulse {
+            0%, 100% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.12); opacity: 1; }
+        }
         .hero-image img {
+            position: relative;
+            z-index: 1;
             width: 100%;
-            max-width: 500px;
-            border-radius: 30px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-            border: 3px solid rgba(255, 107, 53, 0.3);
-            animation: float 6s ease-in-out infinite;
+            max-width: 480px;
+            border-radius: 24px;
+            filter: drop-shadow(0 0 40px rgba(255,107,53,0.4)) drop-shadow(0 0 80px rgba(155,89,182,0.2));
+            transition: filter 0.4s ease;
+            will-change: transform;
+        }
+        .hero-image:hover img {
+            filter: drop-shadow(0 0 60px rgba(255,107,53,0.6)) drop-shadow(0 0 100px rgba(155,89,182,0.35));
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
+        /* partículas de brilho ao redor da imagem */
+        .sparkle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+            pointer-events: none;
+            animation: sparkleFly 3s ease-in-out infinite;
+            z-index: 2;
+        }
+        .sparkle:nth-child(1) { top: 10%; left: 15%; animation-delay: 0s; }
+        .sparkle:nth-child(2) { top: 80%; left: 10%; animation-delay: 0.8s; background: var(--purple-glow); }
+        .sparkle:nth-child(3) { top: 20%; right: 10%; animation-delay: 1.4s; background: var(--primary); }
+        .sparkle:nth-child(4) { bottom: 15%; right: 20%; animation-delay: 2s; }
+        .sparkle:nth-child(5) { top: 50%; left: 5%; animation-delay: 0.4s; background: var(--purple-glow); width:4px; height:4px; }
+        @keyframes sparkleFly {
+            0%, 100% { transform: translateY(0) scale(1); opacity: 0.8; }
+            50% { transform: translateY(-18px) scale(1.4); opacity: 1; }
         }
 
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
         @keyframes fadeInRight {
             from { opacity: 0; transform: translateX(50px); }
             to { opacity: 1; transform: translateX(0); }
         }
 
+        /* ── DICA BANNER ── */
+        .tip-banner {
+            background: var(--dark);
+            padding: 1.25rem 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(255,107,53,0.2);
+            border-bottom: 1px solid rgba(255,107,53,0.2);
+            position: relative;
+            z-index: 1;
+        }
+        .tip-banner p {
+            color: var(--accent);
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.85rem;
+            margin: 0;
+        }
+
+        /* ── FEATURES ── */
         .features {
             padding: 6rem 2rem;
             background: var(--dark);
+            position: relative;
+            z-index: 1;
         }
-
-        .features .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        /* CAVEAT: títulos de seção */
+        .features .container { max-width: 1200px; margin: 0 auto; }
         .section-title {
             font-family: 'Caveat', cursive;
             font-size: 4rem;
@@ -281,62 +359,43 @@
             background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-
         .section-subtitle {
-            font-family: 'Sora', sans-serif;
             text-align: center;
-            color: rgba(248, 249, 250, 0.7);
+            color: rgba(248,249,250,0.7);
             font-size: 0.85rem;
             margin-bottom: 4rem;
         }
-
         .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2.5rem;
         }
-
         .feature-card {
             background: var(--gradient-3);
             padding: 2.5rem;
             border-radius: 20px;
-            border: 1px solid rgba(255, 107, 53, 0.2);
+            border: 1px solid rgba(255,107,53,0.2);
             transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
         }
-
         .feature-card::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             background: var(--gradient-1);
             opacity: 0;
             transition: opacity 0.4s ease;
         }
-
         .feature-card:hover {
             transform: translateY(-10px);
             border-color: var(--primary);
-            box-shadow: 0 20px 40px rgba(255, 107, 53, 0.3);
+            box-shadow: 0 20px 40px rgba(255,107,53,0.3);
         }
-
-        .feature-card:hover::before {
-            opacity: 0.05;
-        }
-
-        .feature-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-            position: relative;
-            z-index: 1;
-        }
-
+        .feature-card:hover::before { opacity: 0.06; }
+        .feature-icon { font-size: 2.5rem; margin-bottom: 1.5rem; position: relative; z-index: 1; }
         .feature-card h3 {
-            font-family: 'Sora', sans-serif;
             font-size: 1rem;
             font-weight: 600;
             margin-bottom: 1rem;
@@ -344,88 +403,123 @@
             position: relative;
             z-index: 1;
         }
-
         .feature-card p {
-            font-family: 'Sora', sans-serif;
             font-size: 0.85rem;
-            color: rgba(248, 249, 250, 0.8);
+            color: rgba(248,249,250,0.8);
             line-height: 1.7;
             position: relative;
             z-index: 1;
         }
 
+        /* ── COMMANDS ── */
         .commands {
             padding: 6rem 2rem;
             background: var(--darker);
+            position: relative;
+            z-index: 1;
         }
+        .commands .container { max-width: 1100px; margin: 0 auto; }
 
-        .commands .container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .command-list {
+        /* Abas de categoria */
+        .cmd-tabs {
             display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            justify-content: center;
+            margin-bottom: 3rem;
         }
+        .cmd-tab {
+            padding: 0.55rem 1.3rem;
+            border-radius: 30px;
+            border: 1.5px solid rgba(255,107,53,0.3);
+            background: transparent;
+            color: rgba(248,249,250,0.7);
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.78rem;
+            cursor: none;
+            transition: all 0.25s ease;
+            user-select: none;
+        }
+        .cmd-tab:hover { border-color: var(--accent); color: var(--accent); }
+        .cmd-tab.active {
+            background: var(--gradient-1);
+            border-color: transparent;
+            color: white;
+            box-shadow: 0 4px 16px rgba(255,107,53,0.35);
+        }
+
+        .cmd-panel { display: none; }
+        .cmd-panel.active { display: block; animation: fadeInUp 0.35s ease; }
+
+        .command-list { display: flex; flex-direction: column; gap: 1.2rem; }
 
         .command-item {
             background: var(--gradient-3);
-            padding: 1.5rem 2rem;
-            border-radius: 15px;
+            padding: 1.3rem 1.8rem;
+            border-radius: 14px;
             border-left: 4px solid var(--primary);
             transition: all 0.3s ease;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
         }
-
         .command-item:hover {
-            transform: translateX(10px);
-            border-left-width: 6px;
-            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.2);
+            transform: translateX(8px);
+            border-left-color: var(--accent);
+            box-shadow: 0 8px 24px rgba(255,107,53,0.18);
         }
-
+        .command-item .cmd-icon {
+            font-size: 1.3rem;
+            flex-shrink: 0;
+            margin-top: 0.1rem;
+        }
+        .command-item .cmd-body { flex: 1; }
         .command-item code {
             font-family: 'IBM Plex Mono', monospace;
             color: var(--accent);
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 600;
         }
-
         .command-item p {
-            font-family: 'Sora', sans-serif;
-            font-size: 0.85rem;
-            color: rgba(248, 249, 250, 0.8);
-            margin-top: 0.5rem;
+            font-size: 0.82rem;
+            color: rgba(248,249,250,0.75);
+            margin-top: 0.3rem;
             line-height: 1.6;
         }
+        .cmd-badge {
+            display: inline-block;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.65rem;
+            padding: 0.15rem 0.55rem;
+            border-radius: 20px;
+            margin-left: 0.5rem;
+            vertical-align: middle;
+        }
+        .badge-premium { background: rgba(155,89,182,0.25); color: var(--purple-glow); border: 1px solid rgba(155,89,182,0.4); }
+        .badge-mod { background: rgba(255,107,53,0.15); color: var(--accent); border: 1px solid rgba(255,107,53,0.3); }
+        .badge-owner { background: rgba(199,125,255,0.15); color: var(--purple-glow); border: 1px solid rgba(199,125,255,0.4); }
 
+        /* ── LEGAL ── */
         .legal {
             padding: 6rem 2rem;
             background: var(--dark);
+            position: relative;
+            z-index: 1;
         }
-
-        .legal .container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
+        .legal .container { max-width: 900px; margin: 0 auto; }
         .legal-content {
             background: var(--gradient-3);
             padding: 3rem;
             border-radius: 20px;
-            border: 1px solid rgba(155, 89, 182, 0.3);
+            border: 1px solid rgba(155,89,182,0.3);
             margin-bottom: 2rem;
         }
-
-        /* CAVEAT: h3 do Legal ("📋 Política de Privacidade", "📜 Termos de Serviço") */
         .legal-content h3 {
             font-family: 'Caveat', cursive;
             font-size: 2.8rem;
             color: var(--purple-glow);
             margin-bottom: 1.5rem;
         }
-
-        /* CAVEAT: h4 do Legal (subtítulos como "Escopo", "Dados Coletados", etc.) */
         .legal-content h4 {
             font-family: 'Caveat', cursive;
             color: var(--accent);
@@ -433,53 +527,90 @@
             margin-top: 2rem;
             margin-bottom: 1rem;
         }
-
         .legal-content p, .legal-content ul, .legal-content li {
-            font-family: 'Sora', sans-serif;
             font-size: 0.85rem;
-            color: rgba(248, 249, 250, 0.85);
+            color: rgba(248,249,250,0.85);
             line-height: 1.8;
             margin-bottom: 1rem;
         }
+        .legal-content ul { padding-left: 2.5rem; }
+        .legal-content li { margin-bottom: 0.5rem; }
 
-        .legal-content ul {
-            padding-left: 2.5rem;
-        }
-
-        .legal-content li {
-            margin-bottom: 0.5rem;
-        }
-
+        /* ── FOOTER ── */
         footer {
             background: var(--darker);
             padding: 3rem 2rem;
-            border-top: 1px solid rgba(255, 107, 53, 0.2);
+            border-top: 1px solid rgba(255,107,53,0.2);
+            position: relative;
+            z-index: 1;
         }
+        footer .container { max-width: 1200px; margin: 0 auto; text-align: center; }
+        footer p { font-size: 0.8rem; color: rgba(248,249,250,0.6); margin-bottom: 1rem; }
+        footer a { color: var(--primary); text-decoration: none; font-weight: 500; transition: color 0.3s ease; }
+        footer a:hover { color: var(--accent); }
 
-        footer .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            text-align: center;
+        /* ── SCROLL INDICATOR ── */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem; left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
         }
-
-        footer p {
-            font-family: 'Sora', sans-serif;
-            font-size: 0.8rem;
-            color: rgba(248, 249, 250, 0.6);
-            margin-bottom: 1rem;
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
         }
-
-        footer a {
+        .scroll-indicator::before {
+            content: '↓';
+            font-size: 2rem;
             color: var(--primary);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s ease;
         }
 
-        footer a:hover {
-            color: var(--accent);
+        /* ── GLITCH EFFECT no título ── */
+        .glitch {
+            position: relative;
+        }
+        .glitch::before, .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0; left: 0;
+            font-family: 'Dancing Script', cursive;
+            font-weight: 700;
+            background: var(--gradient-1);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 0.02em;
+        }
+        .glitch::before {
+            animation: glitch1 4s infinite;
+            clip-path: polygon(0 20%, 100% 20%, 100% 40%, 0 40%);
+        }
+        .glitch::after {
+            animation: glitch2 4s infinite;
+            clip-path: polygon(0 60%, 100% 60%, 100% 80%, 0 80%);
+        }
+        @keyframes glitch1 {
+            0%, 90%, 100% { transform: none; opacity: 0; }
+            92% { transform: skew(-2deg) translateX(-3px); opacity: 0.7; }
+            95% { transform: skew(2deg) translateX(3px); opacity: 0.7; }
+        }
+        @keyframes glitch2 {
+            0%, 88%, 100% { transform: none; opacity: 0; }
+            90% { transform: skew(2deg) translateX(3px); opacity: 0.6; }
+            93% { transform: skew(-2deg) translateX(-3px); opacity: 0.6; }
         }
 
+        /* ── SCROLL REVEAL ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* ── RESPONSIVO ── */
         @media (max-width: 968px) {
             .hero .container { grid-template-columns: 1fr; text-align: center; }
             .hero-content h1 { font-size: 4rem; }
@@ -488,41 +619,37 @@
             .nav-links { gap: 1.5rem; }
             .features-grid { grid-template-columns: 1fr; }
         }
-
         @media (max-width: 640px) {
             .hero-content h1 { font-size: 3.5rem; }
             .cta-buttons { flex-direction: column; width: 100%; }
             .btn { width: 100%; }
             .nav-links { display: none; }
             .section-title { font-size: 3rem; }
-        }
-
-        .scroll-indicator {
-            position: absolute;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
-            40% { transform: translateX(-50%) translateY(-10px); }
-            60% { transform: translateX(-50%) translateY(-5px); }
-        }
-
-        .scroll-indicator::before {
-            content: '↓';
-            font-size: 2rem;
-            font-style: bold;
-            color: var(--primary);
+            body { cursor: auto; }
+            .cursor, .cursor-ring { display: none; }
         }
     </style>
 </head>
 <body>
+
+    <!-- Cursor -->
+    <div class="cursor" id="cursor">
+        <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" id="pawSvg">
+            <ellipse cx="10" cy="7"  rx="4"   ry="3"   fill="#FF6B35"/>
+            <ellipse cx="22" cy="7"  rx="4"   ry="3"   fill="#FF6B35"/>
+            <ellipse cx="5"  cy="15" rx="3"   ry="4"   fill="#FF6B35"/>
+            <ellipse cx="27" cy="15" rx="3"   ry="4"   fill="#FF6B35"/>
+            <ellipse cx="16" cy="22" rx="9.5" ry="8.5" fill="#FF6B35"/>
+        </svg>
+    </div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <!-- Canvas partículas -->
+    <canvas id="particles-canvas"></canvas>
+
     <div class="bg-animation"></div>
 
-    <nav>
+    <nav id="navbar">
         <div class="container">
             <div class="logo aria-name-styled">ARIA</div>
             <ul class="nav-links">
@@ -534,218 +661,234 @@
         </div>
     </nav>
 
+    <!-- HERO -->
     <section class="hero" id="home">
         <div class="container">
             <div class="hero-content">
-                <h1>Conheça <span class="aria-name-styled">ARIA</span></h1>
-                <p class="subtitle">Sou a <span class="aria-name-styled" style="font-size: inherit;"> ARIA</span> (Automated Response & Interaction Assistant), uma Bot integrada com IA desenvolvida para ser a melhor assistente no seu servidor.</p>
+                <h1>Conheça <span class="aria-name-styled glitch" data-text="ARIA">ARIA</span></h1>
+                <p class="subtitle">Sou a <span class="aria-name-styled" style="font-size: inherit;">ARIA</span> (Automated Response &amp; Interaction Assistant), uma Bot integrada com IA desenvolvida para ser a melhor assistente no seu servidor.</p>
                 <p class="tagline">Tento ser esperta, mas às vezes troco as patinhas! Se eu disser algo estranho, dê uma conferida nos fatos, tá bem? 🦊💜</p>
                 <div class="cta-buttons">
                     <a href="https://discord.com/oauth2/authorize?client_id=1439670009147293906&permissions=5419235387371120&integration_type=0&scope=bot" target="_blank" class="btn btn-primary">Adicionar ao Discord</a>
                     <a href="https://discord.gg/E99uQdfCvB" target="_blank" class="btn btn-secondary">Server Oficial</a>
                 </div>
             </div>
-            <div class="hero-image">
-                <img src="https://cdn.jsdelivr.net/gh/EttoreMatos/ARIA_webpage@main/aria_site.webp" alt="ARIA image">
+            <div class="hero-image" id="heroImage">
+                <span class="sparkle"></span>
+                <span class="sparkle"></span>
+                <span class="sparkle"></span>
+                <span class="sparkle"></span>
+                <span class="sparkle"></span>
+                <img src="https://cdn.jsdelivr.net/gh/EttoreMatos/ARIA_webpage@main/aria_site.webp" alt="ARIA image" id="ariaImg">
             </div>
         </div>
         <div class="scroll-indicator"></div>
     </section>
 
-    <section style="background: var(--dark); padding: 2rem; text-align: center; border-top: 1px solid rgba(255, 107, 53, 0.2); border-bottom: 1px solid rgba(255, 107, 53, 0.2);">
-        <div class="container" style="max-width: 900px; margin: 0 auto;">
-            <p style="color: var(--accent); font-family: 'IBM Plex Mono', monospace; font-size: 0.9rem; margin: 0;">
-                💡 <strong>Dica:</strong> Para ver meus comandos, digite <strong>"/"</strong> no campo de texto e clique na minha foto ;)
-            </p>
+    <!-- DICA -->
+    <div class="tip-banner">
+        <div class="container" style="max-width:900px;margin:0 auto;">
+            <p>💡 <strong>Dica:</strong> Para ver meus comandos, digite <strong>"/"</strong> no campo de texto e clique na minha foto ;)</p>
         </div>
-    </section>
-    
+    </div>
+
+    <!-- FEATURES -->
     <section class="features" id="features">
-      <div class="container">
-        <h2 class="section-title">Recursos Incríveis</h2>
-        <p class="section-subtitle">Estou aqui pra deixar seu servidor mais animado! 💜</p>
-    
-        <div class="features-grid">
-    
-          <div class="feature-card">
-            <div class="feature-icon">💬</div>
-            <h3>Conversas Inteligentes</h3>
-            <p>Converso com você de forma natural e lembro do que já falamos. Assim, cada conversa fica mais especial.</p>
-          </div>
-    
-          <div class="feature-card">
-            <div class="feature-icon">💻</div>
-            <h3>Assistência Técnica</h3>
-            <p>Posso te ajudar com programação, bugs e ideias técnicas. Estou sempre pronta pra dar uma forcinha ✨</p>
-          </div>
-    
-          <div class="feature-card">
-            <div class="feature-icon">🌐</div>
-            <h3>Montagem de Servidor</h3>
-            <p>Me diga o tema do seu servidor e eu cuido do resto! Crio canais, cargos e nomes automaticamente.</p>
-          </div>
-    
-          <div class="feature-card">
-            <div class="feature-icon">🔒</div>
-            <h3>Privacidade Garantida</h3>
-            <p>Seus dados ficam seguros comigo. Não compartilho nada com terceiros e sigo direitinho a LGPD.</p>
-          </div>
-    
-          <div class="feature-card">
-            <div class="feature-icon">🧠</div>
-            <h3>Memória Contextual</h3>
-            <p>Lembro das suas preferências pra te responder cada vez melhor. Quanto mais conversamos, mais eu aprendo sobre você!</p>
-          </div>
-    
-          <div class="feature-card">
-            <div class="feature-icon">⚡</div>
-            <h3>Respostas Rápidas</h3>
-            <p>Sou super rápida! Mesmo com muita gente falando ao mesmo tempo, respondo num piscar de olhos.</p>
-          </div>
-    
+        <div class="container">
+            <h2 class="section-title">Recursos Incríveis</h2>
+            <p class="section-subtitle">Estou aqui pra deixar seu servidor mais animado! 💜</p>
+            <div class="features-grid">
+                <div class="feature-card reveal"><div class="feature-icon">💬</div><h3>Conversas Inteligentes</h3><p>Converso com você de forma natural e lembro do que já falamos. Assim, cada conversa fica mais especial.</p></div>
+                <div class="feature-card reveal"><div class="feature-icon">💻</div><h3>Assistência Técnica</h3><p>Posso te ajudar com programação, bugs e ideias técnicas. Estou sempre pronta pra dar uma forcinha ✨</p></div>
+                <div class="feature-card reveal"><div class="feature-icon">🌐</div><h3>Montagem de Servidor</h3><p>Me diga o tema do seu servidor e eu cuido do resto! Crio canais, cargos e nomes automaticamente.</p></div>
+                <div class="feature-card reveal"><div class="feature-icon">🔒</div><h3>Privacidade Garantida</h3><p>Seus dados ficam seguros comigo. Não compartilho nada com terceiros e sigo direitinho a LGPD.</p></div>
+                <div class="feature-card reveal"><div class="feature-icon">🧠</div><h3>Memória Contextual</h3><p>Lembro das suas preferências pra te responder cada vez melhor. Quanto mais conversamos, mais eu aprendo!</p></div>
+                <div class="feature-card reveal"><div class="feature-icon">⚡</div><h3>Respostas Rápidas</h3><p>Sou super rápida! Mesmo com muita gente falando ao mesmo tempo, respondo num piscar de olhos.</p></div>
+            </div>
         </div>
-      </div>
     </section>
-    
+
+    <!-- COMMANDS -->
     <section class="commands" id="commands">
-      <div class="container">
-        <h2 class="section-title">Meus Comandos</h2>
-        <p class="section-subtitle">Comandos atualizados em 27/02/2026 ✨</p>
-    
-        <div class="command-list">
-    
-          <div class="command-item">
-            <code>/help</code>
-            <p>Exibe todas as minhas categorias de comandos em formato interativo.</p>
-          </div>
+        <div class="container">
+            <h2 class="section-title">Meus Comandos</h2>
+            <p class="section-subtitle">Atualizados em 03/05/2026 ✨</p>
 
-          <div class="command-item">
-            <code>/ping</code>
-            <p>Mostra minha latência em tempo real com atualização contínua.</p>
-          </div>
+            <!-- Abas -->
+            <div class="cmd-tabs">
+                <button class="cmd-tab active" data-target="tab-geral">🔧 Geral</button>
+                <button class="cmd-tab" data-target="tab-topico">💬 Tópico Privado</button>
+                <button class="cmd-tab" data-target="tab-historico">🧠 Histórico</button>
+                <button class="cmd-tab" data-target="tab-utilidades">🛠️ Utilidades</button>
+                <button class="cmd-tab" data-target="tab-diversao">🎉 Diversão</button>
+                <button class="cmd-tab" data-target="tab-moderacao">🛡️ Moderação</button>
+                <button class="cmd-tab" data-target="tab-voz">🎙️ Voz</button>
+                <button class="cmd-tab" data-target="tab-economia">📈 Economia</button>
+                <button class="cmd-tab" data-target="tab-premium">👑 Premium</button>
+            </div>
 
-          <div class="command-item">
-            <code>/configurar_servidor</code>
-            <p>Me adicione em um servidor vazio, diga o tema e eu monto tudo pra você: nome do servidor, cargos e canais.</p>
-          </div>
-    
-          <div class="command-item">
-            <code>/reverter_servidor</code>
-            <p>Não gostou do resultado? Tudo bem! Posso voltar o servidor exatamente como estava antes.</p>
-          </div>
-    
-          <div class="command-item">
-            <code>/codificar</code>
-            <p>Transformo seu texto em Base64 rapidinho.</p>
-          </div>
-    
-          <div class="command-item">
-            <code>/decodificar</code>
-            <p>Converto Base64 de volta para texto normal.</p>
-          </div>
-    
-          <div class="command-item">
-            <code>/criar_onboarding</code>
-            <p>Prepara onboarding automático para novos membros (funcionalidade em evolução).</p>
-          </div>
+            <!-- Geral -->
+            <div class="cmd-panel active" id="tab-geral">
+                <div class="command-list">
+                    <div class="command-item reveal"><div class="cmd-icon">❓</div><div class="cmd-body"><code>/help</code><p>Painel interativo com todas as categorias de comandos.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">📡</div><div class="cmd-body"><code>/ping</code><p>Latência WebSocket, tempo online e versão da ARIA com atualização automática em tempo real.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🏠</div><div class="cmd-body"><code>/serverinfo</code><p>Informações completas do servidor: membros, canais, dono e data de criação.</p></div></div>
+                </div>
+            </div>
 
-          <div class="command-item">
-            <code>/relembrar</code>
-            <p>Mostra o seu histórico de conversas comigo.</p>
-          </div>
+            <!-- Tópico Privado -->
+            <div class="cmd-panel" id="tab-topico">
+                <div class="command-list">
+                    <div class="command-item reveal"><div class="cmd-icon">🔐</div><div class="cmd-body"><code>/topico_privado</code><p>Abre um tópico privado só seu para conversar comigo sem precisar me mencionar, respeitando o modo foco do servidor.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🚪</div><div class="cmd-body"><code>/fechar_topico_privado</code><p>Encerra seu tópico privado com segurança — apaga ou arquiva/bloqueia conforme as permissões do servidor.</p></div></div>
+                </div>
+            </div>
 
-          <div class="command-item">
-            <code>/esquecer</code>
-            <p>Apaga um intervalo específico do seu histórico.</p>
-          </div>
+            <!-- Histórico -->
+            <div class="cmd-panel" id="tab-historico">
+                <div class="command-list">
+                    <div class="command-item reveal"><div class="cmd-icon">📖</div><div class="cmd-body"><code>/relembrar</code><p>Lista seu histórico de mensagens comigo neste servidor, com filtro opcional por data e exportação em .txt.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🗑️</div><div class="cmd-body"><code>/esquecer</code><p>Apaga um intervalo específico do histórico (início e fim) ou tudo de uma vez, com confirmação antes de deletar.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">⚙️</div><div class="cmd-body"><code>/historico_tamanho</code><p>Define quantas mensagens do seu histórico entram no meu contexto — o mesmo limite vale para contexto de canal público.</p></div></div>
+                </div>
+            </div>
 
-          <div class="command-item">
-            <code>/topico_privado</code>
-            <p>Cria seu tópico privado para conversar sem precisar me mencionar.</p>
-          </div>
+            <!-- Utilidades -->
+            <div class="cmd-panel" id="tab-utilidades">
+                <div class="command-list">
+                    <div class="command-item reveal"><div class="cmd-icon">🔒</div><div class="cmd-body"><code>/codificar</code><p>Codifica qualquer texto em Base64 rapidinho.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🔓</div><div class="cmd-body"><code>/decodificar</code><p>Converte Base64 de volta para texto normal (UTF-8).</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">✉️</div><div class="cmd-body"><code>/embed</code><p>Monta e envia uma embed personalizada: título, descrição, cor, imagens e rodapé — tudo do seu jeito.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">⏰</div><div class="cmd-body"><code>/lembrete</code><p>Cria um lembrete com texto e tempo (ex.: 10m, 2h). Envio via DM ou canal de fallback configurado.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🌍</div><div class="cmd-body"><code>/traduzir</code><p>Traduz qualquer texto para o idioma que você pedir, via IA.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">📝</div><div class="cmd-body"><code>/resumir</code><p>Resume um texto longo de forma clara e objetiva, via IA.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">📊</div><div class="cmd-body"><code>/enquete</code><p>Cria uma enquete com botões interativos (até 5 opções).</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">📜</div><div class="cmd-body"><code>/resumir_canal</code><p>Resume as últimas N mensagens do canal (texto de usuários), via IA.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🔍</div><div class="cmd-body"><code>/analisar_codigo</code><p>Faz code review de trechos de código ou arquivos de texto via IA.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">✏️</div><div class="cmd-body"><code>/revisar_texto</code><p>Revisa gramática e estilo de qualquer texto, via IA.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🎭</div><div class="cmd-body"><code>/personalidade</code><p>Ajusta como eu falo com você aqui: <em>padrão</em>, <em>formal</em>, <em>casual</em> ou <em>técnica</em>.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🎫</div><div class="cmd-body"><code>/ticket</code><p>Abre um ticket de suporte. Categoria, cargo e canal de logs configuráveis por premium.</p></div></div>
+                </div>
+            </div>
 
-          <div class="command-item">
-            <code>/fechar_topico_privado</code>
-            <p>Encerra o seu tópico privado ativo com segurança.</p>
-          </div>
+            <!-- Diversão -->
+            <div class="cmd-panel" id="tab-diversao">
+                <div class="command-list">
+                    <div class="command-item reveal"><div class="cmd-icon">🌟</div><div class="cmd-body"><code>/fato</code><p>Um fato curioso e aleatório do dia.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">😄</div><div class="cmd-body"><code>/piada</code><p>Uma piada leve pra animar o servidor.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">💘</div><div class="cmd-body"><code>/ship</code><p>"Compatibilidade" divertida entre dois membros do servidor.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">✊</div><div class="cmd-body"><code>/rps</code><p>Pedra, papel ou tesoura comigo! 🪨📄✂️</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">📚</div><div class="cmd-body"><code>/palavra_do_dia</code><p>Uma palavra incomum com definição completa pra enriquecer seu vocabulário.</p></div></div>
+                </div>
+            </div>
 
-          <div class="command-item">
-            <code>/conectar_voz</code>
-            <p>Conecta a <strong>ARIA</strong> no seu canal de voz para conversa por áudio (uso interno com token).</p>
-          </div>
+            <!-- Moderação -->
+            <div class="cmd-panel" id="tab-moderacao">
+                <div class="command-list">
+                    <div class="command-item reveal"><div class="cmd-icon">⚠️</div><div class="cmd-body"><code>/warn</code> <span class="cmd-badge badge-mod">Mod</span><p>Registra um aviso formal em um membro com motivo.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">📋</div><div class="cmd-body"><code>/warnings</code> <span class="cmd-badge badge-mod">Mod</span><p>Lista todos os avisos de um membro.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🧹</div><div class="cmd-body"><code>/clearwarns</code> <span class="cmd-badge badge-mod">Mod</span><p>Remove todos os avisos de um membro.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">👟</div><div class="cmd-body"><code>/kick</code> <span class="cmd-badge badge-mod">Mod</span><p>Expulsa um membro do servidor.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🔨</div><div class="cmd-body"><code>/ban</code> <span class="cmd-badge badge-mod">Mod</span><p>Bane um membro do servidor.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">✅</div><div class="cmd-body"><code>/unban</code> <span class="cmd-badge badge-mod">Mod</span><p>Desbane um usuário pelo ID.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🔇</div><div class="cmd-body"><code>/mute</code> <span class="cmd-badge badge-mod">Mod</span><p>Aplica timeout (silêncio temporário) em um membro.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🔊</div><div class="cmd-body"><code>/unmute</code> <span class="cmd-badge badge-mod">Mod</span><p>Remove o timeout de um membro.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🗑️</div><div class="cmd-body"><code>/purge</code> <span class="cmd-badge badge-mod">Mod</span><p>Apaga N mensagens recentes do canal.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🐢</div><div class="cmd-body"><code>/slowmode</code> <span class="cmd-badge badge-mod">Mod</span><p>Define o slowmode do canal em segundos.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🔒</div><div class="cmd-body"><code>/lock</code> <span class="cmd-badge badge-mod">Mod</span><p>Bloqueia o canal para @everyone enviar mensagens.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🔓</div><div class="cmd-body"><code>/unlock</code> <span class="cmd-badge badge-mod">Mod</span><p>Desbloqueia o canal para todos enviarem mensagens.</p></div></div>
+                </div>
+            </div>
 
-          <div class="command-item">
-            <code>/desconectar_voz</code>
-            <p>Desconecta a <strong>ARIA</strong> do canal de voz atual.</p>
-          </div>
-    
+            <!-- Voz -->
+            <div class="cmd-panel" id="tab-voz">
+                <div class="command-list">
+                    <div class="command-item reveal"><div class="cmd-icon">🎙️</div><div class="cmd-body"><code>/conectar_voz</code><p>Entro no seu canal de voz para ouvir e responder por áudio. Use a wake word <strong>"Aria"</strong> para ativar (disponível também para quem não iniciou a chamada).</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🔌</div><div class="cmd-body"><code>/desconectar_voz</code><p>Saio do canal de voz e limpo todas as gravações locais com segurança.</p></div></div>
+                </div>
+            </div>
+
+            <!-- Economia -->
+            <div class="cmd-panel" id="tab-economia">
+                <div class="command-list">
+                    <div class="command-item reveal"><div class="cmd-icon">🏅</div><div class="cmd-body"><code>/nivel</code><p>Mostra seu nível e XP acumulado (ou de outro membro do servidor).</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🏆</div><div class="cmd-body"><code>/ranking</code><p>Exibe o Top 10 de XP do servidor.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🔄</div><div class="cmd-body"><code>/resetar_xp</code> <span class="cmd-badge badge-mod">Admin</span><p>Zera o XP de um membro específico.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🎁</div><div class="cmd-body"><code>/dar_xp</code> <span class="cmd-badge badge-mod">Admin</span><p>Define o total de XP de um membro manualmente.</p></div></div>
+                </div>
+            </div>
+
+            <!-- Premium -->
+            <div class="cmd-panel" id="tab-premium">
+                <div class="command-list">
+                    <div class="command-item reveal"><div class="cmd-icon">🌐</div><div class="cmd-body"><code>/configurar_servidor</code> <span class="cmd-badge badge-premium">Premium</span><p>Gera e aplica layout de canais, categorias e cargos conforme o tema escolhido — com backup automático antes de qualquer mudança.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">↩️</div><div class="cmd-body"><code>/reverter_servidor</code> <span class="cmd-badge badge-premium">Premium</span><p>Reverte o servidor usando o último backup salvo no banco.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">💾</div><div class="cmd-body"><code>/backup_servidor</code> <span class="cmd-badge badge-premium">Premium</span><p>Exporta um JSON completo do estado atual: categorias, canais e cargos.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">📂</div><div class="cmd-body"><code>/restaurar_backup</code> <span class="cmd-badge badge-premium">Premium</span><p>Aplica um arquivo JSON de backup gerado pela ARIA.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">👋</div><div class="cmd-body"><code>/criar_onboarding</code> <span class="cmd-badge badge-premium">Premium</span><p>Onboarding automático para novos membros (funcionalidade em evolução).</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🎫</div><div class="cmd-body"><code>/configurar_tickets</code> <span class="cmd-badge badge-premium">Premium</span><p>Define categoria, cargo de suporte e canal de logs dos tickets.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🏷️</div><div class="cmd-body"><code>/auto_cargo</code> <span class="cmd-badge badge-premium">Premium</span><p>Cargo automático por gatilho: <em>member_join</em>, <em>member_boost</em> ou <em>ticket_open</em>.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">📋</div><div class="cmd-body"><code>/log_canal</code> <span class="cmd-badge badge-premium">Premium</span><p>Atalho para definir o canal de logs de moderação.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">⚙️</div><div class="cmd-body"><code>/config</code> <span class="cmd-badge badge-premium">Premium</span><p>Painel interativo completo: boas-vindas, despedida, logs, cargo automático, prefixo de menção, eventos e modo foco.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🎯</div><div class="cmd-body"><code>/modo_foco</code> <span class="cmd-badge badge-premium">Premium</span><p>Liga ou desliga o modo foco — quando ativo, só respondo com menção ou prefixo.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🚫</div><div class="cmd-body"><code>/blacklist_aria</code> <span class="cmd-badge badge-owner">Dono</span><p>Adicionar, remover ou listar usuários com bloqueio global de uso da ARIA.</p></div></div>
+                </div>
+            </div>
         </div>
-      </div>
     </section>
 
+    <!-- LEGAL -->
     <section class="legal" id="legal">
         <div class="container">
             <h2 class="section-title">Termos & Privacidade</h2>
-            
             <div class="legal-content">
                 <h3>📋 Política de Privacidade</h3>
                 <p><em>Versão: 27/02/2026</em></p>
-                
                 <h4>Escopo</h4>
-                <p>Esta política descreve como a <span class="aria-name-styled" style="font-size: 1.1rem;"> ARIA</span> trata dados quando você usa comandos, menciona o bot ou conversa em canais autorizados no Discord.</p>
-
+                <p>Esta política descreve como a <span class="aria-name-styled" style="font-size:1.1rem;">ARIA</span> trata dados quando você usa comandos, menciona o bot ou conversa em canais autorizados no Discord.</p>
                 <h4>Dados Coletados</h4>
                 <ul>
-                    <li><strong>Mensagens e contexto:</strong> Conteúdo enviado para interação com a <span class="aria-name-styled" style="font-size: 1.1rem;">ARIA</span>, inclusive trechos de código e arquivos de texto compatíveis.</li>
+                    <li><strong>Mensagens e contexto:</strong> Conteúdo enviado para interação com a <span class="aria-name-styled" style="font-size:1.1rem;">ARIA</span>, inclusive trechos de código e arquivos de texto compatíveis.</li>
                     <li><strong>Metadados técnicos:</strong> IDs do Discord, horário de interação, servidor/canal e comandos executados.</li>
                     <li><strong>Dados de voz:</strong> Áudio processado durante sessões de voz para transcrição e resposta. O processamento é operacional e não tem finalidade comercial.</li>
                     <li><strong>Não coletamos intencionalmente:</strong> Senhas, dados bancários, localização física precisa ou dados fora do ecossistema Discord.</li>
                 </ul>
-
                 <h4>Uso dos Dados</h4>
                 <ul>
                     <li><strong>Execução dos recursos:</strong> Responder perguntas, rodar comandos e manter continuidade de contexto.</li>
                     <li><strong>Segurança e integridade:</strong> Prevenir abuso, spam e uso malicioso dos serviços.</li>
                     <li><strong>Melhoria técnica:</strong> Ajustar desempenho e qualidade de resposta, com minimização de dados quando possível.</li>
                 </ul>
-
                 <h4>Compartilhamento e Base Legal</h4>
-                <p>A <span class="aria-name-styled" style="font-size: 1.1rem;">ARIA</span> não vende dados pessoais. O tratamento ocorre para execução do serviço e legítimo interesse técnico-operacional.</p>
+                <p>A <span class="aria-name-styled" style="font-size:1.1rem;">ARIA</span> não vende dados pessoais. O tratamento ocorre para execução do serviço e legítimo interesse técnico-operacional.</p>
                 <ul>
                     <li>Cumprimento de obrigação legal, regulatória ou ordem judicial.</li>
                     <li>Proteção de direitos e prevenção de fraude/abuso.</li>
                 </ul>
-
                 <h4>Retenção e Exclusão</h4>
                 <ul>
                     <li><strong>/relembrar</strong> permite visualizar histórico disponível vinculado ao seu usuário.</li>
                     <li><strong>/esquecer</strong> remove intervalos do histórico conforme solicitado.</li>
                     <li>Registros técnicos podem ser mantidos por tempo limitado para diagnóstico e segurança.</li>
                 </ul>
-
                 <h4>Segurança</h4>
                 <ul>
                     <li>Transmissão por canais protegidos do Discord.</li>
                     <li>Acesso administrativo restrito para manutenção e suporte.</li>
                     <li>Boas práticas de minimização e proteção de dados no ambiente do bot.</li>
                 </ul>
-
                 <h4>Seus Direitos</h4>
-                <p>Você pode solicitar acesso, correção e exclusão de dados aplicáveis pelos comandos disponíveis ou contato direto com o desenvolvedor.</p>
-
+                <p>Você pode solicitar acesso, correção e exclusão de dados pelos comandos disponíveis ou contato direto com o desenvolvedor.</p>
                 <h4>Contato</h4>
                 <p>Dúvidas? Fale com o desenvolvedor: <strong>@46_6f_78</strong> (Ettore)</p>
-                
-                <p style="margin-top: 2rem;"><em>Última atualização: 27/02/2026</em></p>
+                <p style="margin-top:2rem;"><em>Última atualização: 27/02/2026</em></p>
             </div>
 
             <div class="legal-content">
                 <h3>📜 Termos de Serviço</h3>
                 <p><em>Versão: 27/02/2026</em></p>
-                
                 <h4>Aceitação dos Termos</h4>
-                <p>Ao usar a <span class="aria-name-styled" style="font-size: 1.1rem;">ARIA</span>, você concorda com estes Termos e com a Política de Privacidade. Se não concordar, interrompa o uso.</p>
-
+                <p>Ao usar a <span class="aria-name-styled" style="font-size:1.1rem;">ARIA</span>, você concorda com estes Termos e com a Política de Privacidade. Se não concordar, interrompa o uso.</p>
                 <h4>Uso Permitido</h4>
                 <p><strong>Finalidade:</strong> assistência técnica, automação de servidor, histórico contextual e comandos oficiais do bot.</p>
                 <p><strong>Proibido:</strong></p>
@@ -754,78 +897,181 @@
                     <li>Compartilhar dados sensíveis de terceiros sem autorização.</li>
                     <li>Tentar quebrar, sobrecarregar ou contornar limites técnicos e de segurança.</li>
                 </ul>
-
                 <h4>Comandos e Permissões</h4>
                 <ul>
                     <li>Alguns comandos exigem permissões específicas no Discord (ex.: administração de servidor).</li>
                     <li>Recursos de voz e automação podem ter requisitos adicionais e limitações operacionais.</li>
                     <li>Comandos experimentais podem mudar, ser pausados ou removidos sem aviso prévio.</li>
                 </ul>
-
                 <h4>Disponibilidade e Precisão</h4>
-                <p>A <span class="aria-name-styled" style="font-size: 1.1rem;">ARIA</span> pode ficar offline por manutenção, falhas de terceiros ou atualizações. Respostas podem conter imprecisões e devem ser revisadas antes de decisões importantes.</p>
-
+                <p>A <span class="aria-name-styled" style="font-size:1.1rem;">ARIA</span> pode ficar offline por manutenção, falhas de terceiros ou atualizações. Respostas podem conter imprecisões e devem ser revisadas antes de decisões importantes.</p>
                 <h4>Conteúdo do Usuário</h4>
                 <p>Você mantém seus direitos sobre o conteúdo enviado. Ao interagir, concede autorização para processamento técnico desse conteúdo para execução do serviço.</p>
-
                 <h4>Limitação de Responsabilidade</h4>
-                <p>A <span class="aria-name-styled" style="font-size: 1.1rem;">ARIA</span> é fornecida no estado em que se encontra. O uso de códigos, sugestões e respostas é de responsabilidade do usuário.</p>
-
+                <p>A <span class="aria-name-styled" style="font-size:1.1rem;">ARIA</span> é fornecida no estado em que se encontra. O uso de códigos, sugestões e respostas é de responsabilidade do usuário.</p>
                 <h4>Suspensão e Encerramento</h4>
                 <p>Uso abusivo pode resultar em restrição ou bloqueio de acesso ao bot. Você pode interromper o uso a qualquer momento.</p>
-
                 <h4>Alterações</h4>
                 <p>Estes termos podem ser atualizados periodicamente. A continuação do uso após a publicação representa concordância com a versão vigente.</p>
-
                 <h4>Legislação Aplicável</h4>
                 <p>Estes Termos são regidos pela legislação brasileira aplicável.</p>
-
-                <p style="margin-top: 2rem;"><em>Última atualização: 27/02/2026</em></p>
+                <p style="margin-top:2rem;"><em>Última atualização: 27/02/2026</em></p>
             </div>
         </div>
     </section>
 
     <footer>
         <div class="container">
-            <p>&copy; 2026 <span class="aria-name-styled" style="font-size: 1rem;">ARIA</span> Discord Bot. Desenvolvida por <a href="#">Ettore Bruno (@46_6f_78)</a></p>
+            <p>&copy; 2026 <span class="aria-name-styled" style="font-size:1rem;">ARIA</span> Discord Bot. Desenvolvida por <a href="#">Ettore Bruno (@46_6f_78)</a></p>
             <p>Todos os direitos reservados. | <a href="#legal">Política de Privacidade</a> | <a href="#legal">Termos de Serviço</a></p>
         </div>
     </footer>
 
     <script>
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
+    /* ══════════════════════════════════════
+       CURSOR PERSONALIZADO
+    ══════════════════════════════════════ */
+    const cursor = document.getElementById('cursor');
+    const ring   = document.getElementById('cursorRing');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+    function animCursor() {
+        cursor.style.left = mx + 'px';
+        cursor.style.top  = my + 'px';
+        rx += (mx - rx) * 0.14;
+        ry += (my - ry) * 0.14;
+        ring.style.left = rx + 'px';
+        ring.style.top  = ry + 'px';
+        requestAnimationFrame(animCursor);
+    }
+    animCursor();
+    const pawEllipses = document.querySelectorAll('#pawSvg ellipse');
+    document.querySelectorAll('a, button, .feature-card, .command-item, .cmd-tab').forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            cursor.classList.add('hover');
+            pawEllipses.forEach(e => e.setAttribute('fill', '#FFB347'));
+            ring.style.width = '60px'; ring.style.height = '60px';
+            ring.style.borderColor = 'rgba(255,179,71,0.6)';
+        });
+        el.addEventListener('mouseleave', () => {
+            cursor.classList.remove('hover');
+            pawEllipses.forEach(e => e.setAttribute('fill', '#FF6B35'));
+            ring.style.width = '52px'; ring.style.height = '52px';
+            ring.style.borderColor = 'rgba(255,107,53,0.35)';
+        });
+    });
+
+    /* ══════════════════════════════════════
+       PARALLAX NA IMAGEM
+    ══════════════════════════════════════ */
+    const ariaImg = document.getElementById('ariaImg');
+    document.addEventListener('mousemove', e => {
+        const cx = window.innerWidth / 2;
+        const cy = window.innerHeight / 2;
+        const dx = (e.clientX - cx) / cx;
+        const dy = (e.clientY - cy) / cy;
+        ariaImg.style.transform = `translate(${dx * 12}px, ${dy * 8}px) rotateY(${dx * 4}deg) rotateX(${-dy * 4}deg)`;
+    });
+
+    /* ══════════════════════════════════════
+       PARTÍCULAS
+    ══════════════════════════════════════ */
+    const canvas = document.getElementById('particles-canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
+
+    const COLORS = ['rgba(255,107,53,0.6)', 'rgba(155,89,182,0.5)', 'rgba(255,179,71,0.55)', 'rgba(199,125,255,0.5)'];
+    const particles = Array.from({length: 60}, () => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 2 + 0.5,
+        dx: (Math.random() - 0.5) * 0.35,
+        dy: (Math.random() - 0.5) * 0.35,
+        c: COLORS[Math.floor(Math.random() * COLORS.length)]
+    }));
+
+    function drawParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx.fillStyle = p.c;
+            ctx.fill();
+            p.x += p.dx; p.y += p.dy;
+            if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
+            if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+        });
+        // linhas entre partículas próximas
+        for (let i = 0; i < particles.length; i++) {
+            for (let j = i+1; j < particles.length; j++) {
+                const dist = Math.hypot(particles[i].x - particles[j].x, particles[i].y - particles[j].y);
+                if (dist < 120) {
+                    ctx.beginPath();
+                    ctx.strokeStyle = `rgba(255,107,53,${0.06 * (1 - dist/120)})`;
+                    ctx.lineWidth = 0.5;
+                    ctx.moveTo(particles[i].x, particles[i].y);
+                    ctx.lineTo(particles[j].x, particles[j].y);
+                    ctx.stroke();
                 }
+            }
+        }
+        requestAnimationFrame(drawParticles);
+    }
+    drawParticles();
+
+    /* ══════════════════════════════════════
+       NAVBAR SCROLL
+    ══════════════════════════════════════ */
+    window.addEventListener('scroll', () => {
+        document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    /* ══════════════════════════════════════
+       SMOOTH SCROLL
+    ══════════════════════════════════════ */
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', e => {
+            e.preventDefault();
+            const t = document.querySelector(a.getAttribute('href'));
+            if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+    });
+
+    /* ══════════════════════════════════════
+       SCROLL REVEAL
+    ══════════════════════════════════════ */
+    const revealObserver = new IntersectionObserver(entries => {
+        entries.forEach((entry, i) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => entry.target.classList.add('visible'), i * 60);
+                revealObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    /* ══════════════════════════════════════
+       TABS DE COMANDOS
+    ══════════════════════════════════════ */
+    document.querySelectorAll('.cmd-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            document.querySelectorAll('.cmd-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.cmd-panel').forEach(p => p.classList.remove('active'));
+            tab.classList.add('active');
+            const panel = document.getElementById(tab.dataset.target);
+            panel.classList.add('active');
+            // Reveal items da nova aba
+            panel.querySelectorAll('.reveal:not(.visible)').forEach((el, i) => {
+                setTimeout(() => el.classList.add('visible'), i * 60);
             });
         });
-
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.feature-card, .command-item').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(el);
-        });
+    });
+    // Ativa reveals do painel inicial
+    document.querySelectorAll('#tab-geral .reveal').forEach((el, i) => {
+        setTimeout(() => el.classList.add('visible'), 300 + i * 80);
+    });
     </script>
 </body>
 </html>
