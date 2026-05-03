@@ -634,12 +634,17 @@
 
     <!-- Cursor -->
     <div class="cursor" id="cursor">
-        <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" id="pawSvg">
-            <ellipse cx="10" cy="7"  rx="4"   ry="3"   fill="#FF6B35"/>
-            <ellipse cx="22" cy="7"  rx="4"   ry="3"   fill="#FF6B35"/>
-            <ellipse cx="5"  cy="15" rx="3"   ry="4"   fill="#FF6B35"/>
-            <ellipse cx="27" cy="15" rx="3"   ry="4"   fill="#FF6B35"/>
-            <ellipse cx="16" cy="22" rx="9.5" ry="8.5" fill="#FF6B35"/>
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" id="pawSvg">
+            <!-- dedo esquerdo externo -->
+            <ellipse cx="20" cy="32" rx="9" ry="13" fill="#FF6B35" transform="rotate(-28 20 32)"/>
+            <!-- dedo esquerdo interno -->
+            <ellipse cx="37" cy="21" rx="9" ry="13" fill="#FF6B35" transform="rotate(-10 37 21)"/>
+            <!-- dedo direito interno -->
+            <ellipse cx="55" cy="21" rx="9" ry="13" fill="#FF6B35" transform="rotate(10 55 21)"/>
+            <!-- dedo direito externo -->
+            <ellipse cx="72" cy="32" rx="9" ry="13" fill="#FF6B35" transform="rotate(28 72 32)"/>
+            <!-- almofada principal -->
+            <path d="M50 89 C28 86 14 68 18 50 C22 35 36 30 50 40 C64 30 78 35 82 50 C86 68 72 86 50 89Z" fill="#FF6B35"/>
         </svg>
     </div>
     <div class="cursor-ring" id="cursorRing"></div>
