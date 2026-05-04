@@ -60,32 +60,47 @@
 
         /* ── CURSOR PATINHA ── */
         * { cursor: none !important; }
+        
         .cursor {
             position: fixed;
-            width: 32px;
-            height: 32px;
+            width: 48px; /* Aumentado de 32px para 48px */
+            height: 48px; 
             pointer-events: none;
             z-index: 99999;
             transform: translate(-50%, -50%);
-            transition: width 0.18s ease, height 0.18s ease, filter 0.18s ease;
-            filter: drop-shadow(0 0 6px rgba(255,107,53,0.8));
+            /* Transição elástica e fluida para o movimento e tamanho */
+            transition: width 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                        height 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                        filter 0.3s ease, transform 0.2s ease;
+            /* Glow duplo para um efeito mais mágico */
+            filter: drop-shadow(0 4px 8px rgba(255,107,53,0.5)) drop-shadow(0 0 15px rgba(255,107,53,0.3));
         }
+        
         .cursor svg { width: 100%; height: 100%; }
+        
         .cursor.hover {
-            width: 42px;
-            height: 42px;
-            filter: drop-shadow(0 0 12px rgba(255,179,71,1));
+            width: 64px; /* Aumentado de 42px para 64px */
+            height: 64px; 
+            /* Leve rotação de 10 graus ao focar em um botão para dar "vida" à patinha */
+            transform: translate(-50%, -50%) rotate(-10deg);
+            filter: drop-shadow(0 6px 12px rgba(255,179,71,0.7)) drop-shadow(0 0 25px rgba(255,179,71,0.5));
         }
+        
         .cursor-ring {
             position: fixed;
-            width: 52px;
-            height: 52px;
-            border: 2px solid rgba(255,107,53,0.35);
+            width: 76px; /* Aumentado de 52px para acompanhar a patinha maior */
+            height: 76px; 
+            border: 2px solid rgba(255,107,53,0.5);
             border-radius: 50%;
             pointer-events: none;
             z-index: 99997;
             transform: translate(-50%, -50%);
-            transition: width 0.22s ease, height 0.22s ease, border-color 0.22s ease;
+            /* Adiciona um glow suave também no anel exterior */
+            box-shadow: 0 0 15px rgba(255,107,53,0.2), inset 0 0 10px rgba(255,107,53,0.1);
+            /* Transição elástica no anel */
+            transition: width 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                        height 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                        border-color 0.3s ease, background-color 0.3s ease;
         }
 
         /* ── NOME ARIA ── */
@@ -955,14 +970,25 @@
         el.addEventListener('mouseenter', () => {
             cursor.classList.add('hover');
             pawEllipses.forEach(e => e.setAttribute('fill', '#FFB347'));
-            ring.style.width = '60px'; ring.style.height = '60px';
-            ring.style.borderColor = 'rgba(255,179,71,0.6)';
+            
+            // Aumentado o tamanho do anel expandido
+            ring.style.width = '94px'; 
+            ring.style.height = '94px';
+            ring.style.borderColor = 'rgba(255,179,71,0.8)';
+            
+            // Adiciona um leve preenchimento de cor dentro do anel no hover
+            ring.style.backgroundColor = 'rgba(255,179,71,0.08)'; 
         });
+        
         el.addEventListener('mouseleave', () => {
             cursor.classList.remove('hover');
             pawEllipses.forEach(e => e.setAttribute('fill', '#FF6B35'));
-            ring.style.width = '52px'; ring.style.height = '52px';
-            ring.style.borderColor = 'rgba(255,107,53,0.35)';
+            
+            // Retorna ao novo tamanho base do CSS
+            ring.style.width = '76px'; 
+            ring.style.height = '76px';
+            ring.style.borderColor = 'rgba(255,107,53,0.5)';
+            ring.style.backgroundColor = 'transparent';
         });
     });
 
