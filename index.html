@@ -85,23 +85,6 @@
             transform: translate(-50%, -50%) rotate(-10deg);
             filter: drop-shadow(0 6px 12px rgba(255,179,71,0.7)) drop-shadow(0 0 25px rgba(255,179,71,0.5));
         }
-        
-        .cursor-ring {
-            position: fixed;
-            width: 76px; /* Aumentado de 52px para acompanhar a patinha maior */
-            height: 76px; 
-            border: 2px solid rgba(255,107,53,0.5);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 99997;
-            transform: translate(-50%, -50%);
-            /* Adiciona um glow suave também no anel exterior */
-            box-shadow: 0 0 15px rgba(255,107,53,0.2), inset 0 0 10px rgba(255,107,53,0.1);
-            /* Transição elástica no anel */
-            transition: width 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
-                        height 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
-                        border-color 0.3s ease, background-color 0.3s ease;
-        }
 
         /* ── NOME ARIA ── */
         .aria-name-styled {
@@ -662,7 +645,6 @@
           <ellipse cx="128" cy="106" rx="8"  ry="10"   fill="#FF9A6C" opacity="0.45" transform="rotate(22 126 104)"/>
         </svg>
     </div>
-    <div class="cursor-ring" id="cursorRing"></div>
 
     <!-- Canvas partículas -->
     <canvas id="particles-canvas"></canvas>
@@ -949,46 +931,33 @@
 
     <script>
     /* ══════════════════════════════════════
-       CURSOR PERSONALIZADO
+       CURSOR PERSONALIZADO (SOMENTE A PATINHA)
     ══════════════════════════════════════ */
     const cursor = document.getElementById('cursor');
-    const ring   = document.getElementById('cursorRing');
-    let mx = 0, my = 0, rx = 0, ry = 0;
-    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+    let mx = 0, my = 0;
+    
+    document.addEventListener('mousemove', e => { 
+        mx = e.clientX; 
+        my = e.clientY; 
+    });
+    
     function animCursor() {
         cursor.style.left = mx + 'px';
         cursor.style.top  = my + 'px';
-        rx += (mx - rx) * 0.14;
-        ry += (my - ry) * 0.14;
-        ring.style.left = rx + 'px';
-        ring.style.top  = ry + 'px';
         requestAnimationFrame(animCursor);
     }
     animCursor();
+    
     const pawEllipses = document.querySelectorAll('#pawSvg ellipse');
     document.querySelectorAll('a, button, .feature-card, .command-item, .cmd-tab').forEach(el => {
         el.addEventListener('mouseenter', () => {
             cursor.classList.add('hover');
             pawEllipses.forEach(e => e.setAttribute('fill', '#FFB347'));
-            
-            // Aumentado o tamanho do anel expandido
-            ring.style.width = '94px'; 
-            ring.style.height = '94px';
-            ring.style.borderColor = 'rgba(255,179,71,0.8)';
-            
-            // Adiciona um leve preenchimento de cor dentro do anel no hover
-            ring.style.backgroundColor = 'rgba(255,179,71,0.08)'; 
         });
         
         el.addEventListener('mouseleave', () => {
             cursor.classList.remove('hover');
             pawEllipses.forEach(e => e.setAttribute('fill', '#FF6B35'));
-            
-            // Retorna ao novo tamanho base do CSS
-            ring.style.width = '76px'; 
-            ring.style.height = '76px';
-            ring.style.borderColor = 'rgba(255,107,53,0.5)';
-            ring.style.backgroundColor = 'transparent';
         });
     });
 
