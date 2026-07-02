@@ -35,8 +35,10 @@
         :root {
             --primary: #F2752A; /* Laranja da pelagem */
             --primary-light: #FF9A6C; 
+            --gold: #FFC857; /* Dourado quente para destacar os botões */
             --secondary: #6B345D; /* Roxo escuro da camisola */
-            --accent: #B052D1; /* Magenta dos olhos */
+            --accent: #5865F2; /* Blurple, a cor tema do Discord */
+            --accent-light: #8C99FF; /* Variante clara do blurple para texto/detalhes */
             
             --bg-deep: #0D0612; /* Fundo principal super escuro e levemente roxo */
             --bg-surface: #1B1023; /* Fundo de cartões */
@@ -49,6 +51,7 @@
             --border-accent: rgba(242, 117, 42, 0.2);
             
             --gradient-1: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            --gradient-btn: linear-gradient(135deg, var(--primary) 0%, var(--gold) 100%);
             --gradient-glass: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
         }
 
@@ -854,7 +857,7 @@
             <div class="hero-image-wrapper">
                 <div class="hero-image-bg"></div>
                 <div class="hero-image" id="heroImage">
-                    <img src="https://cdn.jsdelivr.net/gh/EttoreMatos/ARIA_webpage@main/aria_fullbody.webp" alt="ARIA, raposa antropomórfica de camisola roxa" id="ariaImg">
+                    <img src="https://cdn.jsdelivr.net/gh/EttoreMatos/ARIA_webpage@main/aria_fullbody.webp" alt="ARIA image" id="ariaImg">
                 </div>
             </div>
         </div>
