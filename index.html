@@ -1191,7 +1191,9 @@
     <section class="pricing" id="pricing">
         <div class="container">
             <h2 class="section-title">Planos de Assinatura</h2>
-            <p class="section-subtitle">Escolhe o nível de acesso que faz sentido para ti ou para o teu servidor.</p>
+            <comment-tag id="1"><p class="section-subtitle">Escolhe o nível de acesso que faz sentido para ti ou para o teu servidor.</p></comment-tag id="1" text="<p class="section-subtitle">Escolha o nível de acesso que faz sentido para você ou para o seu servidor.</p>
+
+O texto original usava a conjugação informal com 'tu'. A sugestão ajusta o pronome e o verbo para 'você', garantindo um tom mais amigável, padrão e direto para o público brasileiro (como solicitado)." type="suggestion">
 
             <div class="pricing-grid">
                 <!-- ARIA FREE -->
@@ -1200,12 +1202,19 @@
                     <div class="plan-name">Aria Free</div>
                     <p class="plan-tagline">Para testar a <span class="aria-name-styled" style="font-size: 1.1em;">ARIA</span> e para comunidades pequenas.</p>
                     <div class="plan-price">R$ 0</div>
-                    <ul class="plan-features">
+<comment-tag id="2">                    <ul class="plan-features">
                         <li><strong>12</strong> mensagens de IA por usuário, por dia</li>
                         <li>Contexto de até <strong>20</strong> mensagens</li>
                         <li>Histórico limitado a <strong>20</strong> mensagens</li>
                         <li>Comandos gerais, tópicos, voz, XP e moderação</li>
+                    </ul></comment-tag id="2" text="                    <ul class="plan-features">
+                        <li><span><strong>12</strong> mensagens de IA por usuário, por dia</span></li>
+                        <li><span>Contexto de até <strong>20</strong> mensagens</span></li>
+                        <li><span>Histórico limitado a <strong>20</strong> mensagens</span></li>
+                        <li><span>Comandos gerais, tópicos, voz, XP e moderação</span></li>
                     </ul>
+
+O problema visual com os textos 'esmagados' e com espaços estranhos ocorre porque o CSS `display: flex;` aplicado às `<li>` tenta alinhar os itens flexíveis separadamente (como a tag `<strong>` e o texto solto). Envolver o conteúdo do `<li>` em uma tag `<span>` resolve esse problema de layout instantaneamente, mantendo o ícone de '✓' e o texto lado a lado." type="suggestion">
                     <a href="https://discord.com/oauth2/authorize?client_id=1439670009147293906&permissions=5419235387371120&integration_type=0&scope=bot" target="_blank" class="btn btn-primary plan-cta">Adicionar ao Discord</a>
                 </div>
 
@@ -1213,7 +1222,7 @@
                 <div class="plan-card featured reveal">
                     <span class="plan-status soon">Em breve</span>
                     <div class="plan-name">Aria Premium</div>
-                    <p class="plan-tagline">Mais IA para ti, em qualquer servidor onde eu estiver.</p>
+<comment-tag id="3">                    <p class="plan-tagline">Mais IA para ti, em qualquer servidor onde eu estiver.</p>
                     <div class="plan-price">R$ 9,90<span class="period">/mês por usuário</span></div>
                     <ul class="plan-features">
                         <li>Mensagens de IA <strong>ilimitadas</strong></li>
@@ -1221,7 +1230,17 @@
                         <li>Lembretes, traduções, resumos, embeds e tickets</li>
                         <li><code>/revisar</code> textos e <code>/diversao</code> com <strong>minijogos</strong></li>
                         <li><code>/personalizar</code> o meu estilo de fala</li>
+                    </ul></comment-tag id="3" text="                    <p class="plan-tagline">Mais IA para você, em qualquer servidor onde eu estiver.</p>
+                    <div class="plan-price">R$ 9,90<span class="period">/mês por&nbsp;usuário</span></div>
+                    <ul class="plan-features">
+                        <li><span>Mensagens de IA <strong>ilimitadas</strong></span></li>
+                        <li><span>Contexto de até <strong>100</strong> mensagens, sem limite de retenção</span></li>
+                        <li><span>Lembretes, traduções, resumos, embeds e tickets</span></li>
+                        <li><span><code>/revisar</code> textos e <code>/diversao</code> com <strong>minijogos</strong></span></li>
+                        <li><span><code>/personalizar</code> o meu estilo de fala</span></li>
                     </ul>
+
+Ajustada a frase de tagline de 'ti' para 'você'. Foi adicionado um `&nbsp;` (non-breaking space) entre 'por' e 'usuário' na formatação do preço para evitar a quebra estranha de linha vista na imagem. O uso de `<span>` em toda a estrutura do `<li>` corrige o bug do flexbox para que as sentenças não quebrem ou fiquem com espaçamento bizarro." type="suggestion">
                     <a href="https://discord.gg/E99uQdfCvB" target="_blank" class="btn btn-secondary plan-cta">Falar no Discord</a>
                 </div>
 
@@ -1230,20 +1249,30 @@
                     <span class="plan-status soon">Em breve</span>
                     <div class="plan-name">Aria Server</div>
                     <p class="plan-tagline">Para comunidades que querem liberar meus recursos para todos os membros.</p>
-                    <div class="plan-price">R$ 24,90<span class="period">/mês por servidor</span></div>
+<comment-tag id="4">                    <div class="plan-price">R$ 24,90<span class="period">/mês por servidor</span></div>
                     <ul class="plan-features">
                         <li>Benefícios <strong>Premium</strong> para todos os membros do servidor</li>
                         <li>Mensagens de IA <strong>ilimitadas</strong> para o servidor inteiro</li>
                         <li>Todos os comandos administrativos Premium para admins</li>
                         <li>Backup, restauração e reversão de <strong>configurações</strong></li>
+                    </ul></comment-tag id="4" text="                    <div class="plan-price">R$ 24,90<span class="period">/mês por&nbsp;servidor</span></div>
+                    <ul class="plan-features">
+                        <li><span>Benefícios <strong>Premium</strong> para todos os membros do servidor</span></li>
+                        <li><span>Mensagens de IA <strong>ilimitadas</strong> para o servidor inteiro</span></li>
+                        <li><span>Todos os comandos administrativos Premium para admins</span></li>
+                        <li><span>Backup, restauração e reversão de <strong>configurações</strong></span></li>
                     </ul>
+
+Adicionado o envoltório `<span>` em todos os itens de lista para corrigir o mesmo problema de espaçamento visual da imagem. Incluí também o `&nbsp;` em 'por servidor' no subtítulo do preço para padronização e prevenir quebra indesejada." type="suggestion">
                     <a href="https://discord.gg/E99uQdfCvB" target="_blank" class="btn btn-secondary plan-cta">Falar no Discord</a>
                 </div>
             </div>
 
             <div class="tip-banner pricing-note reveal">
                 <span class="icon">👑</span>
-                <p><strong>Precisas de mais?</strong> Para comunidades grandes ou redes de servidores, o plano <strong>Aria Server Plus</strong> e propostas personalizadas estão em preparação. Fala connosco no servidor oficial.</p>
+<comment-tag id="5">                <p><strong>Precisas de mais?</strong> Para comunidades grandes ou redes de servidores, o plano <strong>Aria Server Plus</strong> e propostas personalizadas estão em preparação. Fala connosco no servidor oficial.</p></comment-tag id="5" text="                <p><strong>Precisa de mais?</strong> Para comunidades grandes ou redes de servidores, o plano <strong>Aria Server Plus</strong> e propostas personalizadas estão em preparação. Fale conosco no servidor oficial.</p>
+
+O pronome foi novamente adaptado ('Precisas' para 'Precisa', 'Fala' para 'Fale'), ajustando também 'connosco' (grafia geralmente associada ao PT-PT) para 'conosco' (padrão no Brasil)." type="suggestion">
             </div>
 
             <p class="pricing-fineprint">Assinatura mensal com renovação automática. Ao cancelar, o acesso continua até ao fim do período já pago, e o servidor volta ao plano Free sem apagar histórico ou configurações.</p>
@@ -1643,4 +1672,3 @@
 
     </script>
 </body>
-</html>
