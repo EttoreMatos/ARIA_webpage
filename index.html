@@ -17,14 +17,14 @@
     <meta property="og:description" content="Converse com a ARIA: uma assistente de Discord segura e presente, com memória contextual e respostas confiáveis.">
     <meta property="og:url" content="https://ariawebpage.onrender.com/">
     <meta property="og:site_name" content="ARIA Bot">
-    <meta property="og:image" content="https://cdn.jsdelivr.net/gh/EttoreMatos/ARIA_webpage@main/AriaFace.png">
+    <meta property="og:image" content="https://cdn.jsdelivr.net/gh/EttoreMatos/ARIA_webpage@main/perfil2.png">
     <meta property="og:image:width" content="1024">
     <meta property="og:image:height" content="1024">
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="ARIA - Assistente de IA para Discord">
     <meta name="twitter:description" content="Converse com ARIA: uma assistente de Discord segura e presente, com memória contextual e respostas confiáveis.">
-    <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/EttoreMatos/ARIA_webpage@main/AriaFace.png">
+    <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/EttoreMatos/ARIA_webpage@main/perfil2.png">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -687,18 +687,19 @@
             position: relative;
             z-index: 1;
         }
-        .pricing .container { max-width: 1180px; margin: 0 auto; }
+        .pricing .container { max-width: 1100px; margin: 0 auto; }
+
         .pricing-grid {
             display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 1.35rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
             align-items: stretch;
         }
         .plan-card {
             background: var(--bg-glass);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            padding: 2.1rem 1.55rem;
+            padding: 2.5rem 2.2rem;
             border-radius: 24px;
             border: 1px solid var(--border-glass);
             transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
@@ -706,7 +707,6 @@
             flex-direction: column;
             position: relative;
             overflow: hidden;
-            min-width: 0;
         }
         .plan-card:hover {
             transform: translateY(-8px);
@@ -719,11 +719,10 @@
         }
         .plan-status {
             position: absolute;
-            top: 1.25rem;
-            right: 1.25rem;
+            top: 1.4rem; right: 1.4rem;
             font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.68rem;
-            padding: 0.25rem 0.65rem;
+            font-size: 0.7rem;
+            padding: 0.25rem 0.7rem;
             border-radius: 100px;
             font-weight: 600;
         }
@@ -734,88 +733,77 @@
             font-size: 2.1rem;
             font-weight: 700;
             color: var(--text-main);
-            margin-bottom: 0.5rem;
-            padding-right: 4.5rem;
+            margin-bottom: 0.3rem;
         }
         .plan-tagline {
-            font-size: 0.84rem;
+            font-size: 0.85rem;
             color: var(--text-muted);
-            margin-bottom: 1.35rem;
-            min-height: 3.2em;
-            overflow-wrap: anywhere;
-            line-height: 1.6;
+            margin-bottom: 1.6rem;
+            min-height: 2.6em;
         }
         .plan-price {
             font-family: 'Sora', sans-serif;
             font-weight: 700;
-            font-size: 2.2rem;
+            font-size: 2.4rem;
             background: var(--gradient-1);
             -webkit-background-clip: text;
-            background-clip: text;
             -webkit-text-fill-color: transparent;
-            display: block;
-            line-height: 1.15;
+            display: inline-block;
+            line-height: 1;
         }
         .plan-price .period {
             font-family: 'Sora', sans-serif;
             font-weight: 400;
-            font-size: 0.72rem;
+            font-size: 0.85rem;
             color: var(--text-muted);
             -webkit-text-fill-color: var(--text-muted);
-            white-space: nowrap;
-            font-weight: 400;
-            margin-left: 0.2rem;
+            margin-left: 0.3rem;
         }
         .plan-features {
             list-style: none;
-            margin: 1.65rem 0 2rem;
-            padding: 0;
+            margin: 1.8rem 0 2rem;
             flex: 1;
         }
         .plan-features li {
-            font-size: 0.80rem;
+            font-size: 0.88rem;
             color: var(--text-muted);
-            padding: 0.48rem 0 0.48rem 1.25rem;
-            position: relative;
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.6rem;
             line-height: 1.5;
-            overflow-wrap: anywhere;
-            word-break: normal;
         }
         .plan-features li::before {
             content: '✓';
             color: var(--primary-light);
             font-weight: 700;
-            position: absolute;
-            left: 0;
-            top: 0.48rem;
-            width: 0.85rem;
-        }
-        .plan-features strong {
-            color: var(--text-main);
-            font-weight: 700;
+            flex-shrink: 0;
         }
         .plan-features code {
             font-family: 'IBM Plex Mono', monospace;
             color: var(--primary-light);
-            font-size: 0.78rem;
+            font-size: 0.82rem;
             background: rgba(242, 117, 42, 0.1);
             padding: 0.1rem 0.4rem;
             border-radius: 4px;
-            white-space: nowrap;
         }
-        .plan-cta { margin-top: auto; width: 100%; text-align: center; }
-        .pricing-note { margin: 3rem auto 0; max-width: 760px; }
+        .plan-cta {
+            margin-top: auto;
+            width: 100%;
+            text-align: center;
+        }
+        .pricing-note {
+            margin: 3rem auto 0;
+            max-width: 720px;
+        }
         .pricing-fineprint {
             text-align: center;
             color: var(--text-muted);
             font-size: 0.82rem;
-            line-height: 1.65;
-            margin: 2rem auto 0;
-            max-width: 760px;
-        }
-        @media (max-width: 900px) {
-            .pricing-grid { grid-template-columns: 1fr; max-width: 560px; margin: 0 auto; }
-            .plan-card { padding: 2.25rem 2rem; }
+            margin-top: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         /* ── LEGAL (TERMOS E PRIVACIDADE) ── */
@@ -986,7 +974,7 @@
                 <div class="tagline">✦ Assistente Inteligente</div>
                 <h1>Conheça a <span class="aria-name-styled">ARIA</span></h1>
                 <p class="subtitle">Sou a ARIA &#40;<strong>Automated Response &amp; Interaction Assistant</strong>&#41;, uma Bot com Inteligência Artificial desenvolvida para ser a melhor companhia para o teu servidor.</p>
-                <p class="subtitle" style="font-size: 0.95rem; opacity: 0.8;">Tento ser esperta, mas às vezes troco as patinhas! Se eu disser algo estranho, dê uma olhada nos fatos, tá bom? 🦊💜</p>
+                <p class="subtitle" style="font-size: 0.95rem; opacity: 0.8;">Tento ser esperta, mas às vezes troco as patinhas! Se eu disser algo estranho, dá uma nos fatos, tá bom? 🦊💜</p>
                 <div class="cta-buttons">
                     <a href="https://discord.com/oauth2/authorize?client_id=1439670009147293906&permissions=5419235387371120&integration_type=0&scope=bot" target="_blank" class="btn btn-primary">Adicionar ao Discord</a>
                     <a href="https://discord.gg/E99uQdfCvB" target="_blank" class="btn btn-secondary">Servidor Oficial</a>
@@ -995,7 +983,7 @@
             <div class="hero-image-wrapper">
                 <div class="hero-image-bg"></div>
                 <div class="hero-image" id="heroImage">
-                    <img src="https://cdn.jsdelivr.net/gh/EttoreMatos/ARIA_webpage@main/aria_fullbody.webp" alt="ARIA image" id="ariaImg">
+                    <img src="https://cdn.jsdelivr.net/gh/EttoreMatos/ARIA_webpage@main/fullbody4.png" alt="ARIA image" id="ariaImg">
                 </div>
             </div>
         </div>
@@ -1005,7 +993,7 @@
     <div class="tip-banner-wrapper">
         <div class="tip-banner">
             <span class="icon">💡</span>
-            <p><strong>Dica Rápida:</strong> Para ver os meus comandos diretamente no Discord, digita <strong>"/"</strong> no chat e clica na minha foto.</p>
+            <p><strong>Dica Rápida:</strong> Para veres os meus comandos diretamente no Discord, digita <strong>"/"</strong> no chat e clica na minha foto.</p>
         </div>
     </div>
 
@@ -1033,13 +1021,13 @@
     <section class="features" id="features">
         <div class="container">
             <h2 class="section-title">O que eu sei fazer</h2>
-            <p class="section-subtitle">Estou aqui para deixar o seu servidor mais animado, organizado e inteligente! ✨</p>
+            <p class="section-subtitle">Estou aqui para deixar o teu servidor mais animado, organizado e inteligente! ✨</p>
             
             <div class="features-grid">
                 <div class="feature-card reveal">
                     <div class="feature-icon">💬</div>
                     <h3>Conversas Inteligentes</h3>
-                    <p>Converso contigo de forma natural e lembro-me do que já falamos. Assim, cada conversa fica mais especial e contextual.</p>
+                    <p>Converso contigo de forma natural e lembro-me do que já falámos. Assim, cada conversa fica mais especial e contextual.</p>
                 </div>
                 <div class="feature-card reveal">
                     <div class="feature-icon">💻</div>
@@ -1054,12 +1042,12 @@
                 <div class="feature-card reveal">
                     <div class="feature-icon">🔒</div>
                     <h3>Privacidade Garantida</h3>
-                    <p>Os seus dados ficam seguros comigo. Não partilho nada com terceiros e sigo as melhores práticas de segurança.</p>
+                    <p>Os teus dados ficam seguros comigo. Não partilho nada com terceiros e sigo as melhores práticas de segurança.</p>
                 </div>
                 <div class="feature-card reveal">
                     <div class="feature-icon">🧠</div>
                     <h3>Memória Contextual</h3>
-                    <p>Lembro-me das suas preferências e do histórico da conversa para te responder cada vez melhor e de forma personalizada.</p>
+                    <p>Lembro-me das tuas preferências e do histórico da conversa para te responder cada vez melhor e de forma personalizada.</p>
                 </div>
                 <div class="feature-card reveal">
                     <div class="feature-icon">⚡</div>
@@ -1194,7 +1182,7 @@
             <!-- MENSAGEM NENHUM RESULTADO -->
             <div id="no-results" style="display: none; text-align: center; color: var(--text-muted); padding: 3rem 0;">
                 <div style="font-size: 3.5rem; margin-bottom: 1rem; opacity: 0.8;">🦊</div>
-                <p>Oops, não encontrei nenhum comando com esse termo!</p>
+                <p>Ups, não encontrei nenhum comando com esse termo!</p>
             </div>
         </div>
     </section>
@@ -1203,54 +1191,62 @@
     <section class="pricing" id="pricing">
         <div class="container">
             <h2 class="section-title">Planos de Assinatura</h2>
-            <p class="section-subtitle">Escolha o plano ideal para você ou para o seu servidor.</p>
+            <p class="section-subtitle">Escolhe o nível de acesso que faz sentido para ti ou para o teu servidor.</p>
+
             <div class="pricing-grid">
+                <!-- ARIA FREE -->
                 <div class="plan-card reveal">
                     <span class="plan-status live">Disponível agora</span>
-                    <div class="plan-name">ARIA Free</div>
-                    <p class="plan-tagline">Para conhecer a ARIA e aproveitar os recursos essenciais gratuitamente.</p>
+                    <div class="plan-name">Aria Free</div>
+                    <p class="plan-tagline">Para testar a <span class="aria-name-styled" style="font-size: 1.1em;">ARIA</span> e para comunidades pequenas.</p>
                     <div class="plan-price">R$ 0</div>
                     <ul class="plan-features">
                         <li><strong>12</strong> mensagens de IA por usuário, por dia</li>
                         <li>Contexto de até <strong>20</strong> mensagens</li>
-                        <li>Histórico de até <strong>20</strong> mensagens</li>
+                        <li>Histórico limitado a <strong>20</strong> mensagens</li>
                         <li>Comandos gerais, tópicos, voz, XP e moderação</li>
                     </ul>
                     <a href="https://discord.com/oauth2/authorize?client_id=1439670009147293906&permissions=5419235387371120&integration_type=0&scope=bot" target="_blank" class="btn btn-primary plan-cta">Adicionar ao Discord</a>
                 </div>
+
+                <!-- ARIA PREMIUM -->
                 <div class="plan-card featured reveal">
                     <span class="plan-status soon">Em breve</span>
-                    <div class="plan-name">ARIA Premium</div>
-                    <p class="plan-tagline">Mais recursos de IA para você, em qualquer servidor onde a ARIA estiver.</p>
-                    <div class="plan-price">R$ 9,90 <span class="period">/mês por usuário</span></div>
+                    <div class="plan-name">Aria Premium</div>
+                    <p class="plan-tagline">Mais IA para ti, em qualquer servidor onde eu estiver.</p>
+                    <div class="plan-price">R$ 9,90<span class="period">/mês por usuário</span></div>
                     <ul class="plan-features">
                         <li>Mensagens de IA <strong>ilimitadas</strong></li>
                         <li>Contexto de até <strong>100</strong> mensagens, sem limite de retenção</li>
                         <li>Lembretes, traduções, resumos, embeds e tickets</li>
                         <li><code>/revisar</code> textos e <code>/diversao</code> com <strong>minijogos</strong></li>
-                        <li><code>/personalizar</code> para definir o seu estilo de fala</li>
+                        <li><code>/personalizar</code> o meu estilo de fala</li>
                     </ul>
                     <a href="https://discord.gg/E99uQdfCvB" target="_blank" class="btn btn-secondary plan-cta">Falar no Discord</a>
                 </div>
+
+                <!-- ARIA SERVER -->
                 <div class="plan-card reveal">
                     <span class="plan-status soon">Em breve</span>
-                    <div class="plan-name">ARIA Server</div>
-                    <p class="plan-tagline">Para comunidades que querem oferecer os recursos Premium a todos os membros.</p>
-                    <div class="plan-price">R$ 24,90 <span class="period">/mês por servidor</span></div>
+                    <div class="plan-name">Aria Server</div>
+                    <p class="plan-tagline">Para comunidades que querem liberar meus recursos para todos os membros.</p>
+                    <div class="plan-price">R$ 24,90<span class="period">/mês por servidor</span></div>
                     <ul class="plan-features">
                         <li>Benefícios <strong>Premium</strong> para todos os membros do servidor</li>
-                        <li>Mensagens de IA <strong>ilimitadas</strong> para todo o servidor</li>
-                        <li>Todos os comandos administrativos Premium para administradores</li>
+                        <li>Mensagens de IA <strong>ilimitadas</strong> para o servidor inteiro</li>
+                        <li>Todos os comandos administrativos Premium para admins</li>
                         <li>Backup, restauração e reversão de <strong>configurações</strong></li>
                     </ul>
                     <a href="https://discord.gg/E99uQdfCvB" target="_blank" class="btn btn-secondary plan-cta">Falar no Discord</a>
                 </div>
             </div>
+
             <div class="tip-banner pricing-note reveal">
                 <span class="icon">👑</span>
-                <p><strong>Precisa de mais?</strong> Para comunidades grandes ou redes de servidores, o plano <strong>ARIA Server Plus</strong> e propostas personalizadas estão em preparação. Fale conosco no servidor oficial.</p>
+                <p><strong>Precisas de mais?</strong> Para comunidades grandes ou redes de servidores, o plano <strong>Aria Server Plus</strong> e propostas personalizadas estão em preparação. Fala connosco no servidor oficial.</p>
             </div>
-            <p class="pricing-fineprint">Assinatura mensal com renovação automática. Ao cancelar, o acesso continua até o fim do período já pago. Depois disso, o servidor retorna ao plano Free, sem apagar o histórico ou as configurações.</p>
+
+            <p class="pricing-fineprint">Assinatura mensal com renovação automática. Ao cancelar, o acesso continua até ao fim do período já pago, e o servidor volta ao plano Free sem apagar histórico ou configurações.</p>
         </div>
     </section>
 
@@ -1647,3 +1643,4 @@
 
     </script>
 </body>
+</html>
