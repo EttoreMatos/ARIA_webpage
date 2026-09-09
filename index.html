@@ -681,6 +681,131 @@
         .badge-mod { background: rgba(242, 117, 42, 0.15); color: var(--primary-light); border: 1px solid rgba(242, 117, 42, 0.3); }
         .badge-admin { background: rgba(244, 67, 54, 0.15); color: #FF7B72; border: 1px solid rgba(244, 67, 54, 0.3); }
 
+        /* ── PLANOS DE ASSINATURA ── */
+        .pricing {
+            padding: 6rem 2rem 8rem;
+            position: relative;
+            z-index: 1;
+        }
+        .pricing .container { max-width: 1100px; margin: 0 auto; }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            align-items: stretch;
+        }
+        .plan-card {
+            background: var(--bg-glass);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 2.5rem 2.2rem;
+            border-radius: 24px;
+            border: 1px solid var(--border-glass);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+        .plan-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--border-accent);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3), 0 0 20px rgba(242, 117, 42, 0.1);
+        }
+        .plan-card.featured {
+            border-color: rgba(242, 117, 42, 0.4);
+            box-shadow: 0 0 0 1px rgba(242, 117, 42, 0.15), 0 15px 35px rgba(0,0,0,0.3);
+        }
+        .plan-status {
+            position: absolute;
+            top: 1.4rem; right: 1.4rem;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.7rem;
+            padding: 0.25rem 0.7rem;
+            border-radius: 100px;
+            font-weight: 600;
+        }
+        .plan-status.live { background: rgba(76, 217, 123, 0.15); color: #6EE7A5; border: 1px solid rgba(76, 217, 123, 0.3); }
+        .plan-status.soon { background: rgba(176, 82, 209, 0.15); color: #D68CF0; border: 1px solid rgba(176, 82, 209, 0.3); }
+        .plan-name {
+            font-family: 'Caveat', cursive;
+            font-size: 2.1rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 0.3rem;
+        }
+        .plan-tagline {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 1.6rem;
+            min-height: 2.6em;
+        }
+        .plan-price {
+            font-family: 'Sora', sans-serif;
+            font-weight: 700;
+            font-size: 2.4rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+            line-height: 1;
+        }
+        .plan-price .period {
+            font-family: 'Sora', sans-serif;
+            font-weight: 400;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            -webkit-text-fill-color: var(--text-muted);
+            margin-left: 0.3rem;
+        }
+        .plan-features {
+            list-style: none;
+            margin: 1.8rem 0 2rem;
+            flex: 1;
+        }
+        .plan-features li {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.6rem;
+            line-height: 1.5;
+        }
+        .plan-features li::before {
+            content: '✓';
+            color: var(--primary-light);
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .plan-features code {
+            font-family: 'IBM Plex Mono', monospace;
+            color: var(--primary-light);
+            font-size: 0.82rem;
+            background: rgba(242, 117, 42, 0.1);
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+        }
+        .plan-cta {
+            margin-top: auto;
+            width: 100%;
+            text-align: center;
+        }
+        .pricing-note {
+            margin: 3rem auto 0;
+            max-width: 720px;
+        }
+        .pricing-fineprint {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.82rem;
+            margin-top: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
         /* ── LEGAL (TERMOS E PRIVACIDADE) ── */
         .legal {
             padding: 6rem 2rem;
@@ -836,6 +961,7 @@
                 <li><a href="#home">Início</a></li>
                 <li><a href="#features">Recursos</a></li>
                 <li><a href="#commands">Comandos</a></li>
+                <li><a href="#pricing">Planos</a></li>
                 <li><a href="#legal">Legal</a></li>
             </ul>
         </div>
@@ -876,11 +1002,11 @@
         <div class="container">
             <div class="stats-grid">
                 <div class="stat-card reveal">
-                    <div class="stat-number" data-target="10">0</div>
+                    <div class="stat-number" data-target="9">0</div>
                     <div class="stat-label">Servidores Ativos</div>
                 </div>
                 <div class="stat-card reveal">
-                    <div class="stat-number" data-target="32">0</div>
+                    <div class="stat-number" data-target="42">0</div>
                     <div class="stat-label">Comandos Úteis</div>
                 </div>
                 <div class="stat-card reveal">
@@ -936,12 +1062,12 @@
     <section class="commands" id="commands">
         <div class="container">
             <h2 class="section-title">Os Meus Comandos</h2>
-            <p class="section-subtitle">Tudo o que posso fazer por ti, organizado por categoria. (Atualizado em 03/05/2026)</p>
+            <p class="section-subtitle">Tudo o que posso fazer por ti, organizado por categoria. (Atualizado em 09/09/2026)</p>
 
             <!-- Pesquisa de Comandos -->
             <div class="cmd-search-wrapper reveal">
                 <span class="search-icon">🔍</span>
-                <input type="text" id="cmdSearch" class="cmd-search" placeholder="Pesquisar comandos (ex: ping, ticket, ban)...">
+                <input type="text" id="cmdSearch" class="cmd-search" placeholder="Pesquisar comandos (ex: latencia, ticket, aviso)...">
             </div>
 
             <!-- Abas (Tabs) -->
@@ -960,86 +1086,96 @@
             <!-- GERAL -->
             <div class="cmd-panel active" id="tab-geral">
                 <div class="command-list">
-                    <div class="command-item reveal"><div class="cmd-icon">❓</div><div class="cmd-body"><code>/help</code><p>Abre um painel interativo super elegante com todas as categorias de comandos e dicas.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">📡</div><div class="cmd-body"><code>/ping</code><p>Mostra a minha latência, tempo online e versão, atualizando em tempo real.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🏠</div><div class="cmd-body"><code>/serverinfo</code><p>Exibe informações completas do servidor atual: membros, canais, proprietário e data de criação.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">📡</div><div class="cmd-body"><code>/latencia</code><p>Mostra a minha latência, tempo online e versão, atualizando em tempo real.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">❓</div><div class="cmd-body"><code>/ajuda</code><p>Abre o meu painel de ajuda com todas as categorias de comandos e mostra o teu plano atual.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🏠</div><div class="cmd-body"><code>/info_servidor</code><p>Mostra informações básicas do servidor atual.</p></div></div>
                 </div>
             </div>
 
             <!-- TÓPICO -->
             <div class="cmd-panel" id="tab-topico">
                 <div class="command-list">
-                    <div class="command-item reveal"><div class="cmd-icon">🔐</div><div class="cmd-body"><code>/topico_privado</code><p>Abre um tópico exclusivo para conversarmos sem precisares de me mencionar a todo o momento.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🚪</div><div class="cmd-body"><code>/fechar_topico_privado</code><p>Encerra o nosso tópico privado com segurança (arquiva ou apaga, dependendo do servidor).</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🔐</div><div class="cmd-body"><code>/criar_topico</code><p>Cria um tópico privado para conversarmos sem precisares de me mencionar a todo o momento.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🚪</div><div class="cmd-body"><code>/fechar_topico</code><p>Fecha, remove ou arquiva o teu tópico privado com segurança.</p></div></div>
                 </div>
             </div>
 
             <!-- HISTÓRICO -->
             <div class="cmd-panel" id="tab-historico">
                 <div class="command-list">
-                    <div class="command-item reveal"><div class="cmd-icon">📖</div><div class="cmd-body"><code>/relembrar</code><p>Lista o histórico das nossas conversas, com filtro por data e exportação em .txt.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🗑️</div><div class="cmd-body"><code>/esquecer</code><p>Apaga trechos específicos ou todo o teu histórico comigo no servidor atual.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">⚙️</div><div class="cmd-body"><code>/historico_tamanho</code><p>Ajusta quantas mensagens guardo na memória de curto prazo para manter o contexto.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">📖</div><div class="cmd-body"><code>/relembrar</code><p>Consulta o histórico das nossas conversas, com filtro por data e exportação em .txt (pede o teu PIN do histórico).</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🗑️</div><div class="cmd-body"><code>/esquecer</code><p>Apaga parte ou todo o teu histórico comigo.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🧹</div><div class="cmd-body"><code>/limpar_dm</code><p>Apaga as minhas mensagens na DM atual, depois de confirmares.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🔑</div><div class="cmd-body"><code>/editar_pin</code><p>Altera o PIN usado para proteger o teu histórico.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">⚙️</div><div class="cmd-body"><code>/limite_hist</code><p>Consulta ou ajusta quantas mensagens guardo na memória de curto prazo (até 20 no Grátis, até 100 no Premium).</p></div></div>
                 </div>
             </div>
 
             <!-- UTILIDADES -->
             <div class="cmd-panel" id="tab-utilidades">
                 <div class="command-list">
-                    <div class="command-item reveal"><div class="cmd-icon">✉️</div><div class="cmd-body"><code>/embed</code><p>Gera e envia uma mensagem rica (embed) com título, cor, imagens e rodapé personalizados.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">⏰</div><div class="cmd-body"><code>/lembrete</code><p>Cria um lembrete (ex: 10m, 2h). Eu aviso-te por DM ou no canal configurado.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🌍</div><div class="cmd-body"><code>/traduzir</code><p>Traduz qualquer texto para o idioma desejado usando a minha IA.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">📝</div><div class="cmd-body"><code>/resumir</code><p>Lê um texto longo e cria um resumo claro e objetivo para ti.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">📊</div><div class="cmd-body"><code>/enquete</code><p>Gera uma votação com botões interativos (suporta até 5 opções).</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🔍</div><div class="cmd-body"><code>/analisar_codigo</code><p>Faz code review de trechos ou arquivos, apontando melhorias e erros (com IA).</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🎭</div><div class="cmd-body"><code>/personalidade</code><p>Muda a minha forma de falar: <em>padrão</em>, <em>formal</em>, <em>casual</em> ou <em>técnica</em>.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🎫</div><div class="cmd-body"><code>/ticket</code><p>Abre um ticket de suporte organizado no servidor.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">⏰</div><div class="cmd-body"><code>/lembrete</code> <span class="cmd-badge badge-premium">Premium</span><p>Agenda um lembrete de até 30 dias. Eu aviso-te por DM ou no canal configurado.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🌍</div><div class="cmd-body"><code>/traduzir</code> <span class="cmd-badge badge-premium">Premium</span><p>Traduz qualquer texto para o idioma que escolheres.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">📝</div><div class="cmd-body"><code>/resumir</code> <span class="cmd-badge badge-premium">Premium</span><p>Lê um texto que me enviares e cria um resumo claro e objetivo.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">✉️</div><div class="cmd-body"><code>/cartao</code> <span class="cmd-badge badge-premium">Premium</span><p>Cria e publica uma embed personalizada, com opção de enviar para outro canal.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🎫</div><div class="cmd-body"><code>/ticket</code> <span class="cmd-badge badge-premium">Premium</span><p>Abre um ticket de suporte privado e organizado no servidor.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">📚</div><div class="cmd-body"><code>/resumir_canal</code> <span class="cmd-badge badge-premium">Premium</span><p>Resume as últimas 5 a 50 mensagens do canal para te pores a par rapidamente.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">✍️</div><div class="cmd-body"><code>/revisar</code> <span class="cmd-badge badge-premium">Premium</span><p>Revê a gramática, a clareza e o estilo de um texto que me enviares.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🎭</div><div class="cmd-body"><code>/personalizar</code> <span class="cmd-badge badge-premium">Premium</span><p>Escolhe o meu estilo de fala pessoal. Administradores também podem ajustar o tom geral do servidor.</p></div></div>
                 </div>
             </div>
 
             <!-- DIVERSÃO -->
             <div class="cmd-panel" id="tab-diversao">
                 <div class="command-list">
-                    <div class="command-item reveal"><div class="cmd-icon">🎲</div><div class="cmd-body"><code>/diversao</code><p>Abre um menu com vários mini-jogos e comandos interativos para passar o tempo.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🎲</div><div class="cmd-body"><code>/diversao</code> <span class="cmd-badge badge-premium">Premium</span><p>Abre um menu com vários mini-jogos interativos para passar o tempo.</p></div></div>
                 </div>
             </div>
 
             <!-- MODERAÇÃO -->
             <div class="cmd-panel" id="tab-moderacao">
                 <div class="command-list">
-                    <div class="command-item reveal"><div class="cmd-icon">⚠️</div><div class="cmd-body"><code>/warn</code> <span class="cmd-badge badge-mod">Mod</span><p>Regista um aviso formal num membro.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">👟</div><div class="cmd-body"><code>/kick</code> <span class="cmd-badge badge-mod">Mod</span><p>Expulsa um membro problemático do servidor.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🔨</div><div class="cmd-body"><code>/ban</code> <span class="cmd-badge badge-mod">Mod</span><p>Bane um membro do servidor permanentemente.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🔇</div><div class="cmd-body"><code>/mute</code> <span class="cmd-badge badge-mod">Mod</span><p>Aplica timeout (silêncio temporário) a alguém.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🗑️</div><div class="cmd-body"><code>/purge</code> <span class="cmd-badge badge-mod">Mod</span><p>Limpa rapidamente N mensagens recentes do canal atual.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🔒</div><div class="cmd-body"><code>/lock</code> <span class="cmd-badge badge-mod">Mod</span><p>Bloqueia o canal, impedindo o @everyone de enviar mensagens.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">⚠️</div><div class="cmd-body"><code>/aviso</code> <span class="cmd-badge badge-mod">Mod</span><p>Regista um aviso para um membro.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">📋</div><div class="cmd-body"><code>/avisos</code> <span class="cmd-badge badge-mod">Mod</span><p>Lista os avisos de um membro.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">♻️</div><div class="cmd-body"><code>/limpar_avisos</code> <span class="cmd-badge badge-mod">Mod</span><p>Remove os avisos de um membro.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🗑️</div><div class="cmd-body"><code>/limpar</code> <span class="cmd-badge badge-mod">Mod</span><p>Apaga mensagens recentes do canal atual.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🐢</div><div class="cmd-body"><code>/modo_lento</code> <span class="cmd-badge badge-mod">Mod</span><p>Configura o slowmode do canal.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🔒</div><div class="cmd-body"><code>/trancar</code> <span class="cmd-badge badge-mod">Mod</span><p>Bloqueia mensagens de membros no canal.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🔓</div><div class="cmd-body"><code>/destrancar</code> <span class="cmd-badge badge-mod">Mod</span><p>Desbloqueia mensagens de membros no canal.</p></div></div>
                 </div>
             </div>
 
             <!-- VOZ -->
             <div class="cmd-panel" id="tab-voz">
                 <div class="command-list">
-                    <div class="command-item reveal"><div class="cmd-icon">🎙️</div><div class="cmd-body"><code>/conectar_voz</code><p>Entro no canal de voz para conversar contigo. Basta usares a palavra-chave <strong>"Aria"</strong>.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🔌</div><div class="cmd-body"><code>/desconectar_voz</code><p>Saio do canal de voz e elimino com segurança qualquer gravação temporária.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🎙️</div><div class="cmd-body"><code>/entrar_voice</code><p>Entro no teu canal de voz e inicio escuta, transcrição e resposta por voz quando disponível.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🔌</div><div class="cmd-body"><code>/sair_voice</code><p>Saio do canal de voz e limpo com segurança qualquer gravação temporária.</p></div></div>
                 </div>
             </div>
 
             <!-- ECONOMIA -->
             <div class="cmd-panel" id="tab-economia">
                 <div class="command-list">
-                    <div class="command-item reveal"><div class="cmd-icon">🏅</div><div class="cmd-body"><code>/nivel</code><p>Mostra o teu cartão de XP e nível atual no servidor.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🏆</div><div class="cmd-body"><code>/ranking</code><p>Mostra o Top 10 de membros mais ativos do servidor.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🔄</div><div class="cmd-body"><code>/resetar_xp</code> <span class="cmd-badge badge-admin">Admin</span><p>Repõe a pontuação de XP de um membro específico.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🏅</div><div class="cmd-body"><code>/nivel</code><p>Mostra o nível e o XP de um membro.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🏆</div><div class="cmd-body"><code>/placar</code><p>Mostra o ranking de XP do servidor.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">✏️</div><div class="cmd-body"><code>/definir_xp</code> <span class="cmd-badge badge-admin">Admin</span><p>Define o XP de um membro específico.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🔄</div><div class="cmd-body"><code>/resetar_xp</code> <span class="cmd-badge badge-admin">Admin</span><p>Zera o XP de um membro, depois de confirmares.</p></div></div>
                 </div>
             </div>
 
             <!-- PREMIUM -->
             <div class="cmd-panel" id="tab-premium">
                 <div class="command-list">
-                    <div class="command-item reveal"><div class="cmd-icon">🌐</div><div class="cmd-body"><code>/configurar_servidor</code> <span class="cmd-badge badge-premium">Premium</span><p>Cria uma estrutura de canais, categorias e cargos baseada no tema que escolheres (faz cópia de segurança antes).</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">💾</div><div class="cmd-body"><code>/backup_servidor</code> <span class="cmd-badge badge-premium">Premium</span><p>Exporta um JSON com a estrutura completa do teu servidor para segurança.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">👋</div><div class="cmd-body"><code>/criar_onboarding</code> <span class="cmd-badge badge-premium">Premium</span><p>Gera um sistema de boas-vindas interativo para novos membros.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">⚙️</div><div class="cmd-body"><code>/config</code> <span class="cmd-badge badge-premium">Premium</span><p>Painel principal: ajusta registos, cargos automáticos, prefixo de menção e modo foco.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🌐</div><div class="cmd-body"><code>/config_servidor</code> <span class="cmd-badge badge-premium">Premium</span><span class="cmd-badge badge-admin">Admin</span><p>Gera uma configuração de canais, categorias e cargos com base num tema à tua escolha.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">↩️</div><div class="cmd-body"><code>/reverter_servidor</code> <span class="cmd-badge badge-premium">Premium</span><span class="cmd-badge badge-admin">Admin</span><p>Reverte a última configuração de servidor que eu salvei.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">💾</div><div class="cmd-body"><code>/backup_servidor</code> <span class="cmd-badge badge-premium">Premium</span><span class="cmd-badge badge-admin">Admin</span><p>Salva um backup em JSON da configuração completa do teu servidor.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">📥</div><div class="cmd-body"><code>/restaurar_servidor</code> <span class="cmd-badge badge-premium">Premium</span><span class="cmd-badge badge-admin">Admin</span><p>Restaura um backup que me enviares.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">👋</div><div class="cmd-body"><code>/onboarding</code> <span class="cmd-badge badge-premium">Premium</span><span class="cmd-badge badge-admin">Admin</span><p>Configura o onboarding e as boas-vindas para novos membros.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🧾</div><div class="cmd-body"><code>/configurar_logs</code> <span class="cmd-badge badge-premium">Premium</span><span class="cmd-badge badge-admin">Admin</span><p>Define o canal onde envio os logs de moderação.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🗂️</div><div class="cmd-body"><code>/configurar_tickets</code> <span class="cmd-badge badge-premium">Premium</span><span class="cmd-badge badge-admin">Admin</span><p>Define categoria, cargo de suporte e canal de logs para os tickets.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🏷️</div><div class="cmd-body"><code>/cargo_automatico</code> <span class="cmd-badge badge-premium">Premium</span><span class="cmd-badge badge-admin">Admin</span><p>Configura cargos automáticos por entrada, boost ou ticket.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🎯</div><div class="cmd-body"><code>/modo_foco</code> <span class="cmd-badge badge-premium">Premium</span><span class="cmd-badge badge-admin">Admin</span><p>Faz-me responder apenas quando mencionada ou chamada pelo prefixo.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">⚙️</div><div class="cmd-body"><code>/configurar_aria</code> <span class="cmd-badge badge-premium">Premium</span><span class="cmd-badge badge-admin">Admin</span><p>Abre o meu painel de configuração: canais, cargos, eventos e comportamento.</p></div></div>
                 </div>
             </div>
 
@@ -1048,6 +1184,69 @@
                 <div style="font-size: 3.5rem; margin-bottom: 1rem; opacity: 0.8;">🦊</div>
                 <p>Ups, não encontrei nenhum comando com esse termo!</p>
             </div>
+        </div>
+    </section>
+
+    <!-- PLANOS DE ASSINATURA -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <h2 class="section-title">Planos de Assinatura</h2>
+            <p class="section-subtitle">Escolhe o nível de acesso que faz sentido para ti ou para o teu servidor.</p>
+
+            <div class="pricing-grid">
+                <!-- FREE -->
+                <div class="plan-card reveal">
+                    <span class="plan-status live">Disponível agora</span>
+                    <div class="plan-name">Free</div>
+                    <p class="plan-tagline">Para testar a Aria e para comunidades pequenas.</p>
+                    <div class="plan-price">R$ 0</div>
+                    <ul class="plan-features">
+                        <li>12 mensagens de IA por usuário, por dia</li>
+                        <li>Contexto de até 20 mensagens</li>
+                        <li>Histórico limitado a 20 mensagens</li>
+                        <li>Comandos gerais, tópicos, voz, XP e moderação</li>
+                    </ul>
+                    <a href="https://discord.com/oauth2/authorize?client_id=1439670009147293906&permissions=5419235387371120&integration_type=0&scope=bot" target="_blank" class="btn btn-primary plan-cta">Adicionar ao Discord</a>
+                </div>
+
+                <!-- ARIA PRO -->
+                <div class="plan-card featured reveal">
+                    <span class="plan-status soon">Em breve</span>
+                    <div class="plan-name">Aria Pro</div>
+                    <p class="plan-tagline">Mais IA para ti, em qualquer servidor onde eu esteja.</p>
+                    <div class="plan-price">R$ 9,90<span class="period">/mês por usuário</span></div>
+                    <ul class="plan-features">
+                        <li>Mensagens de IA ilimitadas</li>
+                        <li>Contexto de até 100 mensagens, sem limite de retenção</li>
+                        <li>Lembretes, traduções, resumos, embeds e tickets</li>
+                        <li><code>/revisar</code> textos e <code>/diversao</code> com mini-jogos</li>
+                        <li><code>/personalizar</code> o meu estilo de fala</li>
+                    </ul>
+                    <a href="https://discord.gg/E99uQdfCvB" target="_blank" class="btn btn-secondary plan-cta">Falar no Discord</a>
+                </div>
+
+                <!-- ARIA SERVER -->
+                <div class="plan-card reveal">
+                    <span class="plan-status soon">Em breve</span>
+                    <div class="plan-name">Aria Server</div>
+                    <p class="plan-tagline">Para comunidades que querem liberar recursos para todos os membros.</p>
+                    <div class="plan-price">R$ 24,90<span class="period">/mês por servidor</span></div>
+                    <ul class="plan-features">
+                        <li>Benefícios Premium para todos os membros do servidor</li>
+                        <li>Mensagens de IA ilimitadas para o servidor inteiro</li>
+                        <li>Todos os comandos administrativos Premium para admins</li>
+                        <li>Backup, restauração e reversão da configuração</li>
+                    </ul>
+                    <a href="https://discord.gg/E99uQdfCvB" target="_blank" class="btn btn-secondary plan-cta">Falar no Discord</a>
+                </div>
+            </div>
+
+            <div class="tip-banner pricing-note reveal">
+                <span class="icon">👑</span>
+                <p><strong>Precisas de mais?</strong> Para comunidades grandes ou redes de servidores, o plano <strong>Aria Server Plus</strong> e propostas personalizadas estão em preparação. Fala connosco no servidor oficial.</p>
+            </div>
+
+            <p class="pricing-fineprint">Assinatura mensal com renovação automática. Ao cancelar, o acesso continua até ao fim do período já pago, e o servidor volta ao plano Free sem apagar histórico ou configurações.</p>
         </div>
     </section>
 
@@ -1096,7 +1295,7 @@
                 <ul>
                     <li><strong>/relembrar</strong> permite visualizar histórico disponível vinculado ao seu usuário.</li>
                     <li><strong>/esquecer</strong> remove intervalos do histórico conforme solicitado.</li>
-                    <li><strong>/historico_tamanho</strong> controla quantas mensagens entram no contexto da IA, sem necessariamente apagar o histórico salvo.</li>
+                    <li><strong>/limite_hist</strong> controla quantas mensagens entram no contexto da IA, sem necessariamente apagar o histórico salvo.</li>
                     <li>Históricos podem ser removidos por políticas automáticas de retenção, limites do plano, inatividade ou solicitação do usuário.</li>
                     <li>Comandos administrativos/dev podem consultar resumos agregados de histórico para suporte e segurança, sem expor conteúdo bruto por padrão.</li>
                     <li>Logs técnicos, backups e registros de segurança podem ser mantidos por tempo limitado para diagnóstico, integridade e prevenção de abuso.</li>
@@ -1169,6 +1368,7 @@
             <p>&copy; 2026 <strong>ARIA Discord Bot</strong>.</p>
             <p>Desenvolvida com carinho por <a href="#">Ettore Bruno (@46_6f_78)</a></p>
             <div class="footer-links">
+                <a href="#pricing">Planos</a>
                 <a href="#legal">Privacidade</a>
                 <a href="#legal">Termos</a>
                 <a href="#home">Voltar ao topo ↑</a>
@@ -1199,7 +1399,7 @@
     animCursor();
     
     const pawEllipses = document.querySelectorAll('#pawSvg ellipse');
-    document.querySelectorAll('a, button, .feature-card, .command-item, .cmd-tab').forEach(el => {
+    document.querySelectorAll('a, button, .feature-card, .command-item, .cmd-tab, .plan-card').forEach(el => {
         el.addEventListener('mouseenter', () => {
             cursor.classList.add('hover');
             pawEllipses.forEach(e => e.setAttribute('fill', '#FFB347'));
