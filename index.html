@@ -963,6 +963,7 @@
                 <li><a href="#commands">Comandos</a></li>
                 <li><a href="#pricing">Planos</a></li>
                 <li><a href="#legal">Legal</a></li>
+                <li><a href="#" id="navAuthBtn" class="btn btn-secondary" style="padding:0.45rem 0.9rem;font-size:0.85rem;">Entrar com Discord</a></li>
             </ul>
         </div>
     </nav>
@@ -1211,7 +1212,7 @@
 
                 <!-- ARIA PREMIUM -->
                 <div class="plan-card featured reveal">
-                    <span class="plan-status soon">Em breve</span>
+                    <span class="plan-status live">Assinatura</span>
                     <div class="plan-name">Aria Premium</div>
                     <p class="plan-tagline">Mais IA para ti, em qualquer servidor onde eu estiver.</p>
                     <div class="plan-price">R$ 9,90<span class="period">/mês por usuário</span></div>
@@ -1222,12 +1223,13 @@
                         <li><code>/revisar</code> textos e <code>/diversao</code> com <strong>minijogos</strong></li>
                         <li><code>/personalizar</code> o meu estilo de fala</li>
                     </ul>
-                    <a href="https://discord.gg/E99uQdfCvB" target="_blank" class="btn btn-secondary plan-cta">Falar no Discord</a>
+                    <button type="button" class="btn btn-primary plan-cta" id="btnCheckoutUser" data-plan="USER_PREMIUM">Assinar Premium</button>
+                    <button type="button" class="btn btn-secondary plan-cta" id="btnManageBilling" style="margin-top:0.6rem;">Gerenciar assinatura</button>
                 </div>
 
                 <!-- ARIA SERVER -->
                 <div class="plan-card reveal">
-                    <span class="plan-status soon">Em breve</span>
+                    <span class="plan-status live">Assinatura</span>
                     <div class="plan-name">Aria Server</div>
                     <p class="plan-tagline">Para comunidades que querem liberar meus recursos para todos os membros.</p>
                     <div class="plan-price">R$ 24,90<span class="period">/mês por servidor</span></div>
@@ -1237,8 +1239,18 @@
                         <li>Todos os comandos administrativos Premium para admins</li>
                         <li>Backup, restauração e reversão de <strong>configurações</strong></li>
                     </ul>
-                    <a href="https://discord.gg/E99uQdfCvB" target="_blank" class="btn btn-secondary plan-cta">Falar no Discord</a>
+                    <button type="button" class="btn btn-primary plan-cta" id="btnCheckoutGuild" data-plan="SERVER_PREMIUM">Assinar para servidor</button>
+                    <div id="guildPicker" style="display:none;margin-top:0.9rem;text-align:left;">
+                        <label for="guildSelect" style="display:block;margin-bottom:0.4rem;color:var(--text-muted);font-size:0.9rem;">Escolhe um servidor elegível</label>
+                        <select id="guildSelect" style="width:100%;padding:0.65rem;border-radius:10px;border:1px solid var(--border-glass);background:var(--bg-surface);color:var(--text-main);"></select>
+                        <button type="button" class="btn btn-primary plan-cta" id="btnConfirmGuildCheckout" style="margin-top:0.7rem;">Continuar para o Stripe</button>
+                    </div>
                 </div>
+            </div>
+
+            <div class="tip-banner pricing-note reveal" id="billingStatusBanner" style="display:none;">
+                <span class="icon">💳</span>
+                <p id="billingStatusText"></p>
             </div>
 
             <div class="tip-banner pricing-note reveal">
@@ -1604,6 +1616,177 @@
     }, { threshold: 0.5 });
 
     document.querySelectorAll('.stat-number').forEach(el => statsObserver.observe(el));
+
+    /* ══════════════════════════════════════
+       ARIA API (auth / checkout / billing)
+    ══════════════════════════════════════ */
+    window.ARIA_API_BASE_URL = window.ARIA_API_BASE_URL || 'https://aria-api.onrender.com';
+
+    const ariaApi = {
+        base: () => String(window.ARIA_API_BASE_URL || '').replace(/\/$/, ''),
+        async request(path, options = {}) {
+            const response = await fetch(`${this.base()}${path}`, {
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                    ...(options.headers || {}),
+                },
+                ...options,
+            });
+            let data = null;
+            try { data = await response.json(); } catch (_) { data = null; }
+            if (!response.ok) {
+                const detail = (data && (data.detail || data.error)) || `HTTP ${response.status}`;
+                throw new Error(typeof detail === 'string' ? detail : JSON.stringify(detail));
+            }
+            return data;
+        },
+        login() {
+            window.location.href = `${this.base()}/api/auth/discord/login`;
+        },
+        async logout() {
+            await this.request('/api/auth/logout', { method: 'POST' });
+        },
+        me() { return this.request('/api/auth/me'); },
+        guilds() { return this.request('/api/guilds'); },
+        checkoutUser() {
+            return this.request('/api/checkout/user', {
+                method: 'POST',
+                body: JSON.stringify({ plan: 'USER_PREMIUM' }),
+            });
+        },
+        checkoutGuild(guildId) {
+            return this.request('/api/checkout/guild', {
+                method: 'POST',
+                body: JSON.stringify({ plan: 'SERVER_PREMIUM', guild_id: String(guildId) }),
+            });
+        },
+        portal() {
+            return this.request('/api/billing/portal', { method: 'POST' });
+        },
+    };
+
+    function showBillingBanner(message) {
+        const banner = document.getElementById('billingStatusBanner');
+        const text = document.getElementById('billingStatusText');
+        if (!banner || !text) return;
+        text.textContent = message;
+        banner.style.display = 'flex';
+    }
+
+    async function refreshAuthUi() {
+        const btn = document.getElementById('navAuthBtn');
+        if (!btn) return;
+        try {
+            const me = await ariaApi.me();
+            if (me.authenticated && me.user) {
+                const label = me.user.display_name || me.user.username || 'Conta';
+                btn.textContent = `Sair (${label})`;
+                btn.dataset.mode = 'logout';
+                if (me.premium && me.premium.enabled) {
+                    showBillingBanner(`Premium ativo para ${label}.`);
+                }
+            } else {
+                btn.textContent = 'Entrar com Discord';
+                btn.dataset.mode = 'login';
+            }
+        } catch (_) {
+            btn.textContent = 'Entrar com Discord';
+            btn.dataset.mode = 'login';
+        }
+    }
+
+    document.getElementById('navAuthBtn')?.addEventListener('click', async (event) => {
+        event.preventDefault();
+        const btn = event.currentTarget;
+        if (btn.dataset.mode === 'logout') {
+            try {
+                await ariaApi.logout();
+                await refreshAuthUi();
+                showBillingBanner('Sessão encerrada.');
+            } catch (err) {
+                showBillingBanner(err.message || 'Falha ao sair.');
+            }
+            return;
+        }
+        ariaApi.login();
+    });
+
+    document.getElementById('btnCheckoutUser')?.addEventListener('click', async () => {
+        try {
+            const me = await ariaApi.me();
+            if (!me.authenticated) {
+                ariaApi.login();
+                return;
+            }
+            const session = await ariaApi.checkoutUser();
+            window.location.href = session.checkout_url;
+        } catch (err) {
+            showBillingBanner(err.message || 'Não foi possível iniciar o checkout.');
+        }
+    });
+
+    document.getElementById('btnManageBilling')?.addEventListener('click', async () => {
+        try {
+            const me = await ariaApi.me();
+            if (!me.authenticated) {
+                ariaApi.login();
+                return;
+            }
+            const portal = await ariaApi.portal();
+            window.location.href = portal.portal_url;
+        } catch (err) {
+            showBillingBanner(err.message || 'Portal de cobrança indisponível.');
+        }
+    });
+
+    document.getElementById('btnCheckoutGuild')?.addEventListener('click', async () => {
+        const picker = document.getElementById('guildPicker');
+        const select = document.getElementById('guildSelect');
+        try {
+            const me = await ariaApi.me();
+            if (!me.authenticated) {
+                ariaApi.login();
+                return;
+            }
+            const data = await ariaApi.guilds();
+            const eligible = (data.guilds || []).filter(g => g.eligible_for_checkout);
+            if (!eligible.length) {
+                showBillingBanner('Nenhum servidor elegível. Precisas de permissão de admin e a ARIA presente no servidor.');
+                return;
+            }
+            select.innerHTML = eligible.map(g =>
+                `<option value="${g.guild_id}">${g.name || g.guild_id}</option>`
+            ).join('');
+            picker.style.display = 'block';
+        } catch (err) {
+            showBillingBanner(err.message || 'Falha ao listar servidores.');
+        }
+    });
+
+    document.getElementById('btnConfirmGuildCheckout')?.addEventListener('click', async () => {
+        const select = document.getElementById('guildSelect');
+        const guildId = select?.value;
+        if (!guildId) return;
+        try {
+            const session = await ariaApi.checkoutGuild(guildId);
+            window.location.href = session.checkout_url;
+        } catch (err) {
+            showBillingBanner(err.message || 'Não foi possível iniciar o checkout do servidor.');
+        }
+    });
+
+    (function handleBillingQuery() {
+        const params = new URLSearchParams(window.location.search);
+        const auth = params.get('auth');
+        const billing = params.get('billing');
+        if (auth === 'success') showBillingBanner('Login com Discord concluído.');
+        if (auth === 'error' || auth === 'invalid_state') showBillingBanner('Falha no login com Discord.');
+        if (billing === 'success') showBillingBanner('Pagamento recebido. O Premium será ativado em instantes.');
+        if (billing === 'cancel') showBillingBanner('Checkout cancelado.');
+        if (billing === 'portal') showBillingBanner('Voltaste do portal de cobrança.');
+        refreshAuthUi();
+    })();
 
     /* ══════════════════════════════════════
        SISTEMA DE PESQUISA DE COMANDOS
