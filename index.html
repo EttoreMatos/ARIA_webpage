@@ -763,34 +763,53 @@
             list-style: none;
             margin: 1.8rem 0 2rem;
             flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.55rem;
         }
         .plan-features li {
-            font-size: 0.88rem;
+            font-size: 0.9rem;
             color: var(--text-muted);
-            padding: 0.5rem 0;
-            display: flex;
-            align-items: flex-start;
-            gap: 0.6rem;
-            line-height: 1.5;
+            padding: 0;
+            display: grid;
+            grid-template-columns: 1.1rem 1fr;
+            column-gap: 0.7rem;
+            align-items: start;
+            line-height: 1.55;
         }
         .plan-features li::before {
             content: '✓';
             color: var(--primary-light);
             font-weight: 700;
-            flex-shrink: 0;
+            line-height: 1.55;
+        }
+        .plan-features li > span {
+            min-width: 0;
+            overflow-wrap: anywhere;
+        }
+        .plan-features strong {
+            color: var(--text-main);
+            font-weight: 600;
         }
         .plan-features code {
             font-family: 'IBM Plex Mono', monospace;
             color: var(--primary-light);
-            font-size: 0.82rem;
-            background: rgba(242, 117, 42, 0.1);
-            padding: 0.1rem 0.4rem;
-            border-radius: 4px;
+            font-size: 0.8rem;
+            background: rgba(242, 117, 42, 0.12);
+            padding: 0.12rem 0.4rem;
+            border-radius: 6px;
+            white-space: nowrap;
+        }
+        .plan-card .plan-cta + .plan-cta {
+            margin-top: 0.65rem;
         }
         .plan-cta {
             margin-top: auto;
             width: 100%;
             text-align: center;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
         .pricing-note {
             margin: 3rem auto 0;
@@ -1206,10 +1225,10 @@
                     <p class="plan-tagline">Para testar a <span class="aria-name-styled" style="font-size: 1.1em;">ARIA</span> e para comunidades pequenas.</p>
                     <div class="plan-price">R$ 0</div>
                     <ul class="plan-features">
-                        <li><strong>12</strong> mensagens de IA por usuário, por dia</li>
-                        <li>Contexto de até <strong>20</strong> mensagens</li>
-                        <li>Histórico limitado a <strong>20</strong> mensagens</li>
-                        <li>Comandos gerais, tópicos, voz, XP e moderação</li>
+                        <li><span><strong>12</strong> mensagens de IA por usuário, por dia</span></li>
+                        <li><span>Contexto de até <strong>20</strong> mensagens</span></li>
+                        <li><span>Histórico limitado a <strong>20</strong> mensagens</span></li>
+                        <li><span>Comandos gerais, tópicos, voz, XP e moderação</span></li>
                     </ul>
                     <a href="https://discord.com/oauth2/authorize?client_id=1439670009147293906&permissions=5419235387371120&integration_type=0&scope=bot" target="_blank" class="btn btn-primary plan-cta">Adicionar ao Discord</a>
                 </div>
@@ -1221,14 +1240,14 @@
                     <p class="plan-tagline">Mais IA para ti, em qualquer servidor onde eu estiver.</p>
                     <div class="plan-price">R$ 9,90<span class="period">/mês por usuário</span></div>
                     <ul class="plan-features">
-                        <li>Mensagens de IA <strong>ilimitadas</strong></li>
-                        <li>Contexto de até <strong>100</strong> mensagens, sem limite de retenção</li>
-                        <li>Lembretes, traduções, resumos, embeds e tickets</li>
-                        <li><code>/revisar</code> textos e <code>/diversao</code> com <strong>minijogos</strong></li>
-                        <li><code>/personalizar</code> o meu estilo de fala</li>
+                        <li><span>Mensagens de IA <strong>ilimitadas</strong></span></li>
+                        <li><span>Contexto de até <strong>100</strong> mensagens, sem limite de retenção</span></li>
+                        <li><span>Lembretes, traduções, resumos, embeds e tickets</span></li>
+                        <li><span><code>/revisar</code> textos e <code>/diversao</code> com <strong>minijogos</strong></span></li>
+                        <li><span><code>/personalizar</code> o meu estilo de fala</span></li>
                     </ul>
                     <button type="button" class="btn btn-primary plan-cta" id="btnCheckoutUser" data-plan="USER_PREMIUM">Assinar Premium</button>
-                    <button type="button" class="btn btn-secondary plan-cta" id="btnManageBilling" style="margin-top:0.6rem;">Gerenciar assinatura</button>
+                    <button type="button" class="btn btn-secondary plan-cta" id="btnManageBilling">Gerenciar assinatura</button>
                 </div>
 
                 <!-- ARIA SERVER -->
@@ -1238,10 +1257,10 @@
                     <p class="plan-tagline">Para comunidades que querem liberar meus recursos para todos os membros.</p>
                     <div class="plan-price">R$ 24,90<span class="period">/mês por servidor</span></div>
                     <ul class="plan-features">
-                        <li>Benefícios <strong>Premium</strong> para todos os membros do servidor</li>
-                        <li>Mensagens de IA <strong>ilimitadas</strong> para o servidor inteiro</li>
-                        <li>Todos os comandos administrativos Premium para admins</li>
-                        <li>Backup, restauração e reversão de <strong>configurações</strong></li>
+                        <li><span>Benefícios <strong>Premium</strong> para todos os membros do servidor</span></li>
+                        <li><span>Mensagens de IA <strong>ilimitadas</strong> para o servidor inteiro</span></li>
+                        <li><span>Todos os comandos administrativos Premium para admins</span></li>
+                        <li><span>Backup, restauração e reversão de <strong>configurações</strong></span></li>
                     </ul>
                     <button type="button" class="btn btn-primary plan-cta" id="btnCheckoutGuild" data-plan="SERVER_PREMIUM">Assinar para servidor</button>
                     <div id="guildPicker" style="display:none;margin-top:0.9rem;text-align:left;">
@@ -1626,6 +1645,31 @@
     ══════════════════════════════════════ */
     window.ARIA_API_BASE_URL = 'https://aria-api-xq1h.onrender.com';
     const ARIA_SESSION_KEY = 'aria_session_token';
+    const ARIA_AUTH_BUILD = '20260911-exchange-v2';
+
+    // #region agent log
+    function dbgLog(hypothesisId, location, message, data) {
+        const payload = {
+            sessionId: 'df7487',
+            runId: 'pre-fix',
+            hypothesisId,
+            location,
+            message,
+            data: { ...(data || {}), authBuild: ARIA_AUTH_BUILD, href: String(window.location.href).slice(0, 180) },
+            timestamp: Date.now(),
+        };
+        fetch('http://localhost:7462/ingest/a0cee97f-9a4f-47b4-8daf-963a34ff68aa', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'X-Debug-Session-Id': 'df7487' },
+            body: JSON.stringify(payload),
+        }).catch(() => {});
+        fetch(`${String(window.ARIA_API_BASE_URL || '').replace(/\/$/, '')}/api/debug/client-log`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+        }).catch(() => {});
+    }
+    // #endregion
 
     const ariaApi = {
         base: () => String(window.ARIA_API_BASE_URL || '').replace(/\/$/, ''),
@@ -1698,6 +1742,13 @@
         if (!btn) return;
         try {
             const me = await ariaApi.me();
+            // #region agent log
+            dbgLog('H-C', 'index.html:refreshAuthUi', 'me_result', {
+                authenticated: !!me.authenticated,
+                hasToken: !!ariaApi.getToken(),
+                hasUser: !!(me.user && me.user.discord_id),
+            });
+            // #endregion
             if (me.authenticated && me.user) {
                 const label = me.user.display_name || me.user.username || 'Conta';
                 const avatar = me.user.avatar_url
@@ -1801,27 +1852,64 @@
         }
     });
 
-    (function handleBillingQuery() {
+    (async function handleBillingQuery() {
         const params = new URLSearchParams(window.location.search);
         const auth = params.get('auth');
         const billing = params.get('billing');
-        const sessionToken = params.get('session');
-        if (sessionToken) {
-            ariaApi.setToken(sessionToken);
+        const handoffCode = params.get('code');
+        const legacySession = params.get('session');
+
+        // #region agent log
+        dbgLog('H-A', 'index.html:handleBillingQuery', 'boot', {
+            auth,
+            billing,
+            hasHandoffCode: !!handoffCode,
+            hasLegacySession: !!legacySession,
+            hasTokenAlready: !!ariaApi.getToken(),
+        });
+        // #endregion
+
+        if (handoffCode) {
+            try {
+                const exchanged = await ariaApi.request('/api/auth/exchange', {
+                    method: 'POST',
+                    body: JSON.stringify({ code: handoffCode }),
+                });
+                if (exchanged && exchanged.token) {
+                    ariaApi.setToken(exchanged.token);
+                }
+                // #region agent log
+                dbgLog('H-B', 'index.html:handleBillingQuery', 'exchange_ok', {
+                    gotToken: !!(exchanged && exchanged.token),
+                });
+                // #endregion
+            } catch (err) {
+                // #region agent log
+                dbgLog('H-B', 'index.html:handleBillingQuery', 'exchange_error', {
+                    error: String(err && err.message ? err.message : err).slice(0, 160),
+                });
+                // #endregion
+                showBillingBanner(err.message || 'Falha ao concluir login.');
+            }
+        } else if (legacySession) {
+            ariaApi.setToken(legacySession);
         }
+
         if (auth === 'success') showBillingBanner('Login com Discord concluído.');
         if (auth === 'error' || auth === 'invalid_state') showBillingBanner('Falha no login com Discord.');
         if (billing === 'success') showBillingBanner('Pagamento recebido. O Premium será ativado em instantes.');
         if (billing === 'cancel') showBillingBanner('Checkout cancelado.');
         if (billing === 'portal') showBillingBanner('Voltaste do portal de cobrança.');
-        if (auth || billing || sessionToken) {
+
+        if (auth || billing || handoffCode || legacySession) {
             const clean = new URL(window.location.href);
             clean.searchParams.delete('auth');
             clean.searchParams.delete('billing');
             clean.searchParams.delete('session');
+            clean.searchParams.delete('code');
             window.history.replaceState({}, '', clean.pathname + clean.search + clean.hash);
         }
-        refreshAuthUi();
+        await refreshAuthUi();
     })();
 
     /* ══════════════════════════════════════
