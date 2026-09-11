@@ -963,7 +963,11 @@
                 <li><a href="#commands">Comandos</a></li>
                 <li><a href="#pricing">Planos</a></li>
                 <li><a href="#legal">Legal</a></li>
-                <li><a href="#" id="navAuthBtn" class="btn btn-secondary" style="padding:0.45rem 0.9rem;font-size:0.85rem;">Entrar com Discord</a></li>
+                <li>
+                    <a href="#" id="navAuthBtn" class="btn btn-secondary" style="padding:0.45rem 0.9rem;font-size:0.85rem;display:inline-flex;align-items:center;gap:0.5rem;">
+                        Entrar com Discord
+                    </a>
+                </li>
             </ul>
         </div>
     </nav>
@@ -1620,18 +1624,32 @@
     /* ══════════════════════════════════════
        ARIA API (auth / checkout / billing)
     ══════════════════════════════════════ */
-    window.ARIA_API_BASE_URL = window.ARIA_API_BASE_URL = 'https://aria-api-xq1h.onrender.com';
+    window.ARIA_API_BASE_URL = 'https://aria-api-xq1h.onrender.com';
+    const ARIA_SESSION_KEY = 'aria_session_token';
 
     const ariaApi = {
         base: () => String(window.ARIA_API_BASE_URL || '').replace(/\/$/, ''),
+        getToken() {
+            try { return sessionStorage.getItem(ARIA_SESSION_KEY) || ''; }
+            catch (_) { return ''; }
+        },
+        setToken(token) {
+            try {
+                if (token) sessionStorage.setItem(ARIA_SESSION_KEY, token);
+                else sessionStorage.removeItem(ARIA_SESSION_KEY);
+            } catch (_) { /* ignore */ }
+        },
         async request(path, options = {}) {
+            const headers = {
+                'Content-Type': 'application/json',
+                ...(options.headers || {}),
+            };
+            const token = this.getToken();
+            if (token) headers.Authorization = `Bearer ${token}`;
             const response = await fetch(`${this.base()}${path}`, {
                 credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json',
-                    ...(options.headers || {}),
-                },
                 ...options,
+                headers,
             });
             let data = null;
             try { data = await response.json(); } catch (_) { data = null; }
@@ -1645,7 +1663,8 @@
             window.location.href = `${this.base()}/api/auth/discord/login`;
         },
         async logout() {
-            await this.request('/api/auth/logout', { method: 'POST' });
+            try { await this.request('/api/auth/logout', { method: 'POST' }); }
+            finally { this.setToken(''); }
         },
         me() { return this.request('/api/auth/me'); },
         guilds() { return this.request('/api/guilds'); },
@@ -1681,17 +1700,23 @@
             const me = await ariaApi.me();
             if (me.authenticated && me.user) {
                 const label = me.user.display_name || me.user.username || 'Conta';
-                btn.textContent = `Sair (${label})`;
+                const avatar = me.user.avatar_url
+                    ? `<img src="${me.user.avatar_url}" alt="" width="22" height="22" style="border-radius:50%;object-fit:cover;">`
+                    : '';
+                btn.innerHTML = `${avatar}<span>${label}</span>`;
+                btn.title = 'Clique para sair';
                 btn.dataset.mode = 'logout';
                 if (me.premium && me.premium.enabled) {
                     showBillingBanner(`Premium ativo para ${label}.`);
                 }
             } else {
                 btn.textContent = 'Entrar com Discord';
+                btn.title = '';
                 btn.dataset.mode = 'login';
             }
         } catch (_) {
             btn.textContent = 'Entrar com Discord';
+            btn.title = '';
             btn.dataset.mode = 'login';
         }
     }
@@ -1780,11 +1805,22 @@
         const params = new URLSearchParams(window.location.search);
         const auth = params.get('auth');
         const billing = params.get('billing');
+        const sessionToken = params.get('session');
+        if (sessionToken) {
+            ariaApi.setToken(sessionToken);
+        }
         if (auth === 'success') showBillingBanner('Login com Discord concluído.');
         if (auth === 'error' || auth === 'invalid_state') showBillingBanner('Falha no login com Discord.');
         if (billing === 'success') showBillingBanner('Pagamento recebido. O Premium será ativado em instantes.');
         if (billing === 'cancel') showBillingBanner('Checkout cancelado.');
         if (billing === 'portal') showBillingBanner('Voltaste do portal de cobrança.');
+        if (auth || billing || sessionToken) {
+            const clean = new URL(window.location.href);
+            clean.searchParams.delete('auth');
+            clean.searchParams.delete('billing');
+            clean.searchParams.delete('session');
+            window.history.replaceState({}, '', clean.pathname + clean.search + clean.hash);
+        }
         refreshAuthUi();
     })();
 
