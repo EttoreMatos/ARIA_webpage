@@ -207,19 +207,30 @@
             align-items: center;
         }
         .logo { font-size: 2.5rem; line-height: 1; }
-        .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
         .nav-links a {
             color: var(--text-main);
             text-decoration: none;
             font-weight: 500;
             font-size: 0.9rem;
+            line-height: 1;
+            display: inline-flex;
+            align-items: center;
+            height: 40px;
             transition: color 0.3s ease;
             position: relative;
         }
         .nav-links a::after {
             content: '';
             position: absolute;
-            bottom: -6px; left: 50%;
+            bottom: 8px; left: 50%;
             width: 0; height: 2px;
             background: var(--primary);
             transition: all 0.3s ease;
@@ -228,6 +239,164 @@
         }
         .nav-links a:hover { color: var(--primary-light); }
         .nav-links a:hover::after { width: 100%; }
+
+        .nav-auth {
+            display: flex;
+            align-items: center;
+            margin-left: 0.5rem;
+            min-height: 40px;
+        }
+        .nav-login-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.55rem;
+            height: 40px;
+            padding: 0 1.05rem;
+            border-radius: 999px;
+            border: 1px solid rgba(88, 101, 242, 0.55);
+            background: linear-gradient(135deg, #5865F2 0%, #7289DA 100%);
+            color: #fff;
+            font-family: 'Sora', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+            box-shadow: 0 8px 20px rgba(88, 101, 242, 0.25);
+        }
+        .nav-login-btn:hover {
+            transform: translateY(-1px);
+            filter: brightness(1.06);
+            box-shadow: 0 10px 24px rgba(88, 101, 242, 0.35);
+        }
+        .nav-login-btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+        .nav-user-chip {
+            display: none;
+            align-items: center;
+            gap: 0.7rem;
+            height: 40px;
+            padding: 0 0.35rem 0 0.35rem;
+            border-radius: 999px;
+            border: 1px solid var(--border-glass);
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(10px);
+        }
+        .nav-user-chip.is-visible { display: inline-flex; }
+        .nav-user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: var(--bg-surface);
+        }
+        .nav-user-meta {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-width: 0;
+            padding-right: 0.15rem;
+            line-height: 1.15;
+        }
+        .nav-user-name {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-main);
+            max-width: 140px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .nav-user-plan {
+            font-size: 0.68rem;
+            color: var(--text-muted);
+            letter-spacing: 0.02em;
+        }
+        .nav-user-plan.is-premium { color: #D68CF0; }
+        .nav-user-logout {
+            height: 30px;
+            margin-right: 0.25rem;
+            padding: 0 0.75rem;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text-muted);
+            font-family: 'Sora', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+        }
+        .nav-user-logout:hover {
+            color: var(--text-main);
+            background: rgba(242, 117, 42, 0.12);
+            border-color: rgba(242, 117, 42, 0.35);
+        }
+
+        .auth-waiting {
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(8, 4, 12, 0.72);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        .auth-waiting.is-visible { display: flex; }
+        .auth-waiting-card {
+            width: min(360px, calc(100vw - 2rem));
+            padding: 2.2rem 1.8rem 1.6rem;
+            border-radius: 22px;
+            border: 1px solid var(--border-glass);
+            background: linear-gradient(180deg, rgba(40, 24, 52, 0.95), rgba(22, 12, 32, 0.98));
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+            text-align: center;
+        }
+        .auth-doughnut {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 1.2rem;
+            border-radius: 50%;
+            border: 4px solid rgba(242, 117, 42, 0.18);
+            border-top-color: var(--primary);
+            border-right-color: var(--accent);
+            animation: auth-spin 0.85s linear infinite;
+        }
+        @keyframes auth-spin {
+            to { transform: rotate(360deg); }
+        }
+        .auth-waiting-card h3 {
+            font-family: 'Sora', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 0.45rem;
+        }
+        .auth-waiting-card p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            margin-bottom: 1.3rem;
+            line-height: 1.5;
+        }
+        .auth-waiting-cancel {
+            height: 38px;
+            padding: 0 1.1rem;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: transparent;
+            color: var(--text-muted);
+            font-family: 'Sora', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .auth-waiting-cancel:hover {
+            color: var(--text-main);
+            border-color: rgba(255, 255, 255, 0.22);
+        }
 
         /* ── BOTÕES MODERNOS ── */
         .btn {
@@ -935,6 +1104,8 @@
             .cta-buttons { flex-direction: column; width: 100%; }
             .btn { width: 100%; }
             .nav-links { display: none; }
+            .nav-user-name { max-width: 96px; }
+            .nav-login-btn { padding: 0 0.85rem; font-size: 0.8rem; }
             .section-title { font-size: 2.5rem; }
             body { cursor: auto; }
             .cursor { display: none; }
@@ -982,14 +1153,34 @@
                 <li><a href="#commands">Comandos</a></li>
                 <li><a href="#pricing">Planos</a></li>
                 <li><a href="#legal">Legal</a></li>
-                <li>
-                    <a href="#" id="navAuthBtn" class="btn btn-secondary" style="padding:0.45rem 0.9rem;font-size:0.85rem;display:inline-flex;align-items:center;gap:0.5rem;">
-                        Entrar com Discord
-                    </a>
-                </li>
             </ul>
+            <div class="nav-auth" id="navAuthSlot">
+                <button type="button" class="nav-login-btn" id="navLoginBtn">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
+                        <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+                    </svg>
+                    Entrar com Discord
+                </button>
+                <div class="nav-user-chip" id="navUserChip" aria-live="polite">
+                    <img class="nav-user-avatar" id="navUserAvatar" alt="">
+                    <div class="nav-user-meta">
+                        <span class="nav-user-name" id="navUserName">Utilizador</span>
+                        <span class="nav-user-plan" id="navUserPlan">Conta</span>
+                    </div>
+                    <button type="button" class="nav-user-logout" id="navLogoutBtn">Sair</button>
+                </div>
+            </div>
         </div>
     </nav>
+
+    <div class="auth-waiting" id="authWaitingOverlay" aria-hidden="true">
+        <div class="auth-waiting-card">
+            <div class="auth-doughnut" aria-hidden="true"></div>
+            <h3>Aguardando autenticação</h3>
+            <p>Conclui o login com Discord na nova aba. Esta página atualiza automaticamente.</p>
+            <button type="button" class="auth-waiting-cancel" id="authWaitingCancel">Cancelar</button>
+        </div>
+    </div>
 
     <!-- HERO SECTION -->
     <section class="hero" id="home">
@@ -1645,13 +1836,17 @@
     ══════════════════════════════════════ */
     window.ARIA_API_BASE_URL = 'https://aria-api-xq1h.onrender.com';
     const ARIA_SESSION_KEY = 'aria_session_token';
-    const ARIA_AUTH_BUILD = '20260911-exchange-v2';
+    const ARIA_AUTH_BUILD = '20260911-popup-v1';
+    const ARIA_AUTH_MSG = 'aria-auth';
+    const DEFAULT_AVATAR = 'data:image/svg+xml,' + encodeURIComponent(
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="32" fill="#5865F2"/><circle cx="32" cy="24" r="12" fill="#fff"/><path d="M12 54c4-12 14-18 20-18s16 6 20 18" fill="#fff"/></svg>'
+    );
 
     // #region agent log
     function dbgLog(hypothesisId, location, message, data) {
         const payload = {
             sessionId: 'df7487',
-            runId: 'pre-fix',
+            runId: 'post-fix',
             hypothesisId,
             location,
             message,
@@ -1661,11 +1856,6 @@
         fetch('http://localhost:7462/ingest/a0cee97f-9a4f-47b4-8daf-963a34ff68aa', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'X-Debug-Session-Id': 'df7487' },
-            body: JSON.stringify(payload),
-        }).catch(() => {});
-        fetch(`${String(window.ARIA_API_BASE_URL || '').replace(/\/$/, '')}/api/debug/client-log`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload),
         }).catch(() => {});
     }
@@ -1703,8 +1893,8 @@
             }
             return data;
         },
-        login() {
-            window.location.href = `${this.base()}/api/auth/discord/login`;
+        loginUrl() {
+            return `${this.base()}/api/auth/discord/login`;
         },
         async logout() {
             try { await this.request('/api/auth/logout', { method: 'POST' }); }
@@ -1729,6 +1919,9 @@
         },
     };
 
+    let authPopupRef = null;
+    let authPopupPoll = null;
+
     function showBillingBanner(message) {
         const banner = document.getElementById('billingStatusBanner');
         const text = document.getElementById('billingStatusText');
@@ -1737,62 +1930,162 @@
         banner.style.display = 'flex';
     }
 
-    async function refreshAuthUi() {
-        const btn = document.getElementById('navAuthBtn');
-        if (!btn) return;
-        try {
-            const me = await ariaApi.me();
-            // #region agent log
-            dbgLog('H-C', 'index.html:refreshAuthUi', 'me_result', {
-                authenticated: !!me.authenticated,
-                hasToken: !!ariaApi.getToken(),
-                hasUser: !!(me.user && me.user.discord_id),
-            });
-            // #endregion
-            if (me.authenticated && me.user) {
-                const label = me.user.display_name || me.user.username || 'Conta';
-                const avatar = me.user.avatar_url
-                    ? `<img src="${me.user.avatar_url}" alt="" width="22" height="22" style="border-radius:50%;object-fit:cover;">`
-                    : '';
-                btn.innerHTML = `${avatar}<span>${label}</span>`;
-                btn.title = 'Clique para sair';
-                btn.dataset.mode = 'logout';
-                if (me.premium && me.premium.enabled) {
-                    showBillingBanner(`Premium ativo para ${label}.`);
-                }
-            } else {
-                btn.textContent = 'Entrar com Discord';
-                btn.title = '';
-                btn.dataset.mode = 'login';
-            }
-        } catch (_) {
-            btn.textContent = 'Entrar com Discord';
-            btn.title = '';
-            btn.dataset.mode = 'login';
+    function setAuthWaiting(visible) {
+        const overlay = document.getElementById('authWaitingOverlay');
+        if (!overlay) return;
+        overlay.classList.toggle('is-visible', !!visible);
+        overlay.setAttribute('aria-hidden', visible ? 'false' : 'true');
+        if (!visible && authPopupPoll) {
+            clearInterval(authPopupPoll);
+            authPopupPoll = null;
         }
     }
 
-    document.getElementById('navAuthBtn')?.addEventListener('click', async (event) => {
-        event.preventDefault();
-        const btn = event.currentTarget;
-        if (btn.dataset.mode === 'logout') {
-            try {
-                await ariaApi.logout();
-                await refreshAuthUi();
-                showBillingBanner('Sessão encerrada.');
-            } catch (err) {
-                showBillingBanner(err.message || 'Falha ao sair.');
+    function escapeHtml(value) {
+        return String(value || '')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;');
+    }
+
+    function setLoggedOutUi() {
+        const loginBtn = document.getElementById('navLoginBtn');
+        const chip = document.getElementById('navUserChip');
+        if (loginBtn) loginBtn.style.display = 'inline-flex';
+        if (chip) chip.classList.remove('is-visible');
+    }
+
+    function setLoggedInUi(user, premium) {
+        const loginBtn = document.getElementById('navLoginBtn');
+        const chip = document.getElementById('navUserChip');
+        const avatar = document.getElementById('navUserAvatar');
+        const nameEl = document.getElementById('navUserName');
+        const planEl = document.getElementById('navUserPlan');
+        if (!chip || !avatar || !nameEl || !planEl) return;
+
+        const label = user.display_name || user.username || 'Conta Discord';
+        const isPremium = !!(premium && premium.enabled);
+        avatar.src = user.avatar_url || DEFAULT_AVATAR;
+        avatar.alt = label;
+        nameEl.textContent = label;
+        planEl.textContent = isPremium ? 'Premium' : 'Conta gratuita';
+        planEl.classList.toggle('is-premium', isPremium);
+        if (loginBtn) loginBtn.style.display = 'none';
+        chip.classList.add('is-visible');
+    }
+
+    async function refreshAuthUi() {
+        const loginBtn = document.getElementById('navLoginBtn');
+        const chip = document.getElementById('navUserChip');
+        if (!loginBtn && !chip) return;
+        try {
+            const me = await ariaApi.me();
+            // #region agent log
+            dbgLog('H4', 'index.html:refreshAuthUi', 'me_result', {
+                authenticated: !!me.authenticated,
+                hasToken: !!ariaApi.getToken(),
+                hasUser: !!(me.user && me.user.discord_id),
+                chipVisible: !!(chip && chip.classList.contains('is-visible')),
+            });
+            // #endregion
+            if (me.authenticated && me.user) {
+                setLoggedInUi(me.user, me.premium);
+            } else {
+                setLoggedOutUi();
             }
+        } catch (_) {
+            setLoggedOutUi();
+        }
+    }
+
+    function notifyOpenerAuth(payload) {
+        if (!window.opener || window.opener.closed) return false;
+        try {
+            window.opener.postMessage({ type: ARIA_AUTH_MSG, ...payload }, window.location.origin);
+            return true;
+        } catch (_) {
+            return false;
+        }
+    }
+
+    function startDiscordLogin() {
+        const url = ariaApi.loginUrl();
+        // Nova aba com opener (sem noopener) para postMessage do token de volta.
+        authPopupRef = window.open(url, '_blank');
+        const opened = !!(authPopupRef && !authPopupRef.closed);
+        // #region agent log
+        dbgLog('H1', 'index.html:startDiscordLogin', 'login_open', {
+            opened,
+            hasOpenerCheck: true,
+        });
+        // #endregion
+        if (!opened) {
+            showBillingBanner('Permite pop-ups para autenticar, ou o login abre nesta aba.');
+            window.location.href = url;
             return;
         }
-        ariaApi.login();
+        setAuthWaiting(true);
+        if (authPopupPoll) clearInterval(authPopupPoll);
+        authPopupPoll = setInterval(() => {
+            if (!authPopupRef || authPopupRef.closed) {
+                clearInterval(authPopupPoll);
+                authPopupPoll = null;
+                if (!ariaApi.getToken()) setAuthWaiting(false);
+            }
+        }, 700);
+    }
+
+    window.addEventListener('message', async (event) => {
+        if (event.origin !== window.location.origin) return;
+        const data = event.data;
+        if (!data || data.type !== ARIA_AUTH_MSG) return;
+        // #region agent log
+        dbgLog('H3', 'index.html:message', 'auth_message', {
+            auth: data.auth || null,
+            hasToken: !!data.token,
+        });
+        // #endregion
+        if (data.token) {
+            ariaApi.setToken(data.token);
+            setAuthWaiting(false);
+            showBillingBanner('Login com Discord concluído.');
+            await refreshAuthUi();
+            return;
+        }
+        if (data.auth === 'error' || data.auth === 'invalid_state') {
+            setAuthWaiting(false);
+            showBillingBanner('Falha no login com Discord.');
+        }
+    });
+
+    document.getElementById('navLoginBtn')?.addEventListener('click', (event) => {
+        event.preventDefault();
+        startDiscordLogin();
+    });
+
+    document.getElementById('navLogoutBtn')?.addEventListener('click', async (event) => {
+        event.preventDefault();
+        try {
+            await ariaApi.logout();
+            await refreshAuthUi();
+            showBillingBanner('Sessão encerrada.');
+        } catch (err) {
+            showBillingBanner(err.message || 'Falha ao sair.');
+        }
+    });
+
+    document.getElementById('authWaitingCancel')?.addEventListener('click', () => {
+        setAuthWaiting(false);
+        try { if (authPopupRef && !authPopupRef.closed) authPopupRef.close(); } catch (_) { /* ignore */ }
+        authPopupRef = null;
     });
 
     document.getElementById('btnCheckoutUser')?.addEventListener('click', async () => {
         try {
             const me = await ariaApi.me();
             if (!me.authenticated) {
-                ariaApi.login();
+                startDiscordLogin();
                 return;
             }
             const session = await ariaApi.checkoutUser();
@@ -1806,7 +2099,7 @@
         try {
             const me = await ariaApi.me();
             if (!me.authenticated) {
-                ariaApi.login();
+                startDiscordLogin();
                 return;
             }
             const portal = await ariaApi.portal();
@@ -1822,7 +2115,7 @@
         try {
             const me = await ariaApi.me();
             if (!me.authenticated) {
-                ariaApi.login();
+                startDiscordLogin();
                 return;
             }
             const data = await ariaApi.guilds();
@@ -1832,7 +2125,7 @@
                 return;
             }
             select.innerHTML = eligible.map(g =>
-                `<option value="${g.guild_id}">${g.name || g.guild_id}</option>`
+                `<option value="${escapeHtml(g.guild_id)}">${escapeHtml(g.name || g.guild_id)}</option>`
             ).join('');
             picker.style.display = 'block';
         } catch (err) {
@@ -1858,17 +2151,20 @@
         const billing = params.get('billing');
         const handoffCode = params.get('code');
         const legacySession = params.get('session');
+        const isAuthPopup = !!(window.opener && !window.opener.closed);
 
         // #region agent log
-        dbgLog('H-A', 'index.html:handleBillingQuery', 'boot', {
+        dbgLog('H2', 'index.html:handleBillingQuery', 'boot', {
             auth,
             billing,
             hasHandoffCode: !!handoffCode,
             hasLegacySession: !!legacySession,
             hasTokenAlready: !!ariaApi.getToken(),
+            isAuthPopup,
         });
         // #endregion
 
+        let exchangedToken = '';
         if (handoffCode) {
             try {
                 const exchanged = await ariaApi.request('/api/auth/exchange', {
@@ -1876,23 +2172,49 @@
                     body: JSON.stringify({ code: handoffCode }),
                 });
                 if (exchanged && exchanged.token) {
+                    exchangedToken = exchanged.token;
                     ariaApi.setToken(exchanged.token);
                 }
                 // #region agent log
-                dbgLog('H-B', 'index.html:handleBillingQuery', 'exchange_ok', {
-                    gotToken: !!(exchanged && exchanged.token),
+                dbgLog('H2', 'index.html:handleBillingQuery', 'exchange_ok', {
+                    gotToken: !!exchangedToken,
+                    isAuthPopup,
+                    notifiedOpener: false,
                 });
                 // #endregion
             } catch (err) {
                 // #region agent log
-                dbgLog('H-B', 'index.html:handleBillingQuery', 'exchange_error', {
+                dbgLog('H2', 'index.html:handleBillingQuery', 'exchange_error', {
                     error: String(err && err.message ? err.message : err).slice(0, 160),
+                    isAuthPopup,
                 });
                 // #endregion
+                if (isAuthPopup) {
+                    notifyOpenerAuth({ auth: 'error' });
+                    window.close();
+                    return;
+                }
                 showBillingBanner(err.message || 'Falha ao concluir login.');
             }
         } else if (legacySession) {
+            exchangedToken = legacySession;
             ariaApi.setToken(legacySession);
+        }
+
+        if (isAuthPopup && (exchangedToken || auth === 'success' || auth === 'error' || auth === 'invalid_state')) {
+            const notified = notifyOpenerAuth({
+                auth: auth || (exchangedToken ? 'success' : 'error'),
+                token: exchangedToken || undefined,
+            });
+            // #region agent log
+            dbgLog('H2', 'index.html:handleBillingQuery', 'popup_handoff', {
+                notified,
+                hasToken: !!exchangedToken,
+                auth,
+            });
+            // #endregion
+            setTimeout(() => { try { window.close(); } catch (_) { /* ignore */ } }, 120);
+            return;
         }
 
         if (auth === 'success') showBillingBanner('Login com Discord concluído.');
