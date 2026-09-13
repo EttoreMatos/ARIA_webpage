@@ -897,18 +897,14 @@ async function startGuildCheckout(guildId) {
 async function openBillingPortal(sourceBtnId) {
     if (billingBusy) return;
     const activeId = sourceBtnId || 'btnManageBilling';
-    // Abrir a aba de imediato (gesto do utilizador); o URL chega depois do await.
-    const portalTab = window.open('about:blank', '_blank');
     setBillingBusy(true, 'A redirecionar…', activeId);
     try {
         const me = await ariaApi.me();
         if (!me.authenticated) {
-            if (portalTab && !portalTab.closed) portalTab.close();
             showBillingBanner('Entra com Discord para gerir a assinatura.');
             return;
         }
         if (!(me.premium && me.premium.enabled)) {
-            if (portalTab && !portalTab.closed) portalTab.close();
             showBillingBanner('Ainda não tens uma assinatura ativa para gerir.');
             await refreshAuthUi();
             return;
@@ -916,21 +912,19 @@ async function openBillingPortal(sourceBtnId) {
         const portal = await ariaApi.portal();
         const url = portal && (portal.portal_url || portal.url);
         if (!url) throw new Error('Portal de cobrança indisponível.');
-        if (portalTab && !portalTab.closed) {
-            portalTab.location.href = url;
-            return;
+        const portalTab = window.open(url, '_blank', 'noopener,noreferrer');
+        if (!portalTab) {
+            // Pop-up bloqueado: tenta link sem navegar a aba atual.
+            const link = document.createElement('a');
+            link.href = url;
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            showBillingBanner('Permite pop-ups se o portal não abrir numa nova aba.');
         }
-        // Pop-up bloqueado: tenta link sem navegar a aba atual.
-        const link = document.createElement('a');
-        link.href = url;
-        link.target = '_blank';
-        link.rel = 'noopener noreferrer';
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-        showBillingBanner('Permite pop-ups se o portal não abrir numa nova aba.');
     } catch (err) {
-        if (portalTab && !portalTab.closed) portalTab.close();
         showBillingBanner(friendlyBillingError(err, 'Portal de cobrança indisponível.'));
     } finally {
         setBillingBusy(false);
