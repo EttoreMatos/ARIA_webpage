@@ -18,9 +18,10 @@
     --border-accent: rgba(242, 117, 42, 0.2);
 
     --band-bg: linear-gradient(180deg, rgba(43, 24, 58, 0.72) 0%, rgba(22, 12, 34, 0.78) 100%);
-    /* Mesma curva da borda superior das estatísticas */
-    --wave-edge: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 28' preserveAspectRatio='none'%3E%3Cpath fill='%23000' d='M0 14C120 26 240 2 360 14s240-12 360 0 240 12 360 0 240-12 360 0v14H0Z'/%3E%3C/svg%3E");
-    --wave-edge-bottom: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 28' preserveAspectRatio='none'%3E%3Cpath fill='%23000' d='M0 0h1440v14c-120 12-240-12-360 0s-240 12-360 0-240-12-360 0S120 2 0 14Z'/%3E%3C/svg%3E");
+    --wave-h: 28px;
+    /* Onda mais suave e baixa para a transição home ↔ estatísticas */
+    --wave-edge: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 24' preserveAspectRatio='none'%3E%3Cpath fill='%23000' d='M0 12C180 20 300 4 480 12s300-8 480 0 300 8 480 0v12H0Z'/%3E%3C/svg%3E");
+    --wave-edge-bottom: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 24' preserveAspectRatio='none'%3E%3Cpath fill='%23000' d='M0 0h1440v12c-180 8-300-8-480 0s-300 8-480 0S180 4 0 12Z'/%3E%3C/svg%3E");
     
     --gradient-1: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
     --gradient-btn: linear-gradient(135deg, var(--primary) 0%, var(--gold) 100%);
@@ -830,23 +831,22 @@ nav.scrolled .nav-links {
     z-index: 1;
     overflow: visible;
 }
-/* Borda inferior da home = mesma onda da borda superior das estatísticas */
+/* Transição suave home → estatísticas (evita faixa dupla / borda grossa) */
 .hero::after {
     content: '';
     position: absolute;
     left: 0;
     right: 0;
-    bottom: 0;
-    height: 36px;
-    background: var(--band-bg);
-    -webkit-mask-image: var(--wave-edge);
-    mask-image: var(--wave-edge);
-    -webkit-mask-size: 100% 100%;
-    mask-size: 100% 100%;
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
+    bottom: -1px;
+    height: calc(var(--wave-h) + 18px);
+    background: linear-gradient(
+        180deg,
+        transparent 0%,
+        rgba(13, 6, 18, 0.35) 40%,
+        rgba(22, 12, 34, 0.55) 100%
+    );
     pointer-events: none;
-    z-index: 3;
+    z-index: 2;
 }
 .hero-atmosphere {
     position: absolute;
@@ -949,16 +949,17 @@ nav.scrolled .nav-links {
     position: absolute;
     left: 43%;
     bottom: 2px;
-    width: 62%;
-    height: 40px;
-    transform: translate(-50%, calc(70% - 2px));
+    width: 96%;
+    height: 72px;
+    transform: translate(-50%, calc(58% - 2px));
     background: radial-gradient(ellipse at center,
-        rgba(242, 117, 42, 0.75) 0%,
-        rgba(242, 117, 42, 0.4) 35%,
-        rgba(107, 52, 93, 0.18) 55%,
-        transparent 72%);
+        rgba(242, 117, 42, 0.7) 0%,
+        rgba(242, 117, 42, 0.38) 28%,
+        rgba(242, 117, 42, 0.16) 48%,
+        rgba(107, 52, 93, 0.1) 62%,
+        transparent 78%);
     border-radius: 50%;
-    filter: blur(9px);
+    filter: blur(20px);
     z-index: 0;
     pointer-events: none;
 }
@@ -1123,7 +1124,7 @@ nav.scrolled .nav-links {
     z-index: 2;
     background: var(--band-bg);
     border: none;
-    /* Máscara: mesma onda do hero em cima + corpo + onda em baixo */
+    /* Máscara: onda suave em cima + corpo + onda em baixo */
     -webkit-mask-image:
         var(--wave-edge),
         linear-gradient(#000 0 0),
@@ -1134,14 +1135,14 @@ nav.scrolled .nav-links {
         var(--wave-edge-bottom);
     -webkit-mask-position: top, center, bottom;
     mask-position: top, center, bottom;
-    -webkit-mask-size: 100% 36px, 100% calc(100% - 70px), 100% 36px;
-    mask-size: 100% 36px, 100% calc(100% - 70px), 100% 36px;
+    -webkit-mask-size: 100% var(--wave-h), 100% calc(100% - (var(--wave-h) * 2 - 2px)), 100% var(--wave-h);
+    mask-size: 100% var(--wave-h), 100% calc(100% - (var(--wave-h) * 2 - 2px)), 100% var(--wave-h);
     -webkit-mask-repeat: no-repeat;
     mask-repeat: no-repeat;
 }
 .stats.section-band {
-    margin-top: -36px;
-    padding-top: calc(4.5rem + 36px);
+    margin-top: calc(var(--wave-h) * -1);
+    padding-top: calc(4.5rem + var(--wave-h));
 }
 
 /* ── ESTATÍSTICAS ── */
