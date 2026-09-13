@@ -17,20 +17,18 @@
     <meta property="og:description" content="Converse com a ARIA: uma assistente de Discord segura e presente, com memória contextual e respostas confiáveis.">
     <meta property="og:url" content="https://ariawebpage.onrender.com/">
     <meta property="og:site_name" content="ARIA Bot">
-    <meta property="og:image" content="https://cdn.jsdelivr.net/gh/EttoreMatos/ARIA_webpage@main/perfil2.png">
-    <meta property="og:image:width" content="1024">
-    <meta property="og:image:height" content="1024">
+    <meta property="og:image" content="https://cdn.jsdelivr.net/gh/EttoreMatos/ARIA_webpage@main/banner.png">
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="ARIA - Assistente de IA para Discord">
     <meta name="twitter:description" content="Converse com ARIA: uma assistente de Discord segura e presente, com memória contextual e respostas confiáveis.">
-    <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/EttoreMatos/ARIA_webpage@main/perfil2.png">
+    <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/EttoreMatos/ARIA_webpage@main/banner.png">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Dancing+Script:wght@700&family=IBM+Plex+Mono:wght@400;600&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="style.css?v=20260913-ux-v9">
+    <link rel="stylesheet" href="style.css?v=20260913-ux-v11">
 </head>
 <body>
 
@@ -420,11 +418,6 @@
                 </div>
             </div>
 
-            <div class="tip-banner pricing-note reveal" id="billingStatusBanner" style="display:none;">
-                <span class="icon">💳</span>
-                <p id="billingStatusText"></p>
-            </div>
-
             <p class="pricing-fineprint">Assinatura mensal com renovação automática. Ao cancelar, o acesso continua até ao fim do período já pago, e o servidor volta ao plano Free sem apagar histórico ou configurações.</p>
         </div>
     </section>
@@ -560,6 +553,16 @@
         </div>
     </footer>
 
+    <div class="status-modal" id="statusModal" aria-hidden="true">
+        <div class="status-modal-backdrop" id="statusModalBackdrop"></div>
+        <div class="status-modal-card" role="dialog" aria-modal="true" aria-labelledby="statusModalTitle">
+            <div class="status-modal-icon" id="statusModalIcon" aria-hidden="true">ℹ</div>
+            <h3 id="statusModalTitle">Aviso</h3>
+            <p id="statusModalText"></p>
+            <button type="button" class="btn btn-primary status-modal-ok" id="statusModalOk">OK</button>
+        </div>
+    </div>
+
     <a class="discord-fab" id="discordFab" href="https://discord.gg/E99uQdfCvB" target="_blank" rel="noopener noreferrer" aria-label="Entre no nosso servidor">
         <span class="discord-fab-label">Entre no nosso servidor</span>
         <span class="discord-fab-icon" aria-hidden="true">
@@ -569,6 +572,6 @@
         </span>
     </a>
 
-    <script defer src="script.js?v=20260913-ux-v9"></script>
+    <script defer src="script.js?v=20260913-ux-v11"></script>
 </body>
 </html>
