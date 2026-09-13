@@ -383,13 +383,53 @@ function friendlyBillingError(err, fallback) {
     return raw || fallback;
 }
 
+function inferStatusTone(message) {
+    const msg = String(message || '');
+    if (/recebido|sucesso|concluído|ativo|aberta|aberto/i.test(msg)) return 'success';
+    if (/cancel|falha|erro|indispon|impossível|não foi|invalid/i.test(msg)) return 'error';
+    if (/permite|aguarda|entra|escolhe|ainda não/i.test(msg)) return 'warn';
+    return 'info';
+}
+
+function statusTitleFor(tone, customTitle) {
+    if (customTitle) return customTitle;
+    if (tone === 'success') return 'Tudo certo';
+    if (tone === 'error') return 'Algo correu mal';
+    if (tone === 'warn') return 'Atenção';
+    return 'Aviso';
+}
+
+function statusIconFor(tone) {
+    if (tone === 'success') return '✓';
+    if (tone === 'error') return '!';
+    if (tone === 'warn') return '⚠';
+    return 'ℹ';
+}
+
+function closeStatusModal() {
+    const modal = document.getElementById('statusModal');
+    if (!modal) return;
+    modal.classList.remove('is-visible', 'is-success', 'is-error', 'is-warn', 'is-info');
+    modal.setAttribute('aria-hidden', 'true');
+}
+
+function showStatusPopup(message, options = {}) {
+    const modal = document.getElementById('statusModal');
+    const titleEl = document.getElementById('statusModalTitle');
+    const textEl = document.getElementById('statusModalText');
+    const iconEl = document.getElementById('statusModalIcon');
+    if (!modal || !titleEl || !textEl) return;
+    const tone = options.tone || inferStatusTone(message);
+    modal.classList.remove('is-success', 'is-error', 'is-warn', 'is-info');
+    modal.classList.add('is-visible', `is-${tone}`);
+    modal.setAttribute('aria-hidden', 'false');
+    titleEl.textContent = statusTitleFor(tone, options.title);
+    textEl.textContent = String(message || '');
+    if (iconEl) iconEl.textContent = statusIconFor(tone);
+}
+
 function showBillingBanner(message) {
-    const banner = document.getElementById('billingStatusBanner');
-    const text = document.getElementById('billingStatusText');
-    if (!banner || !text) return;
-    text.textContent = message;
-    banner.style.display = 'flex';
-    banner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    showStatusPopup(message);
 }
 
 function setAuthWaiting(visible) {
@@ -857,14 +897,18 @@ async function startGuildCheckout(guildId) {
 async function openBillingPortal(sourceBtnId) {
     if (billingBusy) return;
     const activeId = sourceBtnId || 'btnManageBilling';
+    // Abrir a aba de imediato (gesto do utilizador); o URL chega depois do await.
+    const portalTab = window.open('about:blank', '_blank');
     setBillingBusy(true, 'A redirecionar…', activeId);
     try {
         const me = await ariaApi.me();
         if (!me.authenticated) {
+            if (portalTab && !portalTab.closed) portalTab.close();
             showBillingBanner('Entra com Discord para gerir a assinatura.');
             return;
         }
         if (!(me.premium && me.premium.enabled)) {
+            if (portalTab && !portalTab.closed) portalTab.close();
             showBillingBanner('Ainda não tens uma assinatura ativa para gerir.');
             await refreshAuthUi();
             return;
@@ -872,14 +916,22 @@ async function openBillingPortal(sourceBtnId) {
         const portal = await ariaApi.portal();
         const url = portal && (portal.portal_url || portal.url);
         if (!url) throw new Error('Portal de cobrança indisponível.');
-        const popup = window.open(url, '_blank', 'noopener,noreferrer');
-        if (!popup) {
-            showBillingBanner('Permite pop-ups para abrir o portal, ou o link abre nesta aba.');
-            window.location.href = url;
+        if (portalTab && !portalTab.closed) {
+            portalTab.location.href = url;
+            showBillingBanner('Portal de cobrança aberto numa nova aba.');
             return;
         }
-        showBillingBanner('Portal de cobrança aberto numa nova aba.');
+        // Pop-up bloqueado: tenta link sem navegar a aba atual.
+        const link = document.createElement('a');
+        link.href = url;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        showBillingBanner('Permite pop-ups se o portal não abrir numa nova aba.');
     } catch (err) {
+        if (portalTab && !portalTab.closed) portalTab.close();
         showBillingBanner(friendlyBillingError(err, 'Portal de cobrança indisponível.'));
     } finally {
         setBillingBusy(false);
@@ -962,8 +1014,17 @@ document.addEventListener('click', (event) => {
 document.addEventListener('keydown', (event) => {
     if (event.key !== 'Escape') return;
     closeNavUserMenu();
+    closeStatusModal();
     const modal = document.getElementById('guildModal');
     if (modal && modal.classList.contains('is-visible')) setGuildModalVisible(false);
+});
+
+document.getElementById('statusModalOk')?.addEventListener('click', () => {
+    closeStatusModal();
+});
+
+document.getElementById('statusModalBackdrop')?.addEventListener('click', () => {
+    closeStatusModal();
 });
 
 document.getElementById('authWaitingCancel')?.addEventListener('click', () => {
@@ -1063,14 +1124,29 @@ updateBillingCtas({ authenticated: false, isPremium: false });
         return;
     }
 
-    if (auth === 'success') showBillingBanner('Login com Discord concluído.');
+    if (auth === 'success') showStatusPopup('Login com Discord concluído.', { tone: 'success', title: 'Autenticado' });
     if (auth === 'error' || auth === 'invalid_state') {
         ariaApi.setPendingAction('');
-        showBillingBanner('Falha no login com Discord.');
+        showStatusPopup('Falha no login com Discord.', { tone: 'error', title: 'Login falhou' });
     }
-    if (billing === 'success') showBillingBanner('Pagamento recebido. O Premium será ativado em instantes.');
-    if (billing === 'cancel') showBillingBanner('Checkout cancelado.');
-    if (billing === 'portal') showBillingBanner('Voltaste do portal de cobrança.');
+    if (billing === 'success') {
+        showStatusPopup('Pagamento recebido. O Premium será ativado em instantes.', {
+            tone: 'success',
+            title: 'Pagamento efetuado',
+        });
+    }
+    if (billing === 'cancel') {
+        showStatusPopup('Checkout cancelado. Nenhuma cobrança foi feita.', {
+            tone: 'warn',
+            title: 'Pagamento cancelado',
+        });
+    }
+    if (billing === 'portal') {
+        showStatusPopup('Voltaste do portal de cobrança.', {
+            tone: 'info',
+            title: 'Portal de cobrança',
+        });
+    }
 
     if (auth || billing || handoffCode || legacySession) {
         const clean = new URL(window.location.href);
