@@ -1478,39 +1478,67 @@ body.nav-open {
     margin: 0;
 }
 .cmd-legend {
+    position: relative;
     display: grid;
-    gap: 0.75rem;
-    margin: 0 auto 1.75rem;
-    max-width: 920px;
-    padding: 1.15rem 1.25rem;
-    background: var(--bg-glass);
-    border: 1px solid var(--border-glass);
-    border-radius: 16px;
+    gap: 1rem;
+    margin: 0 auto 2rem;
+    max-width: 960px;
+    padding: 1.35rem 1.4rem 1.45rem;
+    background:
+        linear-gradient(145deg, rgba(242, 117, 42, 0.10), rgba(176, 82, 209, 0.06) 45%, rgba(64, 140, 220, 0.08)),
+        rgba(18, 12, 28, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: 20px;
+    box-shadow:
+        0 12px 40px rgba(0, 0, 0, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    overflow: hidden;
+}
+.cmd-legend::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 3px;
+    background: linear-gradient(180deg, #8FD99A, #D68CF0, #7EC4FF);
+    border-radius: 20px 0 0 20px;
 }
 .cmd-legend-title {
     font-family: 'Sora', sans-serif;
-    font-size: 0.92rem;
+    font-size: 0.95rem;
     font-weight: 600;
     color: var(--text-main);
-    margin: 0 0 0.15rem;
+    margin: 0;
+    letter-spacing: 0.01em;
 }
 .cmd-legend-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 0.65rem 1rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
 }
 .cmd-legend-item {
     display: flex;
+    flex-direction: column;
     align-items: flex-start;
     gap: 0.55rem;
-    font-size: 0.78rem;
+    font-size: 0.8rem;
     line-height: 1.45;
     color: var(--text-muted);
+    padding: 0.85rem 0.9rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 14px;
+    min-height: 100%;
+    transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease;
+}
+.cmd-legend-item:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(242, 117, 42, 0.28);
+    transform: translateY(-2px);
 }
 .cmd-legend-item .cmd-badge {
     margin-left: 0;
     flex-shrink: 0;
-    margin-top: 0.05rem;
+    margin-top: 0;
 }
 .cmd-badges {
     display: inline-flex;
@@ -2098,6 +2126,17 @@ footer a:hover { color: var(--primary); text-decoration: underline; }
     .feature-icon { width: 52px; height: 52px; font-size: 2rem; margin-bottom: 1rem; }
 
     .commands { padding: 4rem 1.25rem 5rem; }
+    .cmd-legend {
+        padding: 1.15rem 1.1rem 1.2rem;
+        border-radius: 16px;
+        margin-bottom: 1.5rem;
+    }
+    .cmd-legend-grid {
+        grid-template-columns: 1fr;
+        gap: 0.55rem;
+    }
+    .cmd-legend-item { padding: 0.75rem 0.8rem; }
+    .cmd-legend-item:hover { transform: none; }
     .cmd-search-wrapper { margin-bottom: 1.5rem; }
     .cmd-search {
         padding: 0.9rem 1.1rem 0.9rem 3rem;
