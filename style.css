@@ -177,6 +177,46 @@ h1, h2, h3 { line-height: 1.2; }
     100% { transform: translate(-10%, 5%) scale(0.9); }
 }
 
+/* ── TOAST DE SUCESSO (TOPO) ── */
+.top-toast {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1200;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+    background: rgba(12, 28, 18, 0.92);
+    border-bottom: 1px solid rgba(76, 217, 123, 0.28);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: max-height 0.35s ease, opacity 0.3s ease, padding 0.35s ease;
+}
+.top-toast.is-visible {
+    max-height: 56px;
+    opacity: 1;
+    padding: 0.7rem 1rem;
+    pointer-events: auto;
+}
+.top-toast.is-leaving {
+    max-height: 0;
+    opacity: 0;
+    padding: 0 1rem;
+}
+.top-toast-text {
+    font-family: 'Sora', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    color: #4CD97B;
+    text-align: center;
+}
+
 /* ── NAVBAR ── */
 nav {
     position: fixed;
@@ -973,7 +1013,7 @@ nav.scrolled .nav-links {
 .hero-scroll-hint {
     position: absolute;
     left: 50%;
-    bottom: 1.4rem;
+    bottom: 2.6rem;
     transform: translateX(-50%);
     z-index: 2;
     display: inline-flex;
@@ -1761,7 +1801,7 @@ footer a:hover { color: var(--primary); text-decoration: underline; }
     .hero-content h1 .aria-name-styled { font-size: 4rem; }
     .hero-image-wrapper { order: -1; min-height: 320px; }
     .cta-buttons { justify-content: center; }
-    .hero-scroll-hint { bottom: 0.8rem; }
+    .hero-scroll-hint { bottom: 1.8rem; }
     .nav-links,
     nav.scrolled .nav-links {
         transform: none;
