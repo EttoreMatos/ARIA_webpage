@@ -30,7 +30,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Dancing+Script:wght@700&family=IBM+Plex+Mono:wght@400;600&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="style.css?v=20260912">
+    <link rel="stylesheet" href="style.css?v=20260912-ux-v1">
 </head>
 <body>
 
@@ -79,12 +79,16 @@
                     Entrar com Discord
                 </button>
                 <div class="nav-user-chip" id="navUserChip" aria-live="polite">
-                    <img class="nav-user-avatar" id="navUserAvatar" alt="">
-                    <div class="nav-user-meta">
-                        <span class="nav-user-name" id="navUserName">Utilizador</span>
-                        <span class="nav-user-plan" id="navUserPlan">Conta</span>
+                    <button type="button" class="nav-user-trigger" id="navUserTrigger" aria-haspopup="true" aria-expanded="false" aria-controls="navUserMenu">
+                        <img class="nav-user-avatar" id="navUserAvatar" alt="">
+                    </button>
+                    <div class="nav-user-menu" id="navUserMenu" role="menu" hidden>
+                        <div class="nav-user-meta">
+                            <span class="nav-user-name" id="navUserName">Utilizador</span>
+                            <span class="nav-user-plan" id="navUserPlan">Conta</span>
+                        </div>
+                        <button type="button" class="nav-user-logout" id="navLogoutBtn" role="menuitem">Sair</button>
                     </div>
-                    <button type="button" class="nav-user-logout" id="navLogoutBtn">Sair</button>
                 </div>
             </div>
         </div>
@@ -96,6 +100,28 @@
             <h3>Aguardando autenticação</h3>
             <p>Conclui o login com Discord na nova aba. Esta página atualiza automaticamente.</p>
             <button type="button" class="auth-waiting-cancel" id="authWaitingCancel">Cancelar</button>
+        </div>
+    </div>
+
+    <div class="guild-modal" id="guildModal" aria-hidden="true">
+        <div class="guild-modal-backdrop" id="guildModalBackdrop"></div>
+        <div class="guild-modal-card" role="dialog" aria-modal="true" aria-labelledby="guildModalTitle">
+            <button type="button" class="guild-modal-close" id="guildModalClose" aria-label="Fechar">&times;</button>
+            <div class="guild-modal-view" id="guildModalPickView">
+                <h3 id="guildModalTitle">Escolhe o servidor</h3>
+                <p class="guild-modal-hint">Seleciona um servidor onde tens permissão de administrador.</p>
+                <div class="guild-balloon-grid" id="guildBalloonGrid"></div>
+                <p class="guild-modal-empty" id="guildModalEmpty" hidden>Nenhum servidor com permissão de administrador encontrado.</p>
+            </div>
+            <div class="guild-modal-view" id="guildModalInviteView" hidden>
+                <div class="auth-doughnut" aria-hidden="true"></div>
+                <h3 id="guildModalInviteTitle">Adiciona a ARIA</h3>
+                <p class="guild-modal-hint" id="guildModalInviteHint">Abre o Discord, adiciona a ARIA ao servidor escolhido e volta aqui.</p>
+                <div class="guild-modal-actions">
+                    <button type="button" class="btn btn-primary" id="guildInviteAgainBtn">Abrir Discord de novo</button>
+                    <button type="button" class="btn btn-secondary" id="guildInviteDoneBtn">Já adicionei</button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -303,11 +329,10 @@
                     <div class="command-item reveal"><div class="cmd-icon">💾</div><div class="cmd-body"><code>/backup_servidor</code> <span class="cmd-badge badge-premium">Premium</span><span class="cmd-badge badge-admin">Admin</span><p>Salva um backup em JSON da configuração completa do teu servidor.</p></div></div>
                     <div class="command-item reveal"><div class="cmd-icon">📥</div><div class="cmd-body"><code>/restaurar_servidor</code> <span class="cmd-badge badge-premium">Premium</span><span class="cmd-badge badge-admin">Admin</span><p>Restaura um backup que me enviares.</p></div></div>
                     <div class="command-item reveal"><div class="cmd-icon">👋</div><div class="cmd-body"><code>/onboarding</code> <span class="cmd-badge badge-premium">Premium</span><span class="cmd-badge badge-admin">Admin</span><p>Configura o onboarding e as boas-vindas para novos membros.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🧾</div><div class="cmd-body"><code>/configurar_logs</code> <span class="cmd-badge badge-premium">Premium</span><span class="cmd-badge badge-admin">Admin</span><p>Define o canal onde envio os logs de moderação.</p></div></div>
                     <div class="command-item reveal"><div class="cmd-icon">🗂️</div><div class="cmd-body"><code>/configurar_tickets</code> <span class="cmd-badge badge-premium">Premium</span><span class="cmd-badge badge-admin">Admin</span><p>Define categoria, cargo de suporte e canal de logs para os tickets.</p></div></div>
                     <div class="command-item reveal"><div class="cmd-icon">🏷️</div><div class="cmd-body"><code>/cargo_automatico</code> <span class="cmd-badge badge-premium">Premium</span><span class="cmd-badge badge-admin">Admin</span><p>Configura cargos automáticos por entrada, boost ou ticket.</p></div></div>
                     <div class="command-item reveal"><div class="cmd-icon">🎯</div><div class="cmd-body"><code>/modo_foco</code> <span class="cmd-badge badge-premium">Premium</span><span class="cmd-badge badge-admin">Admin</span><p>Faz-me responder apenas quando mencionada ou chamada pelo prefixo.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">⚙️</div><div class="cmd-body"><code>/configurar_aria</code> <span class="cmd-badge badge-premium">Premium</span><span class="cmd-badge badge-admin">Admin</span><p>Abre o meu painel de configuração: canais, cargos, eventos e comportamento.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">⚙️</div><div class="cmd-body"><code>/configurar_aria</code> <span class="cmd-badge badge-premium">Premium</span><span class="cmd-badge badge-admin">Admin</span><p>Abre o meu painel de configuração: canais (incluindo logs), cargos, eventos e comportamento.</p></div></div>
                 </div>
             </div>
 
@@ -371,11 +396,6 @@
                         <li><span>Backup, restauração e reversão de <strong>configurações</strong></span></li>
                     </ul>
                     <button type="button" class="btn btn-primary plan-cta" id="btnCheckoutGuild" data-plan="SERVER_PREMIUM">Assinar para servidor</button>
-                    <div id="guildPicker" style="display:none;margin-top:0.9rem;text-align:left;">
-                        <label for="guildSelect" style="display:block;margin-bottom:0.4rem;color:var(--text-muted);font-size:0.9rem;">Escolhe um servidor elegível</label>
-                        <select id="guildSelect" style="width:100%;padding:0.65rem;border-radius:10px;border:1px solid var(--border-glass);background:var(--bg-surface);color:var(--text-main);"></select>
-                        <button type="button" class="btn btn-primary plan-cta" id="btnConfirmGuildCheckout" style="margin-top:0.7rem;">Continuar para o Stripe</button>
-                    </div>
                 </div>
             </div>
 
@@ -519,6 +539,6 @@
         </div>
     </footer>
 
-    <script defer src="script.js?v=20260912-checkout-v2"></script>
+    <script defer src="script.js?v=20260912-ux-v1"></script>
 </body>
 </html>
