@@ -155,15 +155,22 @@ nav {
     background: transparent;
     padding: 1.2rem 0;
     z-index: 1000;
-    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    border-bottom: 1px solid transparent;
+    box-shadow: none;
+    transition: background 0.35s ease,
+                padding 0.35s ease,
+                box-shadow 0.35s ease,
+                border-color 0.35s ease,
+                backdrop-filter 0.35s ease,
+                -webkit-backdrop-filter 0.35s ease;
 }
 nav.scrolled { 
-    background: var(--bg-glass); 
+    background: rgba(13, 6, 18, 0.82);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     padding: 0.8rem 0;
-    border-bottom: 1px solid var(--border-glass);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    border-bottom-color: rgba(255, 255, 255, 0.04);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
 }
 nav .container {
     max-width: 100%;
@@ -175,7 +182,12 @@ nav .container {
     align-items: center;
     position: relative;
 }
-.logo { font-size: 2.5rem; line-height: 1; z-index: 2; }
+.logo {
+    font-size: 2.5rem;
+    line-height: 1;
+    z-index: 2;
+    margin-left: 1rem;
+}
 .nav-end {
     display: flex;
     align-items: center;
@@ -292,61 +304,64 @@ nav.scrolled .nav-links {
 }
 .nav-user-menu {
     position: absolute;
-    top: calc(100% + 0.65rem);
+    top: calc(100% + 0.75rem);
     right: 0;
     z-index: 1200;
-    width: 280px;
-    padding: 0;
-    border-radius: 8px;
-    border: 1px solid rgba(0, 0, 0, 0.35);
+    width: 340px;
+    padding: 0 0 8px;
+    border-radius: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.45);
     background: #111214;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.35), 0 0 1px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45), 0 0 1px rgba(0, 0, 0, 0.6);
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    animation: navUserMenuIn 0.16s ease-out;
+    animation: navUserMenuIn 0.18s ease-out;
 }
 .nav-user-menu[hidden] { display: none !important; }
 @keyframes navUserMenuIn {
-    from { opacity: 0; transform: translateY(-6px) scale(0.98); }
+    from { opacity: 0; transform: translateY(-8px) scale(0.98); }
     to { opacity: 1; transform: translateY(0) scale(1); }
 }
 .nav-user-banner {
-    height: 60px;
-    background: linear-gradient(135deg, #5865F2 0%, #4752C4 55%, #3c45a5 100%);
+    height: 72px;
+    background: linear-gradient(135deg, #5865F2 0%, #4752C4 50%, #3c45a5 100%);
 }
 .nav-user-header {
     display: flex;
     align-items: flex-end;
-    gap: 0.75rem;
-    padding: 0 12px 12px;
-    margin-top: -28px;
+    padding: 0 16px;
+    margin-top: -38px;
     position: relative;
 }
 .nav-user-menu-avatar {
-    width: 72px;
-    height: 72px;
+    width: 84px;
+    height: 84px;
     border-radius: 50%;
     object-fit: cover;
-    border: 6px solid #111214;
+    border: 7px solid #111214;
     background: #1e1f22;
     flex-shrink: 0;
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.3);
+}
+.nav-user-card {
+    margin: 10px 12px 0;
+    padding: 12px;
+    border-radius: 8px;
+    background: #232428;
 }
 .nav-user-meta {
     display: flex;
     flex-direction: column;
     justify-content: center;
     min-width: 0;
-    line-height: 1.25;
-    padding-bottom: 0.35rem;
-    flex: 1;
+    line-height: 1.3;
 }
 .nav-user-name {
-    font-size: 0.95rem;
+    font-size: 1.05rem;
     font-weight: 700;
     color: #f2f3f5;
-    max-width: 150px;
+    max-width: 100%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -355,15 +370,15 @@ nav.scrolled .nav-links {
     display: inline-flex;
     align-items: center;
     align-self: flex-start;
-    margin-top: 0.35rem;
-    font-size: 0.68rem;
+    margin-top: 0.45rem;
+    font-size: 0.72rem;
     font-weight: 600;
     letter-spacing: 0.02em;
     color: #b5bac1;
     background: #1e1f22;
     border: 1px solid #2b2d31;
     border-radius: 4px;
-    padding: 0.15rem 0.45rem;
+    padding: 0.2rem 0.5rem;
 }
 .nav-user-plan.is-premium {
     color: #f0b132;
@@ -371,38 +386,53 @@ nav.scrolled .nav-links {
     border-color: rgba(240, 177, 50, 0.35);
 }
 .nav-user-menu-panel {
-    margin: 0 8px 8px;
+    margin: 8px 12px 0;
     padding: 6px;
     border-radius: 8px;
     background: #232428;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
 }
-.nav-user-logout {
+.nav-user-menu-item {
     width: 100%;
     display: flex;
     align-items: center;
-    gap: 0.65rem;
-    height: 34px;
-    padding: 0 0.55rem;
+    gap: 0.7rem;
+    min-height: 38px;
+    padding: 0 0.65rem;
     border-radius: 4px;
     border: none;
     background: transparent;
     color: #dbdee1;
     font-family: 'Sora', sans-serif;
-    font-size: 0.82rem;
+    font-size: 0.88rem;
     font-weight: 500;
     text-align: left;
     cursor: pointer;
     transition: background 0.12s ease, color 0.12s ease;
 }
-.nav-user-logout svg {
-    width: 16px;
-    height: 16px;
+.nav-user-menu-item svg {
+    width: 18px;
+    height: 18px;
     flex-shrink: 0;
-    opacity: 0.9;
+    opacity: 0.95;
 }
-.nav-user-logout:hover {
+.nav-user-menu-item:hover {
+    background: #5865F2;
+    color: #fff;
+}
+.nav-user-menu-item.is-danger:hover {
     background: #da373c;
     color: #fff;
+}
+.nav-user-menu-divider {
+    height: 1px;
+    margin: 4px 6px;
+    background: rgba(255, 255, 255, 0.06);
+}
+.nav-user-menu-item[hidden] {
+    display: none !important;
 }
 
 .auth-waiting {
@@ -865,8 +895,8 @@ nav.scrolled .nav-links {
     display: flex;
     align-items: center;
     gap: 1rem;
-    width: auto;
-    max-width: 900px;
+    width: 100%;
+    max-width: 1200px;
     animation: fadeInUp 0.8s ease-out 0.6s both;
 }
 .tip-banner .icon {
@@ -1008,11 +1038,11 @@ nav.scrolled .nav-links {
     position: relative;
     z-index: 1;
 }
-.commands .container { max-width: 1000px; width: 100%; margin: 0 auto; }
+.commands .container { max-width: 1200px; width: 100%; margin: 0 auto; }
 
 /* ── PESQUISA DE COMANDOS ── */
 .cmd-search-wrapper {
-    max-width: 600px;
+    max-width: 720px;
     margin: 0 auto 2.5rem;
     position: relative;
 }
@@ -1057,29 +1087,36 @@ nav.scrolled .nav-links {
 /* Abas Estilo Pill Moderno */
 .cmd-tabs {
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.8rem;
+    flex-wrap: nowrap;
+    gap: 0.55rem;
     justify-content: center;
+    align-items: center;
     margin-bottom: 3.5rem;
     background: rgba(255,255,255,0.02);
     padding: 0.5rem;
     border-radius: 100px;
     border: 1px solid var(--border-glass);
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    scrollbar-width: thin;
 }
 .cmd-tab {
-    padding: 0.6rem 1.5rem;
+    padding: 0.55rem 1.1rem;
     border-radius: 100px;
     border: none;
     background: transparent;
     color: var(--text-muted);
     font-weight: 500;
-    font-size: 0.9rem;
+    font-size: 0.86rem;
     cursor: none;
     transition: all 0.3s ease;
     user-select: none;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.4rem;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 .cmd-tab:hover { color: var(--text-main); background: rgba(255,255,255,0.05); }
 .cmd-tab.active {
@@ -1431,6 +1468,7 @@ footer a:hover { color: var(--primary); text-decoration: underline; }
     max-width: 0;
     opacity: 0;
     overflow: hidden;
+    transform: translateY(3px);
     transition: max-width 0.35s ease, opacity 0.25s ease;
 }
 .discord-fab:hover,
@@ -1488,8 +1526,13 @@ footer a:hover { color: var(--primary); text-decoration: underline; }
         transform: none;
         gap: 1.25rem;
     }
-    .cmd-tabs { border-radius: 16px; padding: 1rem; }
-    .cmd-tab { flex: 1 1 auto; justify-content: center; border-radius: 8px;}
+    .cmd-tabs {
+        flex-wrap: wrap;
+        border-radius: 16px;
+        padding: 1rem;
+        justify-content: flex-start;
+    }
+    .cmd-tab { flex: 0 0 auto; justify-content: center; border-radius: 8px;}
 }
 @media (max-width: 640px) {
     .hero { padding-top: 7rem; }
