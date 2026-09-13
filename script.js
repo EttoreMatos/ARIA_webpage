@@ -244,7 +244,7 @@ document.querySelectorAll('.stat-number').forEach(el => statsObserver.observe(el
 window.ARIA_API_BASE_URL = window.ARIA_API_BASE_URL || 'https://aria-api-xq1h.onrender.com';
 const ARIA_SESSION_KEY = 'aria_session_token';
 const ARIA_PENDING_KEY = 'aria_pending_action';
-const ARIA_AUTH_BUILD = '20260912-ux-v1';
+const ARIA_AUTH_BUILD = '20260912-ux-v3';
 const ARIA_PENDING_GUILD_KEY = 'aria_pending_guild_id';
 const ARIA_BOT_CLIENT_ID = '1439670009147293906';
 const ARIA_BOT_PERMISSIONS = '5419235387371120';
@@ -391,19 +391,43 @@ function setAuthWaiting(visible) {
     }
 }
 
-function setBillingBusy(busy, label) {
+function setButtonLoading(btn, loading) {
+    if (!btn) return;
+    if (loading) {
+        if (!btn.dataset.labelBackup) {
+            btn.dataset.labelBackup = btn.textContent.trim();
+        }
+        btn.classList.add('is-loading');
+        btn.setAttribute('aria-busy', 'true');
+        btn.innerHTML = '<span class="btn-spinner" aria-hidden="true"></span><span class="sr-only">A carregar…</span>';
+        return;
+    }
+    btn.classList.remove('is-loading');
+    btn.removeAttribute('aria-busy');
+    const backup = btn.dataset.labelBackup;
+    if (backup) {
+        btn.textContent = backup;
+        delete btn.dataset.labelBackup;
+    }
+}
+
+function setBillingBusy(busy, label, activeBtnId) {
     billingBusy = !!busy;
     const ids = ['btnCheckoutUser', 'btnCheckoutGuild', 'btnManageBilling', 'guildInviteDoneBtn', 'guildInviteAgainBtn'];
     ids.forEach((id) => {
         const el = document.getElementById(id);
         if (!el) return;
         el.disabled = billingBusy;
+        const shouldSpin = billingBusy && (
+            activeBtnId ? id === activeBtnId : !!label
+        );
+        if (shouldSpin) setButtonLoading(el, true);
+        else if (!billingBusy) setButtonLoading(el, false);
+        else if (el.classList.contains('is-loading') && activeBtnId && id !== activeBtnId) {
+            setButtonLoading(el, false);
+        }
     });
-    const checkoutBtn = document.getElementById('btnCheckoutUser');
-    if (checkoutBtn && !checkoutBtn.hidden) {
-        if (billingBusy && label) checkoutBtn.textContent = label;
-        else updateBillingCtas(lastAuthSnapshot);
-    }
+    if (!billingBusy) updateBillingCtas(lastAuthSnapshot);
 }
 
 function updateBillingCtas(state) {
@@ -416,17 +440,37 @@ function updateBillingCtas(state) {
     if (manageBtn) {
         manageBtn.hidden = !(authenticated && isPremium);
         manageBtn.disabled = billingBusy || manageBtn.hidden;
+        if (!billingBusy && !manageBtn.classList.contains('is-loading')) {
+            manageBtn.dataset.labelBackup = 'Gerenciar assinatura';
+            if (!manageBtn.textContent.trim() || manageBtn.querySelector('.btn-spinner')) {
+                manageBtn.textContent = 'Gerenciar assinatura';
+            }
+        }
     }
     if (checkoutBtn) {
         if (authenticated && isPremium) {
             checkoutBtn.hidden = true;
+            setButtonLoading(checkoutBtn, false);
         } else {
             checkoutBtn.hidden = false;
-            checkoutBtn.textContent = 'Assinar Premium';
+            if (!billingBusy) {
+                setButtonLoading(checkoutBtn, false);
+                checkoutBtn.textContent = 'Assinar Premium';
+                checkoutBtn.dataset.labelBackup = 'Assinar Premium';
+            }
             checkoutBtn.disabled = billingBusy;
         }
     }
-    if (guildBtn) guildBtn.disabled = billingBusy;
+    if (guildBtn) {
+        guildBtn.disabled = billingBusy;
+        if (!billingBusy) {
+            setButtonLoading(guildBtn, false);
+            if (!guildBtn.dataset.labelBackup) guildBtn.dataset.labelBackup = 'Assinar para servidor';
+            if (!guildBtn.querySelector('.btn-spinner')) {
+                guildBtn.textContent = guildBtn.dataset.labelBackup || 'Assinar para servidor';
+            }
+        }
+    }
 }
 
 function escapeHtml(value) {
@@ -596,7 +640,7 @@ async function onGuildBalloonClick(guildId) {
 async function recheckGuildAfterInvite() {
     const guildId = (pendingInviteGuild && pendingInviteGuild.guild_id) || ariaApi.getPendingGuildId();
     if (!guildId || billingBusy) return;
-    setBillingBusy(true);
+    setBillingBusy(true, null, 'guildInviteDoneBtn');
     try {
         const data = await ariaApi.guilds();
         const guilds = (data.guilds || []).filter((g) => g.can_manage);
@@ -679,7 +723,7 @@ function startDiscordLogin() {
 
 async function startUserCheckout() {
     if (billingBusy) return;
-    setBillingBusy(true, 'A redirecionar…');
+    setBillingBusy(true, 'A redirecionar…', 'btnCheckoutUser');
     try {
         const me = await ariaApi.me();
         if (!me.authenticated) {
@@ -713,7 +757,7 @@ async function startUserCheckout() {
 
 async function openGuildPicker() {
     if (billingBusy) return;
-    setBillingBusy(true);
+    setBillingBusy(true, null, 'btnCheckoutGuild');
     try {
         const me = await ariaApi.me();
         if (!me.authenticated) {
@@ -746,7 +790,7 @@ async function openGuildPicker() {
 
 async function startGuildCheckout(guildId) {
     if (billingBusy || !guildId) return;
-    setBillingBusy(true, 'A redirecionar…');
+    setBillingBusy(true, 'A redirecionar…', 'btnCheckoutGuild');
     try {
         const session = await ariaApi.checkoutGuild(guildId);
         const url = session && (session.checkout_url || session.url);
@@ -762,7 +806,7 @@ async function startGuildCheckout(guildId) {
 
 async function openBillingPortal() {
     if (billingBusy) return;
-    setBillingBusy(true);
+    setBillingBusy(true, 'A redirecionar…', 'btnManageBilling');
     try {
         const me = await ariaApi.me();
         if (!me.authenticated) {
