@@ -918,7 +918,6 @@ async function openBillingPortal(sourceBtnId) {
         if (!url) throw new Error('Portal de cobrança indisponível.');
         if (portalTab && !portalTab.closed) {
             portalTab.location.href = url;
-            showBillingBanner('Portal de cobrança aberto numa nova aba.');
             return;
         }
         // Pop-up bloqueado: tenta link sem navegar a aba atual.
