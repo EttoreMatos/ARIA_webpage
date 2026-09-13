@@ -447,6 +447,8 @@ function updateBillingCtas(state) {
     const isPremium = !!(state && state.isPremium);
     const checkoutBtn = document.getElementById('btnCheckoutUser');
     const manageBtn = document.getElementById('btnManageBilling');
+    const navManageBtn = document.getElementById('navManagePlanBtn');
+    const navManageDivider = document.getElementById('navManagePlanDivider');
     const guildBtn = document.getElementById('btnCheckoutGuild');
 
     if (manageBtn) {
@@ -458,6 +460,11 @@ function updateBillingCtas(state) {
                 manageBtn.textContent = 'Gerenciar assinatura';
             }
         }
+    }
+    if (navManageBtn) {
+        const showManage = authenticated && isPremium;
+        navManageBtn.hidden = !showManage;
+        if (navManageDivider) navManageDivider.hidden = !showManage;
     }
     if (checkoutBtn) {
         if (authenticated && isPremium) {
@@ -908,6 +915,12 @@ document.getElementById('navLogoutBtn')?.addEventListener('click', async (event)
     } catch (err) {
         showBillingBanner(err.message || 'Falha ao sair.');
     }
+});
+
+document.getElementById('navManagePlanBtn')?.addEventListener('click', (event) => {
+    event.preventDefault();
+    closeNavUserMenu();
+    openBillingPortal();
 });
 
 document.addEventListener('click', (event) => {
