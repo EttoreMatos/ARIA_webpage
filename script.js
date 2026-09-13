@@ -256,7 +256,7 @@ document.querySelectorAll('.stat-number').forEach(el => statsObserver.observe(el
 window.ARIA_API_BASE_URL = window.ARIA_API_BASE_URL || 'https://aria-api-xq1h.onrender.com';
 const ARIA_SESSION_KEY = 'aria_session_token';
 const ARIA_PENDING_KEY = 'aria_pending_action';
-const ARIA_AUTH_BUILD = '20260912-ux-v4';
+const ARIA_AUTH_BUILD = '20260913-ux-v8';
 const ARIA_PENDING_GUILD_KEY = 'aria_pending_guild_id';
 const ARIA_BOT_CLIENT_ID = '1439670009147293906';
 const ARIA_BOT_PERMISSIONS = '5419235387371120';
@@ -406,6 +406,9 @@ function setAuthWaiting(visible) {
 function setButtonLoading(btn, loading) {
     if (!btn) return;
     if (loading) {
+        if (!btn.dataset.htmlBackup) {
+            btn.dataset.htmlBackup = btn.innerHTML;
+        }
         if (!btn.dataset.labelBackup) {
             btn.dataset.labelBackup = btn.textContent.trim();
         }
@@ -416,6 +419,11 @@ function setButtonLoading(btn, loading) {
     }
     btn.classList.remove('is-loading');
     btn.removeAttribute('aria-busy');
+    if (btn.dataset.htmlBackup) {
+        btn.innerHTML = btn.dataset.htmlBackup;
+        delete btn.dataset.htmlBackup;
+        return;
+    }
     const backup = btn.dataset.labelBackup;
     if (backup) {
         btn.textContent = backup;
@@ -425,7 +433,7 @@ function setButtonLoading(btn, loading) {
 
 function setBillingBusy(busy, label, activeBtnId) {
     billingBusy = !!busy;
-    const ids = ['btnCheckoutUser', 'btnCheckoutGuild', 'btnManageBilling', 'guildInviteDoneBtn', 'guildInviteAgainBtn'];
+    const ids = ['btnCheckoutUser', 'btnCheckoutGuild', 'btnManageBilling', 'navManagePlanBtn', 'guildInviteDoneBtn', 'guildInviteAgainBtn'];
     ids.forEach((id) => {
         const el = document.getElementById(id);
         if (!el) return;
@@ -500,14 +508,21 @@ function escapeHtml(value) {
         .replace(/"/g, '&quot;');
 }
 
-function setLoggedOutUi() {
-    const loginBtn = document.getElementById('navLoginBtn');
-    const chip = document.getElementById('navUserChip');
-    if (loginBtn) loginBtn.style.display = 'inline-flex';
-    if (chip) chip.classList.remove('is-visible');
-    closeNavUserMenu();
-    lastAuthSnapshot = { authenticated: false, isPremium: false };
-    updateBillingCtas(lastAuthSnapshot);
+function applyUserBanner(user) {
+    const banner = document.getElementById('navUserBanner');
+    if (!banner) return;
+    banner.classList.remove('has-image', 'has-color');
+    banner.style.backgroundImage = '';
+    banner.style.backgroundColor = '';
+    if (user && user.banner_url) {
+        banner.classList.add('has-image');
+        banner.style.backgroundImage = `url("${String(user.banner_url).replace(/"/g, '')}")`;
+        return;
+    }
+    if (user && user.banner_color) {
+        banner.classList.add('has-color');
+        banner.style.backgroundColor = String(user.banner_color);
+    }
 }
 
 function setLoggedInUi(user, premium) {
@@ -531,9 +546,21 @@ function setLoggedInUi(user, premium) {
     nameEl.textContent = label;
     planEl.textContent = isPremium ? 'Premium' : 'Conta gratuita';
     planEl.classList.toggle('is-premium', isPremium);
+    applyUserBanner(user);
     if (loginBtn) loginBtn.style.display = 'none';
     chip.classList.add('is-visible');
     lastAuthSnapshot = { authenticated: true, isPremium };
+    updateBillingCtas(lastAuthSnapshot);
+}
+
+function setLoggedOutUi() {
+    const loginBtn = document.getElementById('navLoginBtn');
+    const chip = document.getElementById('navUserChip');
+    if (loginBtn) loginBtn.style.display = 'inline-flex';
+    if (chip) chip.classList.remove('is-visible');
+    closeNavUserMenu();
+    applyUserBanner(null);
+    lastAuthSnapshot = { authenticated: false, isPremium: false };
     updateBillingCtas(lastAuthSnapshot);
 }
 
@@ -629,12 +656,10 @@ function renderGuildBalloons(guilds) {
         const avatarHtml = icon
             ? `<img class="guild-balloon-avatar" src="${escapeHtml(icon)}" alt="" loading="lazy">`
             : `<span class="guild-balloon-avatar guild-balloon-fallback" aria-hidden="true">${escapeHtml(guildInitial(g.name))}</span>`;
-        const badge = ready ? 'Pronta' : 'Adicionar ARIA';
         return `
             <button type="button" class="guild-balloon ${ready ? 'is-ready' : ''}" data-guild-id="${escapeHtml(g.guild_id)}" title="${name}">
                 ${avatarHtml}
                 <span class="guild-balloon-name">${name}</span>
-                <span class="guild-balloon-badge">${badge}</span>
             </button>
         `;
     }).join('');
@@ -829,18 +854,17 @@ async function startGuildCheckout(guildId) {
     }
 }
 
-async function openBillingPortal() {
+async function openBillingPortal(sourceBtnId) {
     if (billingBusy) return;
-    setBillingBusy(true, 'A redirecionar…', 'btnManageBilling');
+    const activeId = sourceBtnId || 'btnManageBilling';
+    setBillingBusy(true, 'A redirecionar…', activeId);
     try {
         const me = await ariaApi.me();
         if (!me.authenticated) {
-            setBillingBusy(false);
             showBillingBanner('Entra com Discord para gerir a assinatura.');
             return;
         }
         if (!(me.premium && me.premium.enabled)) {
-            setBillingBusy(false);
             showBillingBanner('Ainda não tens uma assinatura ativa para gerir.');
             await refreshAuthUi();
             return;
@@ -848,10 +872,17 @@ async function openBillingPortal() {
         const portal = await ariaApi.portal();
         const url = portal && (portal.portal_url || portal.url);
         if (!url) throw new Error('Portal de cobrança indisponível.');
-        window.location.href = url;
+        const popup = window.open(url, '_blank', 'noopener,noreferrer');
+        if (!popup) {
+            showBillingBanner('Permite pop-ups para abrir o portal, ou o link abre nesta aba.');
+            window.location.href = url;
+            return;
+        }
+        showBillingBanner('Portal de cobrança aberto numa nova aba.');
     } catch (err) {
-        setBillingBusy(false);
         showBillingBanner(friendlyBillingError(err, 'Portal de cobrança indisponível.'));
+    } finally {
+        setBillingBusy(false);
     }
 }
 
@@ -917,10 +948,10 @@ document.getElementById('navLogoutBtn')?.addEventListener('click', async (event)
     }
 });
 
-document.getElementById('navManagePlanBtn')?.addEventListener('click', (event) => {
+document.getElementById('navManagePlanBtn')?.addEventListener('click', async (event) => {
     event.preventDefault();
+    await openBillingPortal('navManagePlanBtn');
     closeNavUserMenu();
-    openBillingPortal();
 });
 
 document.addEventListener('click', (event) => {
@@ -947,7 +978,7 @@ document.getElementById('btnCheckoutUser')?.addEventListener('click', () => {
 });
 
 document.getElementById('btnManageBilling')?.addEventListener('click', () => {
-    openBillingPortal();
+    openBillingPortal('btnManageBilling');
 });
 
 document.getElementById('btnCheckoutGuild')?.addEventListener('click', () => {
