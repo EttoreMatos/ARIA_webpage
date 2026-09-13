@@ -240,65 +240,94 @@ nav .container {
 
 .nav-user-chip {
     display: none;
+    position: relative;
     align-items: center;
-    gap: 0.7rem;
-    height: 40px;
-    padding: 0 0.35rem 0 0.35rem;
-    border-radius: 999px;
-    border: 1px solid var(--border-glass);
-    background: rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(10px);
 }
 .nav-user-chip.is-visible { display: inline-flex; }
+.nav-user-trigger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.nav-user-trigger:hover,
+.nav-user-trigger[aria-expanded="true"] {
+    transform: translateY(-1px);
+    box-shadow: 0 0 0 2px rgba(242, 117, 42, 0.45);
+}
 .nav-user-avatar {
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     object-fit: cover;
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    border: 2px solid rgba(255, 255, 255, 0.14);
     background: var(--bg-surface);
+    display: block;
 }
+.nav-user-menu {
+    position: absolute;
+    top: calc(100% + 0.55rem);
+    right: 0;
+    z-index: 1200;
+    min-width: 190px;
+    padding: 0.85rem 0.9rem;
+    border-radius: 14px;
+    border: 1px solid var(--border-glass);
+    background: linear-gradient(180deg, rgba(40, 24, 52, 0.98), rgba(22, 12, 32, 0.99));
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+.nav-user-menu[hidden] { display: none !important; }
 .nav-user-meta {
     display: flex;
     flex-direction: column;
     justify-content: center;
     min-width: 0;
-    padding-right: 0.15rem;
-    line-height: 1.15;
+    line-height: 1.2;
 }
 .nav-user-name {
-    font-size: 0.82rem;
+    font-size: 0.86rem;
     font-weight: 600;
     color: var(--text-main);
-    max-width: 140px;
+    max-width: 160px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 .nav-user-plan {
-    font-size: 0.68rem;
+    font-size: 0.7rem;
     color: var(--text-muted);
     letter-spacing: 0.02em;
+    margin-top: 0.15rem;
 }
 .nav-user-plan.is-premium { color: #D68CF0; }
 .nav-user-logout {
-    height: 30px;
-    margin-right: 0.25rem;
+    height: 34px;
+    width: 100%;
     padding: 0 0.75rem;
-    border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
     background: rgba(255, 255, 255, 0.04);
     color: var(--text-muted);
     font-family: 'Sora', sans-serif;
-    font-size: 0.72rem;
+    font-size: 0.78rem;
     font-weight: 600;
     cursor: pointer;
     transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
 }
 .nav-user-logout:hover {
     color: var(--text-main);
-    background: rgba(242, 117, 42, 0.12);
-    border-color: rgba(242, 117, 42, 0.35);
+    background: rgba(242, 117, 42, 0.14);
+    border-color: rgba(242, 117, 42, 0.4);
 }
 
 .auth-waiting {
@@ -365,14 +394,174 @@ nav .container {
     border-color: rgba(255, 255, 255, 0.22);
 }
 
+/* ── MODAL DE SERVIDORES ── */
+.guild-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 10001;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem;
+}
+.guild-modal.is-visible { display: flex; }
+.guild-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(8, 4, 12, 0.78);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+.guild-modal-card {
+    position: relative;
+    z-index: 1;
+    width: min(520px, calc(100vw - 2rem));
+    max-height: min(82vh, 640px);
+    overflow: auto;
+    padding: 2rem 1.6rem 1.6rem;
+    border-radius: 22px;
+    border: 1px solid var(--border-glass);
+    background: linear-gradient(180deg, rgba(40, 24, 52, 0.97), rgba(18, 10, 28, 0.99));
+    box-shadow: 0 28px 70px rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+.guild-modal-close {
+    position: absolute;
+    top: 0.7rem;
+    right: 0.85rem;
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-muted);
+    font-size: 1.4rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: color 0.2s ease, background 0.2s ease;
+}
+.guild-modal-close:hover {
+    color: var(--text-main);
+    background: rgba(242, 117, 42, 0.18);
+}
+.guild-modal-view h3 {
+    font-family: 'Sora', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--text-main);
+    margin-bottom: 0.4rem;
+}
+.guild-modal-hint {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    margin-bottom: 1.4rem;
+    line-height: 1.5;
+}
+.guild-modal-empty {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    padding: 1.5rem 0.5rem;
+}
+.guild-balloon-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+    gap: 1rem 0.75rem;
+    justify-items: center;
+}
+.guild-balloon {
+    width: 100%;
+    max-width: 104px;
+    padding: 0.35rem 0.2rem;
+    border: none;
+    background: transparent;
+    color: var(--text-main);
+    font-family: 'Sora', sans-serif;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.45rem;
+    transition: transform 0.2s ease;
+}
+.guild-balloon:hover,
+.guild-balloon:focus-visible {
+    transform: translateY(-3px);
+    outline: none;
+}
+.guild-balloon-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(255, 255, 255, 0.12);
+    background: var(--bg-surface);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.guild-balloon:hover .guild-balloon-avatar,
+.guild-balloon:focus-visible .guild-balloon-avatar {
+    border-color: rgba(242, 117, 42, 0.65);
+    box-shadow: 0 10px 26px rgba(242, 117, 42, 0.28);
+}
+.guild-balloon-fallback {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+}
+.guild-balloon-name {
+    font-size: 0.72rem;
+    font-weight: 600;
+    line-height: 1.25;
+    max-width: 100%;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.guild-balloon-badge {
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    padding: 0.18rem 0.4rem;
+    border-radius: 999px;
+    background: rgba(88, 101, 242, 0.22);
+    color: var(--accent-light);
+    border: 1px solid rgba(88, 101, 242, 0.35);
+}
+.guild-balloon.is-ready .guild-balloon-badge {
+    background: rgba(242, 117, 42, 0.18);
+    color: var(--primary-light);
+    border-color: rgba(242, 117, 42, 0.4);
+}
+.guild-modal-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    justify-content: center;
+}
+.guild-modal-actions .btn {
+    min-width: 160px;
+    padding: 0.85rem 1.4rem;
+    font-size: 0.88rem;
+}
+
 /* ── BOTÕES MODERNOS ── */
 .btn {
     padding: 1rem 2.2rem;
-    border-radius: 100px; /* Estilo pílula */
+    border-radius: 100px;
     text-decoration: none;
     font-weight: 600;
     font-size: 0.95rem;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                box-shadow 0.3s ease,
+                filter 0.3s ease,
+                background 0.3s ease,
+                border-color 0.3s ease;
     border: none;
     cursor: none;
     display: inline-flex;
@@ -380,43 +569,28 @@ nav .container {
     justify-content: center;
     gap: 0.5rem;
     position: relative;
-    overflow: hidden;
+    isolation: isolate;
     z-index: 1;
 }
-.btn::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(255,255,255,0.1);
-    transform: scaleX(0);
-    transform-origin: right;
-    transition: transform 0.4s ease;
-    z-index: -1;
-    border-radius: 100px;
-}
-.btn:hover::before {
-    transform: scaleX(1);
-    transform-origin: left;
-}
 .btn-primary {
-    background: var(--gradient-1);
-    color: white;
-    box-shadow: 0 8px 24px rgba(242, 117, 42, 0.25);
-    border: 1px solid rgba(255,255,255,0.1);
+    background: linear-gradient(135deg, #E86A1F 0%, #F2752A 42%, #E8A020 100%);
+    color: #fff;
+    box-shadow: 0 8px 24px rgba(232, 106, 31, 0.38);
 }
 .btn-primary:hover {
     transform: translateY(-3px);
-    box-shadow: 0 12px 32px rgba(242, 117, 42, 0.4);
+    filter: brightness(1.05);
+    box-shadow: 0 12px 32px rgba(232, 106, 31, 0.5);
 }
 .btn-secondary {
-    background: var(--bg-glass);
-    backdrop-filter: blur(10px);
+    background: rgba(27, 16, 35, 0.85);
     color: var(--text-main);
-    border: 1px solid var(--border-accent);
+    border: 1px solid rgba(242, 117, 42, 0.45);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
 }
 .btn-secondary:hover {
     border-color: var(--primary);
-    background: rgba(242, 117, 42, 0.08);
+    background: rgba(242, 117, 42, 0.14);
     transform: translateY(-3px);
 }
 .btn:disabled,
@@ -426,6 +600,7 @@ nav .container {
     transform: none !important;
     box-shadow: none !important;
     pointer-events: none;
+    filter: none !important;
 }
 .plan-cta[hidden] {
     display: none !important;
@@ -1097,7 +1272,6 @@ footer a:hover { color: var(--primary); text-decoration: underline; }
     .cta-buttons { flex-direction: column; width: 100%; }
     .btn { width: 100%; }
     .nav-links { display: none; }
-    .nav-user-name { max-width: 96px; }
     .nav-login-btn { padding: 0 0.85rem; font-size: 0.8rem; }
     .section-title { font-size: 2.5rem; }
     body { cursor: auto; }
