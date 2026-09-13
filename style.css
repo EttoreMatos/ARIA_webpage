@@ -18,6 +18,7 @@
     --border-accent: rgba(242, 117, 42, 0.2);
 
     --band-bg: rgba(43, 24, 58, 0.78);
+    --stats-bg: #F2752A;
     --wave-h: 28px;
     /* Onda mais suave e baixa para a transição home ↔ estatísticas */
     --wave-edge: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 24' preserveAspectRatio='none'%3E%3Cpath fill='%23000' d='M0 12C180 20 300 4 480 12s300-8 480 0 300 8 480 0v12H0Z'/%3E%3C/svg%3E");
@@ -871,22 +872,9 @@ nav.scrolled .nav-links {
     z-index: 1;
     overflow: visible;
 }
-/* Transição suave home → estatísticas (evita faixa dupla / borda grossa) */
+/* Transição home → estatísticas: a onda sólida vem da máscara da .stats */
 .hero::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: -1px;
-    height: calc(var(--wave-h) + 18px);
-    background: linear-gradient(
-        180deg,
-        transparent 0%,
-        rgba(43, 24, 58, 0.25) 45%,
-        rgba(43, 24, 58, 0.55) 100%
-    );
-    pointer-events: none;
-    z-index: 2;
+    display: none;
 }
 .hero-atmosphere {
     position: absolute;
@@ -894,6 +882,14 @@ nav.scrolled .nav-links {
     pointer-events: none;
     z-index: 0;
     overflow: hidden;
+}
+/* Leve filtro roxo Discord sobre o fundo da home */
+.hero-atmosphere::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(88, 101, 242, 0.14);
+    pointer-events: none;
 }
 .hero-glow {
     position: absolute;
@@ -906,7 +902,7 @@ nav.scrolled .nav-links {
     height: min(48vw, 520px);
     left: -8%;
     top: 18%;
-    background: rgba(107, 52, 93, 0.45);
+    background: rgba(88, 101, 242, 0.35);
 }
 .hero-glow-right {
     width: min(42vw, 420px);
@@ -1181,6 +1177,7 @@ nav.scrolled .nav-links {
     mask-repeat: no-repeat;
 }
 .stats.section-band {
+    background: var(--stats-bg);
     margin-top: calc(var(--wave-h) * -1);
     padding-top: calc(4.5rem + var(--wave-h));
 }
@@ -1651,11 +1648,24 @@ nav.scrolled .nav-links {
 /* ── FOOTER ── */
 footer {
     background: var(--bg-deep);
-    padding: 4rem 2rem 3rem;
-    border-top: 1px solid var(--border-glass);
+    padding: calc(4rem + var(--wave-h)) 2rem 3rem;
+    border-top: none;
     position: relative;
-    z-index: 1;
+    z-index: 2;
     text-align: center;
+    margin-top: calc(var(--wave-h) * -1);
+    -webkit-mask-image:
+        var(--wave-edge),
+        linear-gradient(#000 0 0);
+    mask-image:
+        var(--wave-edge),
+        linear-gradient(#000 0 0);
+    -webkit-mask-position: top, center;
+    mask-position: top, center;
+    -webkit-mask-size: 100% var(--wave-h), 100% calc(100% - var(--wave-h) + 1px);
+    mask-size: 100% var(--wave-h), 100% calc(100% - var(--wave-h) + 1px);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
 }
 footer .container { max-width: 1200px; width: 100%; margin: 0 auto; }
 footer .logo-bottom {
