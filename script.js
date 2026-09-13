@@ -413,6 +413,34 @@ function closeStatusModal() {
     modal.setAttribute('aria-hidden', 'true');
 }
 
+let topToastTimer = null;
+let topToastHideTimer = null;
+
+function hideTopToast() {
+    const toast = document.getElementById('topToast');
+    if (!toast) return;
+    toast.classList.remove('is-visible');
+    toast.classList.add('is-leaving');
+    clearTimeout(topToastHideTimer);
+    topToastHideTimer = setTimeout(() => {
+        toast.classList.remove('is-leaving');
+        toast.setAttribute('aria-hidden', 'true');
+    }, 360);
+}
+
+function showTopToast(message) {
+    const toast = document.getElementById('topToast');
+    const textEl = document.getElementById('topToastText');
+    if (!toast || !textEl) return;
+    clearTimeout(topToastTimer);
+    clearTimeout(topToastHideTimer);
+    textEl.textContent = String(message || '');
+    toast.classList.remove('is-leaving');
+    toast.classList.add('is-visible');
+    toast.setAttribute('aria-hidden', 'false');
+    topToastTimer = setTimeout(hideTopToast, 3000);
+}
+
 function showStatusPopup(message, options = {}) {
     const modal = document.getElementById('statusModal');
     const titleEl = document.getElementById('statusModalTitle');
@@ -922,7 +950,6 @@ async function openBillingPortal(sourceBtnId) {
             document.body.appendChild(link);
             link.click();
             link.remove();
-            showBillingBanner('Permite pop-ups se o portal não abrir numa nova aba.');
         }
     } catch (err) {
         showBillingBanner(friendlyBillingError(err, 'Portal de cobrança indisponível.'));
@@ -959,7 +986,7 @@ window.addEventListener('message', async (event) => {
     const data = event.data;
     if (!data || data.type !== ARIA_AUTH_MSG) return;
     if (data.token) {
-        showBillingBanner('Login com Discord concluído.');
+        showTopToast('Login com Discord concluído.');
         await onAuthSuccess(data.token);
         return;
     }
@@ -987,7 +1014,7 @@ document.getElementById('navLogoutBtn')?.addEventListener('click', async (event)
     try {
         await ariaApi.logout();
         await refreshAuthUi();
-        showBillingBanner('Sessão encerrada.');
+        showTopToast('Sessão encerrada.');
     } catch (err) {
         showBillingBanner(err.message || 'Falha ao sair.');
     }
@@ -1117,7 +1144,7 @@ updateBillingCtas({ authenticated: false, isPremium: false });
         return;
     }
 
-    if (auth === 'success') showStatusPopup('Login com Discord concluído.', { tone: 'success', title: 'Autenticado' });
+    if (auth === 'success') showTopToast('Login com Discord concluído.');
     if (auth === 'error' || auth === 'invalid_state') {
         ariaApi.setPendingAction('');
         showStatusPopup('Falha no login com Discord.', { tone: 'error', title: 'Login falhou' });
