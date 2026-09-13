@@ -507,14 +507,20 @@ function setLoggedInUi(user, premium) {
     const loginBtn = document.getElementById('navLoginBtn');
     const chip = document.getElementById('navUserChip');
     const avatar = document.getElementById('navUserAvatar');
+    const menuAvatar = document.getElementById('navUserMenuAvatar');
     const nameEl = document.getElementById('navUserName');
     const planEl = document.getElementById('navUserPlan');
     if (!chip || !avatar || !nameEl || !planEl) return;
 
     const label = user.display_name || user.username || 'Conta Discord';
     const isPremium = !!(premium && premium.enabled);
-    avatar.src = user.avatar_url || DEFAULT_AVATAR;
+    const src = user.avatar_url || DEFAULT_AVATAR;
+    avatar.src = src;
     avatar.alt = label;
+    if (menuAvatar) {
+        menuAvatar.src = src;
+        menuAvatar.alt = label;
+    }
     nameEl.textContent = label;
     planEl.textContent = isPremium ? 'Premium' : 'Conta gratuita';
     planEl.classList.toggle('is-premium', isPremium);
