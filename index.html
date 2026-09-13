@@ -28,7 +28,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Dancing+Script:wght@700&family=IBM+Plex+Mono:wght@400;600&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="style.css?v=20260913-ux-v25">
+    <link rel="stylesheet" href="style.css?v=20260913-ux-v27">
 </head>
 <body>
 
@@ -253,12 +253,22 @@
     <section class="commands" id="commands">
         <div class="container">
             <h2 class="section-title">Os Meus Comandos</h2>
-            <p class="section-subtitle">Tudo o que posso fazer por ti, organizado por categoria. (Atualizado em 09/09/2026)</p>
+            <p class="section-subtitle">Olá! Aqui está tudo o que eu sei fazer por ti. Em cada comando mostro o plano e, se precisar, a permissão do Discord. (Atualizado em 13/09/2026)</p>
+
+            <div class="cmd-legend reveal">
+                <p class="cmd-legend-title">Psst… como ler as etiquetinhas</p>
+                <div class="cmd-legend-grid">
+                    <div class="cmd-legend-item"><span class="cmd-badge badge-free">Grátis</span><span>Está no <strong>Aria Free</strong> — podes usar sem assinar (desde que não estejas bloqueado).</span></div>
+                    <div class="cmd-legend-item"><span class="cmd-badge badge-premium">Aria Premium</span><span>Libera com <strong>Aria Premium</strong> na tua conta, ou se o servidor tiver <strong>Aria Server</strong>.</span></div>
+                    <div class="cmd-legend-item"><span class="cmd-badge badge-server">Aria Server</span><span>Só no plano do <strong>servidor</strong>. O Premium individual sozinho não chega aqui.</span></div>
+                    <div class="cmd-legend-item"><span class="cmd-badge badge-perm">Permissão Discord</span><span>Isto <strong>não</strong> é plano pago — é uma permissão do Discord (tipo Gerenciar Mensagens ou Administrador).</span></div>
+                </div>
+            </div>
 
             <!-- Pesquisa de Comandos -->
             <div class="cmd-search-wrapper reveal">
                 <span class="search-icon">🔍</span>
-                <input type="text" id="cmdSearch" class="cmd-search" placeholder="Pesquisar comandos (ex: latencia, ticket, aviso)...">
+                <input type="text" id="cmdSearch" class="cmd-search" placeholder="Procura um comando (ex: latencia, ticket, aviso)...">
             </div>
 
             <!-- Abas (Tabs) -->
@@ -271,101 +281,101 @@
                 <button class="cmd-tab" data-target="tab-moderacao">🛡️ Moderação</button>
                 <button class="cmd-tab" data-target="tab-voz">🎙️ Voz</button>
                 <button class="cmd-tab" data-target="tab-economia">📈 Economia</button>
-                <button class="cmd-tab" data-target="tab-premium">👑 Premium</button>
+                <button class="cmd-tab" data-target="tab-premium">👑 Aria Server</button>
             </div>
 
             <!-- GERAL -->
             <div class="cmd-panel active" id="tab-geral">
                 <div class="command-list">
-                    <div class="command-item reveal"><div class="cmd-icon">📡</div><div class="cmd-body"><code>/latencia</code><p>Mostra a minha latência, tempo online e versão, atualizando em tempo real.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">❓</div><div class="cmd-body"><code>/ajuda</code><p>Abre o meu painel de ajuda com todas as categorias de comandos e mostra o teu plano atual.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🏠</div><div class="cmd-body"><code>/info_servidor</code><p>Mostra informações básicas do servidor atual.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">📡</div><div class="cmd-body"><code>/latencia</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span></span><p>Queres saber se o meu coraçãozinho digital ainda bate? Mostro latência, tempo online e versão.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">❓</div><div class="cmd-body"><code>/ajuda</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span></span><p>O meu mapa do tesouro: abro as categorias de comandos e digo-te qual é o teu plano agora.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🏠</div><div class="cmd-body"><code>/info_servidor</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span></span><p>Conto-te o essencial deste servidor num piscar de olhos.</p></div></div>
                 </div>
             </div>
 
             <!-- TÓPICO -->
             <div class="cmd-panel" id="tab-topico">
                 <div class="command-list">
-                    <div class="command-item reveal"><div class="cmd-icon">🔐</div><div class="cmd-body"><code>/criar_topico</code><p>Cria um tópico privado para conversarmos sem precisares de me mencionar a todo o momento.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🚪</div><div class="cmd-body"><code>/fechar_topico</code><p>Fecha, remove ou arquiva o teu tópico privado com segurança.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🔐</div><div class="cmd-body"><code>/criar_topico</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span></span><p>Abro um cantinho só nosso: um tópico privado onde podes falar comigo sem me mencionar a cada frase.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🚪</div><div class="cmd-body"><code>/fechar_topico</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span></span><p>Quando acabares a conversa, fecha o teu tópico (só quem o criou é que manda).</p></div></div>
                 </div>
             </div>
 
             <!-- HISTÓRICO -->
             <div class="cmd-panel" id="tab-historico">
                 <div class="command-list">
-                    <div class="command-item reveal"><div class="cmd-icon">📖</div><div class="cmd-body"><code>/relembrar</code><p>Consulta o histórico das nossas conversas, com filtro por data e exportação em .txt (pede o teu PIN do histórico).</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🗑️</div><div class="cmd-body"><code>/esquecer</code><p>Apaga parte ou todo o teu histórico comigo.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🧹</div><div class="cmd-body"><code>/limpar_dm</code><p>Apaga as minhas mensagens na DM atual, depois de confirmares.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🔑</div><div class="cmd-body"><code>/editar_pin</code><p>Altera o PIN usado para proteger o teu histórico.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">⚙️</div><div class="cmd-body"><code>/limite_hist</code><p>Consulta ou ajusta quantas mensagens guardo na memória de curto prazo (até 20 no Grátis, até 100 no Premium).</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">📖</div><div class="cmd-body"><code>/relembrar</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span></span><p>Abro o nosso diário: vês o histórico, filtras por data e podes exportar em .txt. Peço o teu PIN, ok?</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🗑️</div><div class="cmd-body"><code>/esquecer</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span></span><p>Poof — apago parte ou todas as nossas memórias, mas só depois de confirmares.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🧹</div><div class="cmd-body"><code>/limpar_dm</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span></span><p>Na DM, posso limpar as minhas mensagens depois da tua confirmação. Só funciona em mensagem direta.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🔑</div><div class="cmd-body"><code>/editar_pin</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span></span><p>Trocas o PIN secreto do diário (4 a 12 dígitos). Guarda bem!</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">⚙️</div><div class="cmd-body"><code>/limite_hist</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span></span><p>Dizes-me quantas lembranças carrego no contexto curto: até <strong>20</strong> no Free, até <strong>100</strong> com Aria Premium ou Aria Server.</p></div></div>
                 </div>
             </div>
 
             <!-- UTILIDADES -->
             <div class="cmd-panel" id="tab-utilidades">
                 <div class="command-list">
-                    <div class="command-item reveal"><div class="cmd-icon">⏰</div><div class="cmd-body"><code>/lembrete</code> <span class="cmd-badge badge-premium">Premium</span><p>Agenda um lembrete de até 30 dias. Eu aviso-te por DM ou no canal configurado.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🌍</div><div class="cmd-body"><code>/traduzir</code> <span class="cmd-badge badge-premium">Premium</span><p>Traduz qualquer texto para o idioma que escolheres.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">📝</div><div class="cmd-body"><code>/resumir</code> <span class="cmd-badge badge-premium">Premium</span><p>Lê um texto que me enviares e cria um resumo claro e objetivo.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">✉️</div><div class="cmd-body"><code>/cartao</code> <span class="cmd-badge badge-premium">Premium</span><p>Cria e publica uma embed personalizada, com opção de enviar para outro canal.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🎫</div><div class="cmd-body"><code>/ticket</code> <span class="cmd-badge badge-premium">Premium</span><p>Abre um ticket de suporte privado e organizado no servidor.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">📚</div><div class="cmd-body"><code>/resumir_canal</code> <span class="cmd-badge badge-premium">Premium</span><p>Resume as últimas 5 a 50 mensagens do canal para te pores a par rapidamente.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">✍️</div><div class="cmd-body"><code>/revisar</code> <span class="cmd-badge badge-premium">Premium</span><p>Revê a gramática, a clareza e o estilo de um texto que me enviares.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🎭</div><div class="cmd-body"><code>/personalizar</code> <span class="cmd-badge badge-premium">Premium</span><p>Escolhe o meu estilo de fala pessoal. Administradores também podem ajustar o tom geral do servidor.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">⏰</div><div class="cmd-body"><code>/lembrete</code> <span class="cmd-badges"><span class="cmd-badge badge-premium">Aria Premium</span></span><p>Eu não esqueço… tu que esqueces. Agenda até 30 dias e eu aviso-te por DM (ou no canal, se a DM falhar).</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🌍</div><div class="cmd-body"><code>/traduzir</code> <span class="cmd-badges"><span class="cmd-badge badge-premium">Aria Premium</span></span><p>Babel? Deixa comigo — traduzo o teu texto para o idioma que escolheres.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">📝</div><div class="cmd-body"><code>/resumir</code> <span class="cmd-badges"><span class="cmd-badge badge-premium">Aria Premium</span></span><p>Textão demais? Eu corto o drama e devolvo um resumo clarinho.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">✉️</div><div class="cmd-body"><code>/cartao</code> <span class="cmd-badges"><span class="cmd-badge badge-premium">Aria Premium</span></span><p>Faço um cartãozinho (embed) bonito. Para publicar noutro canal, precisas da permissão Discord <strong>Gerenciar Mensagens</strong> lá.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🎫</div><div class="cmd-body"><code>/ticket</code> <span class="cmd-badges"><span class="cmd-badge badge-premium">Aria Premium</span></span><p>Abro um ticketzinho privado de suporte — desde que o servidor já tenha tickets prontos com <code>/configurar_tickets</code>.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">📚</div><div class="cmd-body"><code>/resumir_canal</code> <span class="cmd-badges"><span class="cmd-badge badge-premium">Aria Premium</span></span><p>Chegaste a meio da conversa? Resumo as últimas 5 a 50 mensagens do canal para te pôr a par.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">✍️</div><div class="cmd-body"><code>/revisar</code> <span class="cmd-badges"><span class="cmd-badge badge-premium">Aria Premium</span></span><p>Polimento de texto: gramática, clareza e estilo, com carinho.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🎭</div><div class="cmd-body"><code>/personalizar</code> <span class="cmd-badges"><span class="cmd-badge badge-premium">Aria Premium</span></span><p>Escolhe como eu falo contigo. O tom do servidor só quem tem <strong>Administrador</strong> no Discord é que mexe.</p></div></div>
                 </div>
             </div>
 
             <!-- DIVERSÃO -->
             <div class="cmd-panel" id="tab-diversao">
                 <div class="command-list">
-                    <div class="command-item reveal"><div class="cmd-icon">🎲</div><div class="cmd-body"><code>/diversao</code> <span class="cmd-badge badge-premium">Premium</span><p>Abre um menu com vários mini-jogos interativos para passar o tempo.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🎲</div><div class="cmd-body"><code>/diversao</code> <span class="cmd-badges"><span class="cmd-badge badge-premium">Aria Premium</span></span><p>Hora do recreio! Menu com Jokenpô, Ship, Palavra, Moeda e Dados.</p></div></div>
                 </div>
             </div>
 
             <!-- MODERAÇÃO -->
             <div class="cmd-panel" id="tab-moderacao">
                 <div class="command-list">
-                    <div class="command-item reveal"><div class="cmd-icon">⚠️</div><div class="cmd-body"><code>/aviso</code> <span class="cmd-badge badge-mod">Mod</span><p>Regista um aviso para um membro.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">📋</div><div class="cmd-body"><code>/avisos</code> <span class="cmd-badge badge-mod">Mod</span><p>Lista os avisos de um membro.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">♻️</div><div class="cmd-body"><code>/limpar_avisos</code> <span class="cmd-badge badge-mod">Mod</span><p>Remove os avisos de um membro.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🗑️</div><div class="cmd-body"><code>/limpar</code> <span class="cmd-badge badge-mod">Mod</span><p>Apaga mensagens recentes do canal atual.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🐢</div><div class="cmd-body"><code>/modo_lento</code> <span class="cmd-badge badge-mod">Mod</span><p>Configura o slowmode do canal.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🔒</div><div class="cmd-body"><code>/trancar</code> <span class="cmd-badge badge-mod">Mod</span><p>Bloqueia mensagens de membros no canal.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🔓</div><div class="cmd-body"><code>/destrancar</code> <span class="cmd-badge badge-mod">Mod</span><p>Desbloqueia mensagens de membros no canal.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">⚠️</div><div class="cmd-body"><code>/aviso</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span><span class="cmd-badge badge-perm">Discord · Gerenciar Mensagens</span></span><p>Um avisinho carinhoso… mas sério. Para a staff com permissão Discord <strong>Gerenciar Mensagens</strong> — não é “plano Mod”.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">📋</div><div class="cmd-body"><code>/avisos</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span><span class="cmd-badge badge-perm">Discord · Gerenciar Mensagens</span></span><p>Abro o dossiê: listo os avisos guardados de um membro.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">♻️</div><div class="cmd-body"><code>/limpar_avisos</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span><span class="cmd-badge badge-perm">Discord · Gerenciar Mensagens</span></span><p>Página virada: zero avisos para aquele membro.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🗑️</div><div class="cmd-body"><code>/limpar</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span><span class="cmd-badge badge-perm">Discord · Gerenciar Mensagens</span></span><p>Sumiu! Apago de 1 a 100 mensagens recentes do canal.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🐢</div><div class="cmd-body"><code>/modo_lento</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span><span class="cmd-badge badge-perm">Discord · Gerenciar Canais</span></span><p>Respiro fundo… configuro o slowmode (0 a 21600s). Precisas de <strong>Gerenciar Canais</strong> no Discord.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🔒</div><div class="cmd-body"><code>/trancar</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span><span class="cmd-badge badge-perm">Discord · Gerenciar Canais</span></span><p>Selo real: bloqueio as mensagens dos membros neste canal.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🔓</div><div class="cmd-body"><code>/destrancar</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span><span class="cmd-badge badge-perm">Discord · Gerenciar Canais</span></span><p>As portas abrem-se outra vez — desbloqueio o canal.</p></div></div>
                 </div>
             </div>
 
             <!-- VOZ -->
             <div class="cmd-panel" id="tab-voz">
                 <div class="command-list">
-                    <div class="command-item reveal"><div class="cmd-icon">🎙️</div><div class="cmd-body"><code>/entrar_voice</code><p>Entro no teu canal de voz e inicio escuta, transcrição e resposta por voz quando disponível.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🔌</div><div class="cmd-body"><code>/sair_voice</code><p>Saio do canal de voz e limpo com segurança qualquer gravação temporária.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🎙️</div><div class="cmd-body"><code>/entrar_voice</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span></span><p>Entro na voz. Me ouves? Eu ouço-te — escuta, transcrição e resposta falada quando der. Tu precisas de estar num canal de voz.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🔌</div><div class="cmd-body"><code>/sair_voice</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span></span><p>Tchauzinho da voz… saio e limpo as gravações temporárias da sessão.</p></div></div>
                 </div>
             </div>
 
             <!-- ECONOMIA -->
             <div class="cmd-panel" id="tab-economia">
                 <div class="command-list">
-                    <div class="command-item reveal"><div class="cmd-icon">🏅</div><div class="cmd-body"><code>/nivel</code><p>Mostra o nível e o XP de um membro.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🏆</div><div class="cmd-body"><code>/placar</code><p>Mostra o ranking de XP do servidor.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">✏️</div><div class="cmd-body"><code>/definir_xp</code> <span class="cmd-badge badge-admin">Admin</span><p>Define o XP de um membro específico.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🔄</div><div class="cmd-body"><code>/resetar_xp</code> <span class="cmd-badge badge-admin">Admin</span><p>Zera o XP de um membro, depois de confirmares.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🏅</div><div class="cmd-body"><code>/nivel</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span></span><p>Olha só o quanto evoluiu! Mostro nível e XP teus ou de outro membro.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🏆</div><div class="cmd-body"><code>/placar</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span></span><p>O pódio sagrado do XP: top 10 do servidor.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">✏️</div><div class="cmd-body"><code>/definir_xp</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span><span class="cmd-badge badge-perm">Discord · Administrador</span></span><p>Para admins do Discord: definir o XP de alguém. Isto é permissão do Discord, não o plano Aria Server.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🔄</div><div class="cmd-body"><code>/resetar_xp</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span><span class="cmd-badge badge-perm">Discord · Administrador</span></span><p>Zerar o XP de um membro (com confirmação). Só quem tem <strong>Administrador</strong> no Discord.</p></div></div>
                 </div>
             </div>
 
-            <!-- PREMIUM -->
+            <!-- ARIA SERVER (admin premium) -->
             <div class="cmd-panel" id="tab-premium">
                 <div class="command-list">
-                    <div class="command-item reveal"><div class="cmd-icon">🌐</div><div class="cmd-body"><code>/config_servidor</code> <span class="cmd-badge badge-premium">Premium</span><span class="cmd-badge badge-admin">Admin</span><p>Gera uma configuração de canais, categorias e cargos com base num tema à tua escolha.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">↩️</div><div class="cmd-body"><code>/reverter_servidor</code> <span class="cmd-badge badge-premium">Premium</span><span class="cmd-badge badge-admin">Admin</span><p>Reverte a última configuração de servidor que eu salvei.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">💾</div><div class="cmd-body"><code>/backup_servidor</code> <span class="cmd-badge badge-premium">Premium</span><span class="cmd-badge badge-admin">Admin</span><p>Salva um backup em JSON da configuração completa do teu servidor.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">📥</div><div class="cmd-body"><code>/restaurar_servidor</code> <span class="cmd-badge badge-premium">Premium</span><span class="cmd-badge badge-admin">Admin</span><p>Restaura um backup que me enviares.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">👋</div><div class="cmd-body"><code>/onboarding</code> <span class="cmd-badge badge-premium">Premium</span><span class="cmd-badge badge-admin">Admin</span><p>Configura o onboarding e as boas-vindas para novos membros.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🗂️</div><div class="cmd-body"><code>/configurar_tickets</code> <span class="cmd-badge badge-premium">Premium</span><span class="cmd-badge badge-admin">Admin</span><p>Define categoria, cargo de suporte e canal de logs para os tickets.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🏷️</div><div class="cmd-body"><code>/cargo_automatico</code> <span class="cmd-badge badge-premium">Premium</span><span class="cmd-badge badge-admin">Admin</span><p>Configura cargos automáticos por entrada, boost ou ticket.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🎯</div><div class="cmd-body"><code>/modo_foco</code> <span class="cmd-badge badge-premium">Premium</span><span class="cmd-badge badge-admin">Admin</span><p>Faz-me responder apenas quando mencionada ou chamada pelo prefixo.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">⚙️</div><div class="cmd-body"><code>/configurar_aria</code> <span class="cmd-badge badge-premium">Premium</span><span class="cmd-badge badge-admin">Admin</span><p>Abre o meu painel de configuração: canais (incluindo logs), cargos, eventos e comportamento.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🌐</div><div class="cmd-body"><code>/config_servidor</code> <span class="cmd-badges"><span class="cmd-badge badge-server">Aria Server</span><span class="cmd-badge badge-perm">Discord · Administrador</span></span><p>Diz-me o tema e eu monto categorias, canais e cargos — e guardo um backup da estrutura anterior, por segurança.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">↩️</div><div class="cmd-body"><code>/reverter_servidor</code> <span class="cmd-badges"><span class="cmd-badge badge-server">Aria Server</span><span class="cmd-badge badge-perm">Discord · Administrador</span></span><p>Ops, mudámos de ideias? Desfaço a última configuração que eu salvei.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">💾</div><div class="cmd-body"><code>/backup_servidor</code> <span class="cmd-badges"><span class="cmd-badge badge-server">Aria Server</span><span class="cmd-badge badge-perm">Discord · Administrador</span></span><p>Exporto um backup JSON da configuração do servidor — um salvamentozinho de emergência.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">📥</div><div class="cmd-body"><code>/restaurar_servidor</code> <span class="cmd-badges"><span class="cmd-badge badge-server">Aria Server</span><span class="cmd-badge badge-perm">Discord · Administrador</span></span><p>Envias-me o backup e eu restauro a estrutura a partir dele.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">👋</div><div class="cmd-body"><code>/onboarding</code> <span class="cmd-badges"><span class="cmd-badge badge-server">Aria Server</span><span class="cmd-badge badge-perm">Discord · Administrador</span></span><p>Reservado para onboarding e boas-vindas… ainda estou a aprender esta patinha. Em breve!</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🗂️</div><div class="cmd-body"><code>/configurar_tickets</code> <span class="cmd-badges"><span class="cmd-badge badge-server">Aria Server</span><span class="cmd-badge badge-perm">Discord · Administrador</span></span><p>Preparámos o suporte juntos: categoria, cargo de suporte e canal de logs dos tickets.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🏷️</div><div class="cmd-body"><code>/cargo_automatico</code> <span class="cmd-badges"><span class="cmd-badge badge-server">Aria Server</span><span class="cmd-badge badge-perm">Discord · Administrador</span></span><p>Cargos sozinhos? Configuro gatilhos por entrada, boost ou abertura de ticket.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🎯</div><div class="cmd-body"><code>/modo_foco</code> <span class="cmd-badges"><span class="cmd-badge badge-server">Aria Server</span><span class="cmd-badge badge-perm">Discord · Administrador</span></span><p>Mundo exterior? Silêncio. Faço-me responder só quando me mencionam ou usam o prefixo.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">⚙️</div><div class="cmd-body"><code>/configurar_aria</code> <span class="cmd-badges"><span class="cmd-badge badge-server">Aria Server</span><span class="cmd-badge badge-perm">Discord · Administrador</span></span><p>O meu painelzinho: boas-vindas, despedidas, log de moderação, cargos, prefixo, eventos, modo foco e tom do servidor.</p></div></div>
                 </div>
             </div>
 
@@ -381,19 +391,21 @@
     <section class="pricing" id="pricing">
         <div class="container">
             <h2 class="section-title">Planos de Assinatura</h2>
-            <p class="section-subtitle">Escolhe o nível de acesso que faz sentido para ti ou para o teu servidor.</p>
+            <p class="section-subtitle">Deixa-me explicar sem mistério: podes experimentar de graça, desbloquear mais para ti, ou libertar tudo para a comunidade.</p>
 
             <div class="pricing-grid">
                 <!-- ARIA FREE -->
                 <div class="plan-card reveal">
                     <div class="plan-name">Aria Free</div>
-                    <p class="plan-tagline">Para testar a <span class="aria-name-styled" style="font-size: 1.1em;">ARIA</span> e para comunidades pequenas.</p>
+                    <p class="plan-tagline">O nosso primeiro “olá”: conversamos, brincamos com o básico e cuidamos do servidor com calma.</p>
+                    <p class="plan-why"><strong>Para ti se…</strong> queres conhecer-me, falar um bocadinho por dia e usar voz, XP e moderação sem pagar.</p>
                     <div class="plan-price">R$ 0</div>
                     <ul class="plan-features">
-                        <li><span><strong>12</strong> mensagens de IA por usuário, por dia</span></li>
-                        <li><span>Contexto de até <strong>20</strong> mensagens</span></li>
-                        <li><span>Histórico limitado a <strong>20</strong> mensagens</span></li>
-                        <li><span>Comandos gerais, tópicos, voz, XP e moderação</span></li>
+                        <li><span><strong>12</strong> mensagens de IA por usuário, por dia — um pedacinho meu todos os dias</span></li>
+                        <li><span>Lembro-me de até <strong>20</strong> mensagens no contexto (e corto o histórico antigo automaticamente)</span></li>
+                        <li><span>Comandos gerais, tópicos, voz, XP e moderação (quando a staff tem permissão no Discord)</span></li>
+                        <li><span>Ainda sem utilidades Premium (<code>/lembrete</code>, <code>/traduzir</code>…) nem busca web Premium</span></li>
+                        <li><span>Sem os meus painéis avançados de servidor (<code>/configurar_aria</code>, backups…)</span></li>
                     </ul>
                     <a href="https://discord.com/oauth2/authorize?client_id=1439670009147293906&permissions=5419235387371120&integration_type=0&scope=bot" target="_blank" class="btn btn-primary plan-cta">Adicionar ao Discord</a>
                 </div>
@@ -401,14 +413,17 @@
                 <!-- ARIA PREMIUM -->
                 <div class="plan-card featured reveal">
                     <div class="plan-name">Aria Premium</div>
-                    <p class="plan-tagline">Mais IA para ti, em qualquer servidor onde eu estiver.</p>
+                    <p class="plan-tagline">A minha assinatura individual: os benefícios andam contigo em qualquer servidor onde eu estiver.</p>
+                    <p class="plan-why"><strong>Assina se…</strong> falas muito comigo, queres utilidades e jogos sem o limite diário do Free — e não queres depender do plano do servidor.</p>
                     <div class="plan-price">R$ 9,90<span class="period">/mês por usuário</span></div>
+                    <p class="plan-diff">Face ao Free: IA sem teto diário, memória maior e as minhas utilidades Premium. Sozinha, ainda não abre as ferramentas de admin do servidor.</p>
                     <ul class="plan-features">
-                        <li><span>Mensagens de IA <strong>ilimitadas</strong></span></li>
-                        <li><span>Contexto de até <strong>100</strong> mensagens, sem limite de retenção</span></li>
-                        <li><span>Lembretes, traduções, resumos, embeds e tickets</span></li>
-                        <li><span><code>/revisar</code> textos e <code>/diversao</code> com <strong>minijogos</strong></span></li>
-                        <li><span><code>/personalizar</code> o meu estilo de fala</span></li>
+                        <li><span>Mensagens de IA <strong>ilimitadas</strong> e com prioridade na fila</span></li>
+                        <li><span>Contexto de até <strong>100</strong> mensagens, sem aquele corte automático do Free</span></li>
+                        <li><span>Lembretes, tradução, resumos, embeds, tickets e revisão de texto</span></li>
+                        <li><span><code>/diversao</code> com mini-jogos e <code>/personalizar</code> o meu jeito de falar</span></li>
+                        <li><span>Busca web e voz mais caprichada quando estiverem disponíveis</span></li>
+                        <li><span>Funciona onde a ARIA estiver — não precisas de Aria Server</span></li>
                     </ul>
                     <button type="button" class="btn btn-primary plan-cta" id="btnCheckoutUser" data-plan="USER_PREMIUM">Assinar Premium</button>
                     <button type="button" class="btn btn-secondary plan-cta" id="btnManageBilling" hidden>Gerenciar assinatura</button>
@@ -417,19 +432,22 @@
                 <!-- ARIA SERVER -->
                 <div class="plan-card reveal">
                     <div class="plan-name">Aria Server</div>
-                    <p class="plan-tagline">Para comunidades que querem liberar meus recursos para todos os membros.</p>
+                    <p class="plan-tagline">A assinatura da comunidade: eu libero os benefícios Premium para toda a gente neste servidor.</p>
+                    <p class="plan-why"><strong>Assina se…</strong> queres que todos os membros me usem sem limites e que os admins do Discord tenham as minhas ferramentas de automação.</p>
                     <div class="plan-price">R$ 24,90<span class="period">/mês por servidor</span></div>
+                    <p class="plan-diff">Face ao Aria Premium: cobre o servidor inteiro + comandos de admin (configuração, backups, tickets, cargos). Se só queres benefícios para ti, o Aria Premium chega.</p>
                     <ul class="plan-features">
-                        <li><span>Benefícios <strong>Premium</strong> para todos os membros do servidor</span></li>
-                        <li><span>Mensagens de IA <strong>ilimitadas</strong> para o servidor inteiro</span></li>
-                        <li><span>Todos os comandos administrativos Premium para admins</span></li>
-                        <li><span>Backup, restauração e reversão de <strong>configurações</strong></span></li>
+                        <li><span>Benefícios <strong>Aria Premium</strong> para <strong>todos</strong> os membros neste servidor</span></li>
+                        <li><span>Mensagens de IA <strong>ilimitadas</strong> para a comunidade</span></li>
+                        <li><span>As minhas ferramentas de admin: <code>/configurar_aria</code>, tickets, cargos automáticos, modo foco</span></li>
+                        <li><span>Montagem, backup, restauração e reversão da estrutura do servidor</span></li>
+                        <li><span>Boas-vindas, despedidas, boost e tom do servidor (com Administrador no Discord)</span></li>
                     </ul>
                     <button type="button" class="btn btn-primary plan-cta" id="btnCheckoutGuild" data-plan="SERVER_PREMIUM">Assinar para servidor</button>
                 </div>
             </div>
 
-            <p class="pricing-fineprint">Assinatura mensal com renovação automática. Ao cancelar, o acesso continua até ao fim do período já pago, e o servidor volta ao plano Free sem apagar histórico ou configurações.</p>
+            <p class="pricing-fineprint">Assinatura mensal via Stripe, com renovação automática. Se cancelares no portal de faturação, continuo contigo até ao fim do período já pago; depois voltamos ao Aria Free sem apagar histórico nem configurações. Se o pagamento atrasar (<em>past_due</em>), o Premium pode seguir até ao fim do período em curso.</p>
         </div>
     </section>
 
@@ -437,109 +455,124 @@
     <section class="legal" id="legal">
         <div class="container">
             <h2 class="section-title">Termos & Privacidade</h2>
-            <p class="section-subtitle">Transparência é super importante para mim. Veja como cuido dos seus dados.</p>
+            <p class="section-subtitle">Gosto de ser transparente: aqui conto o que guardo, para quê, e as regrinhas do nosso convívio e das assinaturas.</p>
             
             <div class="legal-content">
                 <h3>📋 Política de Privacidade</h3>
-                <p><em>Versão: 29/05/2026</em></p>
+                <p><em>Versão: 13/09/2026</em></p>
                 <h4>Escopo</h4>
-                <p>Esta política explica como a <span class="aria-name-styled" style="font-size:1.1rem;">ARIA</span> trata dados quando você usa comandos, menciona o bot, conversa em canais autorizados, usa voz, envia anexos ou interage com recursos premium no Discord.</p>
-                <p>A <span class="aria-name-styled" style="font-size:1.1rem;">ARIA</span> foi criada para funcionar dentro do Discord. O uso do bot também depende das regras, permissões e infraestrutura do próprio Discord e dos serviços externos usados para IA, voz, mídia e busca.</p>
-                <h4>Dados Coletados</h4>
+                <p>Esta política explica como eu, a <span class="aria-name-styled" style="font-size:1.1rem;">ARIA</span>, trato os teus dados quando usas os meus comandos, me mencionas, conversas comigo, usas voz, envias anexos, abres tickets ou assinas Aria Premium / Aria Server no Discord e no site.</p>
+                <p>Vivo dentro do Discord, por isso o uso também depende das regras e da infraestrutura do Discord e de serviços externos (IA, voz, mídia, busca e pagamentos com Stripe).</p>
+                <h4>O que eu posso guardar</h4>
                 <ul>
-                    <li><strong>Mensagens e contexto:</strong> conteúdo enviado para interação com a <span class="aria-name-styled" style="font-size:1.1rem;">ARIA</span>, incluindo perguntas, respostas, trechos de código, links e arquivos de texto compatíveis.</li>
-                    <li><strong>Histórico contextual:</strong> mensagens salvas para continuidade de conversa, configuração de limite de histórico, comandos como <strong>/relembrar</strong> e <strong>/esquecer</strong>, compactação de contexto e auditoria operacional restrita.</li>
-                    <li><strong>Metadados do Discord:</strong> IDs de usuário, servidor e canal, nome de exibição, cargos, permissões relevantes, data/hora de interação, comandos executados, informações públicas do perfil e dados básicos do servidor.</li>
-                    <li><strong>Voz e áudio:</strong> áudio enviado ou captado em sessões de voz para transcrição, resposta por TTS e operação do wake word. O processamento é operacional e não tem finalidade comercial.</li>
-                    <li><strong>Anexos, mídia e links:</strong> imagens, GIFs, vídeos, páginas públicas e anexos podem ser lidos ou resumidos quando o usuário pede análise ou quando o recurso precisa entender o contexto.</li>
-                    <li><strong>Busca web e recursos premium:</strong> consultas e resultados de busca podem ser processados quando a busca web estiver liberada, especially para usuários VIP.</li>
-                    <li><strong>Segurança e moderação:</strong> registros de uso, blacklist, avisos, tickets, logs configurados pelo servidor e dados necessários para prevenir abuso, spam e tentativas de burlar regras.</li>
-                    <li><strong>Não coletamos intencionalmente:</strong> senhas, dados bancários, documentos sensíveis, localização física precisa ou dados fora do ambiente Discord, salvo se o próprio usuário enviar esse conteúdo por mensagem/anexo.</li>
+                    <li><strong>Mensagens e contexto:</strong> o que me envias para conversar (perguntas, respostas, código, links e ficheiros de texto), ligado aos IDs de utilizador, servidor e canal.</li>
+                    <li><strong>O nosso diário:</strong> histórico para continuidade; limite de histórico; PIN do histórico (guardado como hash); e o que fazes com <strong>/relembrar</strong>, <strong>/esquecer</strong>, <strong>/editar_pin</strong> e <strong>/limite_hist</strong>.</li>
+                    <li><strong>Uso diário de IA:</strong> no Free, conto quantas mensagens de IA usaste no dia (para o limite de 12).</li>
+                    <li><strong>Metadados do Discord:</strong> IDs, nome de exibição, cargos/permissões relevantes, data/hora, comandos usados e dados públicos básicos do servidor.</li>
+                    <li><strong>Preferências e XP:</strong> o estilo de fala que escolheste, o teu XP/nível e bloqueios temporários se houver abuso.</li>
+                    <li><strong>Voz e áudio:</strong> áudio processado na sessão para transcrição, TTS e wake word. É operacional — não guardo arquivo comercial permanente de áudio.</li>
+                    <li><strong>Anexos, mídia e links:</strong> imagens, GIFs, vídeos e páginas públicas quando pedes análise ou preciso de contexto.</li>
+                    <li><strong>Busca web e Premium:</strong> consultas e resultados quando a busca estiver disponível para Aria Premium ou Aria Server.</li>
+                    <li><strong>Moderação e suporte:</strong> avisos, tickets (incluindo transcripts no canal de logs do servidor), blacklist, lembretes, relay de DM (com confirmação) e logs de moderação no canal que o servidor configurar.</li>
+                    <li><strong>Configuração do servidor:</strong> boas-vindas, despedidas, log de moderação, prefixo, modo foco, tickets, cargos automáticos, tom do servidor e backups JSON.</li>
+                    <li><strong>Assinaturas:</strong> IDs Discord, estado Premium, datas, identificadores Stripe e estados de faturação — só o necessário para ativar ou cancelar o plano.</li>
+                    <li><strong>O que eu não peço de propósito:</strong> senhas, número completo do cartão (isso fica com o Stripe), documentos sensíveis ou localização precisa — a menos que tu próprio envies.</li>
                 </ul>
-                <h4>Uso dos Dados</h4>
+                <h4>Para que uso</h4>
                 <ul>
-                    <li><strong>Execução dos recursos:</strong> responder perguntas, rodar comandos, gerar resumos, transcrever voz, analisar mídia e manter continuidade de contexto.</li>
-                    <li><strong>Personalização e memória operacional:</strong> adaptar respostas ao servidor, usuário, canal, modo de voz, preferências configuradas e histórico disponível.</li>
-                    <li><strong>Segurança e integridade:</strong> prevenir abuso, spam, prompt injection, tentativas de burlar regras, uso malicioso, conteúdo unsafe e falhas operacionais.</li>
-                    <li><strong>Suporte e diagnóstico:</strong> investigar erros, verificar limites, consultar resumos agregados de histórico por comandos dev restritos e manter o bot funcionando.</li>
-                    <li><strong>Melhoria técnica:</strong> ajustar desempenho, qualidade de resposta e confiabilidade, usando minimização de dados sempre que possível.</li>
+                    <li><strong>Fazer o que pediste:</strong> responder, correr comandos, resumir, ouvir voz, analisar mídia e manter o fio da conversa.</li>
+                    <li><strong>Personalizar:</strong> adaptar-me a ti, ao servidor e às preferências que escolheste.</li>
+                    <li><strong>Manter tudo seguro:</strong> travar abuso, spam, burlar limites e conteúdo indevido.</li>
+                    <li><strong>Faturação:</strong> ativar, renovar e cancelar Aria Premium e Aria Server.</li>
+                    <li><strong>Suporte e diagnóstico:</strong> perceber erros e manter-me a funcionar, com acesso administrativo restrito.</li>
                 </ul>
-                <h4>Serviços Externos e Compartilhamento</h4>
-                <p>A <span class="aria-name-styled" style="font-size:1.1rem;">ARIA</span> não vende dados pessoais. Para funcionar, dados necessários podem ser enviados a serviços externos usados pelo bot, como provedores de IA, transcrição, voz, busca web, processamento de mídia, hospedagem, banco de dados e a própria plataforma Discord.</p>
-                <p>Esse compartilhamento é limitado ao necessário para entregar o recurso solicitado, manter segurança, cumprir obrigações legais ou proteger direitos.</p>
-                <h4>Base Legal</h4>
-                <p>O tratamento ocorre principalmente para execução do serviço solicitado pelo usuário, legítimo interesse técnico-operacional, segurança, prevenção de abuso e cumprimento de obrigações legais quando aplicável.</p>
+                <h4>Serviços externos</h4>
+                <p>Eu não vendo os teus dados. Para funcionar, posso enviar o necessário a serviços de IA, voz, busca, mídia, hospedagem, base de dados, Discord e Stripe — só para cumprir o pedido, segurança ou obrigações legais.</p>
+                <h4>Base legal</h4>
+                <p>Trato dados para executar o serviço que pediste, por interesse legítimo técnico, segurança, prevenção de abuso, contrato da assinatura e obrigações legais quando existirem.</p>
+                <h4>Retenção e exclusão</h4>
                 <ul>
-                    <li>Cumprimento de obrigação legal, regulatória ou ordem judicial.</li>
-                    <li>Proteção de direitos e prevenção de fraude/abuso.</li>
-                    <li>Execução de recursos pedidos pelo usuário ou configurados por administradores do servidor.</li>
-                </ul>
-                <h4>Retenção e Exclusão</h4>
-                <ul>
-                    <li><strong>/relembrar</strong> permite visualizar histórico disponível vinculado ao seu usuário.</li>
-                    <li><strong>/esquecer</strong> remove intervalos do histórico conforme solicitado.</li>
-                    <li><strong>/limite_hist</strong> controla quantas mensagens entram no contexto da IA, sem necessariamente apagar o histórico salvo.</li>
-                    <li>Históricos podem ser removidos por políticas automáticas de retenção, limites do plano, inatividade ou solicitação do usuário.</li>
-                    <li>Comandos administrativos/dev podem consultar resumos agregados de histórico para suporte e segurança, sem expor conteúdo bruto por padrão.</li>
-                    <li>Logs técnicos, backups e registros de segurança podem ser mantidos por tempo limitado para diagnóstico, integridade e prevenção de abuso.</li>
+                    <li>Com <strong>/relembrar</strong> vês o histórico disponível; com <strong>/esquecer</strong> apagas o que pedires.</li>
+                    <li><strong>/limite_hist</strong> controla o contexto da IA; no Free, corto automaticamente o histórico guardado às últimas 20 mensagens.</li>
+                    <li>No Premium (conta ou servidor), esse corte automático do Free não se aplica.</li>
+                    <li>Se cancelares a assinatura, o Premium acaba no fim do período pago — mas o histórico e as configurações <strong>não</strong> desaparecem sozinhos.</li>
+                    <li>Logs técnicos, backups e registos de segurança/faturação podem ficar um tempo para diagnóstico e obrigações legais.</li>
                 </ul>
                 <h4>Segurança</h4>
                 <ul>
-                    <li>Transmissão por canais protegidos do Discord.</li>
-                    <li>Acesso administrativo restrito para manutenção e suporte.</li>
-                    <li>Uso de permissões, comandos restritos, blacklist, limites de uso e filtros contra prompt injection e abuso.</li>
-                    <li>Boas práticas de minimização, truncamento, compactação de contexto e proteção de dados no ambiente do bot.</li>
-                    <li>Nenhum sistema é totalmente imune a falhas; incidentes relevantes serão tratados conforme a legislação aplicável e os canais disponíveis.</li>
+                    <li>Canais protegidos do Discord e HTTPS no site/API.</li>
+                    <li>PIN do diário em hash; acesso admin restrito.</li>
+                    <li>Permissões Discord, blacklist, limites, filtros e bloqueios por abuso.</li>
+                    <li>Minimização e compactação de contexto quando dá.</li>
+                    <li>Nenhum sistema é perfeito; se algo grave acontecer, tratamos conforme a lei.</li>
                 </ul>
-                <h4>Seus Direitos</h4>
-                <p>Você pode solicitar acesso, correção, informação sobre tratamento, exclusão, bloqueio ou revisão de decisões automatizadas quando aplicável, conforme a legislação de proteção de dados. Alguns pedidos podem exigir confirmação de identidade ou informações suficientes para localizar os registros.</p>
+                <h4>Os teus direitos</h4>
+                <p>Podes pedir acesso, correção, informação, exclusão ou bloqueio, conforme a legislação (incluindo a LGPD). Às vezes preciso de confirmar a tua identidade.</p>
                 <ul>
-                    <li>Use <strong>/relembrar</strong> para consultar seu histórico disponível.</li>
-                    <li>Use <strong>/esquecer</strong> para apagar parte ou todo o histórico vinculado a você naquele servidor.</li>
-                    <li>Entre em contato com o desenvolvedor para pedidos que não possam ser resolvidos por comando.</li>
+                    <li>No Discord: <strong>/relembrar</strong> e <strong>/esquecer</strong>.</li>
+                    <li>No site: “Gerenciar assinatura” para faturação Stripe e cancelamento.</li>
+                    <li>Para o resto, fala com o programador.</li>
                 </ul>
-                <h4>Responsabilidade do Usuário</h4>
-                <p>Evite enviar senhas, documentos, dados bancários, informações íntimas ou dados pessoais de terceiros. Se você enviar esse tipo de conteúdo, ele poderá ser processado tecnicamente para executar a interação e pode precisar ser removido por solicitação.</p>
-                <h4>Alterações desta Política</h4>
-                <p>Esta política pode ser atualizada para refletir novos recursos, mudanças técnicas, ajustes legais ou melhorias de segurança. A versão vigente fica publicada nesta página.</p>
-                <h4>Contato</h4>
-                <p>Dúvidas? Fale com o desenvolvedor: <strong>@46_6f_78</strong> (Ettore)</p>
-                <p style="margin-top:2rem;"><em>Última atualização: 29/05/2026</em></p>
+                <h4>Um pedido de amiga</h4>
+                <p>Evita mandar senhas, documentos, dados bancários ou informações íntimas de terceiros. Se enviares, posso processar só para cumprir o pedido — e podes pedir remoção depois.</p>
+                <h4>Alterações</h4>
+                <p>Posso atualizar esta política quando os recursos, a técnica ou a lei mudarem. A versão atual fica sempre aqui.</p>
+                <h4>Contacto</h4>
+                <p>Dúvidas? Fala com o programador: <strong>@46_6f_78</strong> (Ettore)</p>
+                <p style="margin-top:2rem;"><em>Última atualização: 13/09/2026</em></p>
             </div>
 
             <div class="legal-content">
                 <h3>📜 Termos de Serviço</h3>
-                <p><em>Versão: 29/05/2026</em></p>
-                <h4>Acceptance dos Termos</h4>
-                <p>Ao usar a <span class="aria-name-styled" style="font-size:1.1rem;">ARIA</span>, você concorda com estes Termos e com a Política de Privacidade. Se não concordar, interrompa o uso.</p>
-                <h4>Uso Permitido</h4>
-                <p><strong>Finalidade:</strong> assistência técnica, conversa contextual, automação de servidor, recursos de voz, busca web quando disponível e comandos oficiais do bot.</p>
-                <p><strong>Proibido:</strong></p>
+                <p><em>Versão: 13/09/2026</em></p>
+                <h4>Aceitação</h4>
+                <p>Ao usar-me (no Discord e neste site), concordas com estes Termos e com a Política de Privacidade. Se não concordares, é só deixar de me usar — sem drama.</p>
+                <h4>O que eu ofereço</h4>
+                <p>Conversa, comandos, voz, moderação, XP e assinaturas. Os planos de agora são:</p>
                 <ul>
-                    <li>Uso para atividades ilegais, assédio, spam, engenharia social ou exploração maliciosa.</li>
-                    <li>Compartilhar dados sensíveis de terceiros sem autorização.</li>
-                    <li>Tentar quebrar, sobrecarregar, contornar limites técnicos/de segurança ou induzir a ARIA a ignorar regras internas.</li>
+                    <li><strong>Aria Free</strong> — grátis, com limite diário de IA e o básico.</li>
+                    <li><strong>Aria Premium</strong> — R$&nbsp;9,90/mês por utilizador; benefícios Premium na tua conta.</li>
+                    <li><strong>Aria Server</strong> — R$&nbsp;24,90/mês por servidor; Premium para os membros desse servidor + ferramentas admin para quem tem Administrador no Discord.</li>
                 </ul>
-                <h4>Comandos e Permissões</h4>
+                <h4>Uso permitido</h4>
+                <p><strong>Podes:</strong> pedir ajuda, conversar, automatizar o servidor, usar voz e os comandos oficiais.</p>
+                <p><strong>Não podes:</strong></p>
                 <ul>
-                    <li>Alguns comandos exigem permissões específicas no Discord (ex.: administração de servidor).</li>
-                    <li>Recursos de voz e automação podem ter requisitos adicionais e limitações operacionais.</li>
-                    <li>Busca web, histórico ampliado e recursos premium podem depender de configuração do servidor, cargo VIP ou disponibilidade de serviços externos.</li>
-                    <li>Comandos experimentais podem mudar, ser pausados ou removidos sem aviso prévio.</li>
+                    <li>Usar-me para ilegalidades, assédio, spam ou exploração maliciosa.</li>
+                    <li>Partilhar dados sensíveis de terceiros sem autorização.</li>
+                    <li>Tentar partir, sobrecarregar ou induzir-me a ignorar as minhas regras.</li>
+                    <li>Revender acesso Premium ou abusar de reembolsos/chargebacks.</li>
                 </ul>
-                <h4>Disponibilidade e Precisão</h4>
-                <p>A <span class="aria-name-styled" style="font-size:1.1rem;">ARIA</span> pode ficar offline por manutenção, falhas de terceiros ou atualizações. Respostas podem conter imprecisões e devem ser revisadas antes de decisões importantes.</p>
-                <h4>Conteúdo do Usuário</h4>
-                <p>Você mantém seus direitos sobre o conteúdo enviado. Ao interagir, concede autorização para processamento técnico desse conteúdo para execução do serviço.</p>
-                <h4>Limitação de Responsabilidade</h4>
-                <p>A <span class="aria-name-styled" style="font-size:1.1rem;">ARIA</span> é fornecida no estado em que se encontra. O uso de códigos, sugestões e respostas é de responsabilidade do usuário.</p>
-                <h4>Suspensão e Encerramento</h4>
-                <p>Uso abusivo pode resultar em restrição ou bloqueio de acesso ao bot. Você pode interromper o uso a qualquer momento.</p>
+                <h4>Planos, pagamentos e cancelamento</h4>
+                <ul>
+                    <li>Os pagamentos passam pelo <strong>Stripe</strong>. Eu não guardo o número completo do cartão.</li>
+                    <li>A assinatura renova sozinha até cancelares no portal de faturação do site.</li>
+                    <li>Ao cancelar, continuo Premium/Server até ao fim do período já pago; depois voltamos ao Free.</li>
+                    <li>Histórico e configurações não são apagados só porque o plano acabou.</li>
+                    <li>Em atraso (<em>past_due</em>), o acesso pode seguir até ao fim do período em curso.</li>
+                    <li><strong>Reembolsos:</strong> pede ao programador ou trata via Stripe. Não há reembolso automático no bot.</li>
+                </ul>
+                <h4>Comandos, planos e permissões Discord</h4>
+                <ul>
+                    <li>“Grátis”, “Aria Premium” e “Aria Server” = <strong>plano de assinatura</strong>.</li>
+                    <li>“Discord · Gerenciar Mensagens / Canais / Administrador” = <strong>permissão do Discord</strong>, não um plano pago.</li>
+                    <li>Comandos Aria Server pedem o plano do servidor <strong>e</strong> Administrador no Discord.</li>
+                    <li>Voz e automação podem ter limites técnicos.</li>
+                    <li>Comandos experimentais (ex.: <code>/onboarding</code>) podem mudar, ficar em “em breve” ou sair.</li>
+                </ul>
+                <h4>Disponibilidade e precisão</h4>
+                <p>Posso ficar offline por manutenção ou falhas de terceiros. Às vezes troco as patinhas — revê respostas importantes antes de decidir.</p>
+                <h4>O teu conteúdo</h4>
+                <p>O que envias continua teu. Ao interagir, autorizas o processamento técnico para eu cumprir o pedido.</p>
+                <h4>Limitação de responsabilidade</h4>
+                <p>Sou fornecida “como estou”. Códigos, sugestões, mudanças de servidor e respostas são da tua responsabilidade (e da staff do teu servidor).</p>
+                <h4>Suspensão</h4>
+                <p>Abuso pode dar bloqueio temporário de chat, blacklist ou corte de acesso. Podes sair e cancelar a assinatura quando quiseres pelo portal.</p>
                 <h4>Alterações</h4>
-                <p>Estes termos podem ser atualizados periodicamente. A continuação do uso após a publicação representa concordância com a versão vigente.</p>
-                <h4>Legislação Aplicável</h4>
-                <p>Estes Termos são regidos pela legislação brasileira aplicável.</p>
-                <p style="margin-top:2rem;"><em>Última atualização: 29/05/2026</em></p>
+                <p>Estes termos podem mudar. Continuar a usar-me depois da publicação significa que aceitas a versão atual.</p>
+                <h4>Lei aplicável</h4>
+                <p>Regidos pela legislação brasileira aplicável.</p>
+                <p style="margin-top:2rem;"><em>Última atualização: 13/09/2026</em></p>
             </div>
         </div>
     </section>
