@@ -16,6 +16,8 @@
     
     --border-glass: rgba(255, 255, 255, 0.06);
     --border-accent: rgba(242, 117, 42, 0.2);
+
+    --band-bg: linear-gradient(180deg, rgba(43, 24, 58, 0.72) 0%, rgba(22, 12, 34, 0.78) 100%);
     
     --gradient-1: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
     --gradient-btn: linear-gradient(135deg, var(--primary) 0%, var(--gold) 100%);
@@ -823,24 +825,16 @@ nav.scrolled .nav-links {
     padding: 8rem 2rem 5.5rem;
     position: relative;
     z-index: 1;
-    overflow: hidden;
-}
-.hero::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 140px;
-    background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.28) 100%);
-    pointer-events: none;
-    z-index: 0;
+    overflow: visible;
+    background: var(--band-bg);
 }
 .hero-atmosphere {
     position: absolute;
     inset: 0;
     pointer-events: none;
     z-index: 0;
+    overflow: hidden;
+    border-radius: inherit;
 }
 .hero-glow {
     position: absolute;
@@ -920,27 +914,33 @@ nav.scrolled .nav-links {
     justify-content: center;
     align-items: flex-end;
     min-height: 420px;
+    overflow: visible;
 }
 .hero-image {
     position: relative;
     z-index: 1;
     width: 100%;
     max-width: 480px;
-    filter: drop-shadow(0 20px 40px rgba(0,0,0,0.4));
+    filter: drop-shadow(0 12px 28px rgba(0,0,0,0.35));
     will-change: transform;
     animation: floatAria 6s ease-in-out infinite;
+    overflow: visible;
 }
 .hero-image-floor {
     position: absolute;
-    /* Corpo da Aria fica à esquerda do bounding box (cauda à direita) */
-    left: 42%;
-    bottom: 3%;
-    width: 52%;
-    height: 58px;
-    transform: translateX(-50%);
-    background: radial-gradient(ellipse at center, rgba(242, 117, 42, 0.55) 0%, rgba(107, 52, 93, 0.28) 42%, transparent 72%);
+    /* Centro entre as patas (corpo à esquerda da cauda) */
+    left: 43%;
+    bottom: 0;
+    width: 46%;
+    height: 26px;
+    transform: translate(-50%, 70%);
+    background: radial-gradient(ellipse at center,
+        rgba(242, 117, 42, 0.7) 0%,
+        rgba(242, 117, 42, 0.35) 35%,
+        rgba(107, 52, 93, 0.15) 55%,
+        transparent 72%);
     border-radius: 50%;
-    filter: blur(12px);
+    filter: blur(8px);
     z-index: 0;
     pointer-events: none;
 }
@@ -1103,7 +1103,7 @@ nav.scrolled .nav-links {
 .section-band {
     position: relative;
     z-index: 2;
-    background: linear-gradient(180deg, rgba(43, 24, 58, 0.72) 0%, rgba(22, 12, 34, 0.78) 100%);
+    background: var(--band-bg);
     border: none;
     /* Máscara: onda suave no topo + corpo + onda suave em baixo */
     -webkit-mask-image:
