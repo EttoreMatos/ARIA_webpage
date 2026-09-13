@@ -183,6 +183,18 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 });
 
 /* ══════════════════════════════════════
+   HINT DE SCROLL (FIXO NA VIEWPORT / SOME AO SAIR DA HOME)
+══════════════════════════════════════ */
+const heroScrollHint = document.getElementById('heroScrollHint');
+const heroSection = document.getElementById('home');
+if (heroScrollHint && heroSection) {
+    const hintObserver = new IntersectionObserver(([entry]) => {
+        heroScrollHint.classList.toggle('is-away', !entry.isIntersecting);
+    }, { threshold: 0.2 });
+    hintObserver.observe(heroSection);
+}
+
+/* ══════════════════════════════════════
    SCROLL REVEAL (ANIMAÇÃO AO DESCER A TELA)
 ══════════════════════════════════════ */
 const revealObserver = new IntersectionObserver(entries => {
