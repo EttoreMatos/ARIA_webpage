@@ -323,7 +323,8 @@ document.querySelectorAll('.stat-number').forEach(el => statsObserver.observe(el
 window.ARIA_API_BASE_URL = window.ARIA_API_BASE_URL || 'https://aria-api-xq1h.onrender.com';
 const ARIA_SESSION_KEY = 'aria_session_token';
 const ARIA_PENDING_KEY = 'aria_pending_action';
-const ARIA_AUTH_BUILD = '20260913-ux-v8';
+const ARIA_AUTH_BUILD = '20260913-oauth-mobile-v1';
+const ARIA_OAUTH_STATE_KEY = 'aria_oauth_state';
 const ARIA_PENDING_GUILD_KEY = 'aria_pending_guild_id';
 const ARIA_BOT_CLIENT_ID = '1439670009147293906';
 const ARIA_BOT_PERMISSIONS = '5419235387371120';
@@ -403,6 +404,25 @@ const ariaApi = {
     },
     loginUrl() {
         return `${this.base()}/api/auth/discord/login`;
+    },
+    async discordAuthorizeUrl() {
+        const response = await fetch(`${this.base()}/api/auth/discord/login?format=json`, {
+            credentials: 'include',
+            headers: { Accept: 'application/json' },
+        });
+        let data = null;
+        try { data = await response.json(); } catch (_) { data = null; }
+        if (!response.ok || !data || !data.url) {
+            const detail = (data && (data.detail || data.error)) || `HTTP ${response.status}`;
+            throw new Error(typeof detail === 'string' ? detail : JSON.stringify(detail));
+        }
+        return data;
+    },
+    async completeDiscordOAuth(code, state) {
+        return this.request('/api/auth/discord/complete', {
+            method: 'POST',
+            body: JSON.stringify({ code: String(code), state: String(state) }),
+        });
     },
     async logout() {
         try { await this.request('/api/auth/logout', { method: 'POST' }); }
@@ -876,6 +896,13 @@ function notifyOpenerAuth(payload) {
     }
 }
 
+function isMobileAuthContext() {
+    try {
+        if (window.matchMedia && window.matchMedia('(max-width: 820px)').matches) return true;
+    } catch (_) { /* ignore */ }
+    return /Android|iPhone|iPad|iPod|Mobile|Opera Mini|IEMobile/i.test(navigator.userAgent || '');
+}
+
 function requireLoginThen(action) {
     ariaApi.setPendingAction(action);
     const pricing = document.getElementById('pricing');
@@ -884,14 +911,32 @@ function requireLoginThen(action) {
     startDiscordLogin();
 }
 
-function startDiscordLogin() {
-    const url = ariaApi.loginUrl();
-    // Nova aba com opener (sem noopener) para postMessage do token de volta.
-    authPopupRef = window.open(url, '_blank');
+async function startDiscordLogin() {
+    let authorizeUrl = '';
+    try {
+        const data = await ariaApi.discordAuthorizeUrl();
+        authorizeUrl = data.url;
+        if (data.state) {
+            try { authStore.setItem(ARIA_OAUTH_STATE_KEY, data.state); } catch (_) { /* ignore */ }
+        }
+    } catch (_) {
+        // Fallback: redirect pela API (legado).
+        authorizeUrl = ariaApi.loginUrl();
+    }
+
+    // No mobile, popup/Custom Tab + domínio da API a meio do OAuth falha com frequência.
+    // Vamos direto ao Discord e o callback regressa ao site (HTTPS com HSTS).
+    if (isMobileAuthContext()) {
+        setAuthWaiting(true);
+        window.location.assign(authorizeUrl);
+        return;
+    }
+
+    authPopupRef = window.open(authorizeUrl, '_blank');
     const opened = !!(authPopupRef && !authPopupRef.closed);
     if (!opened) {
         showBillingBanner('Permite pop-ups para autenticar, ou o login abre nesta aba.');
-        window.location.href = url;
+        window.location.assign(authorizeUrl);
         return;
     }
     setAuthWaiting(true);
@@ -900,7 +945,6 @@ function startDiscordLogin() {
         if (!authPopupRef || authPopupRef.closed) {
             clearInterval(authPopupPoll);
             authPopupPoll = null;
-            // Sempre libertar a UI — o overlay preso bloqueava os botões.
             setAuthWaiting(false);
         }
     }, 700);
@@ -1175,11 +1219,33 @@ updateBillingCtas({ authenticated: false, isPremium: false });
     const auth = params.get('auth');
     const billing = params.get('billing');
     const handoffCode = params.get('code');
+    const oauthState = params.get('state');
     const legacySession = params.get('session');
     const isAuthPopup = !!(window.opener && !window.opener.closed);
+    // Discord devolve code+state no site. O handoff antigo usa auth=success&code=...
+    const isDiscordOAuthReturn = !!(handoffCode && oauthState && !auth);
 
     let exchangedToken = '';
-    if (handoffCode) {
+    if (isDiscordOAuthReturn) {
+        try {
+            const exchanged = await ariaApi.completeDiscordOAuth(handoffCode, oauthState);
+            if (exchanged && exchanged.token) {
+                exchangedToken = exchanged.token;
+                ariaApi.setToken(exchanged.token);
+            }
+            try { authStore.removeItem(ARIA_OAUTH_STATE_KEY); } catch (_) { /* ignore */ }
+        } catch (err) {
+            if (isAuthPopup) {
+                notifyOpenerAuth({ auth: 'error' });
+                window.close();
+                return;
+            }
+            showStatusPopup(err.message || 'Falha ao concluir login com Discord.', {
+                tone: 'error',
+                title: 'Login falhou',
+            });
+        }
+    } else if (handoffCode) {
         try {
             const exchanged = await ariaApi.request('/api/auth/exchange', {
                 method: 'POST',
@@ -1202,16 +1268,16 @@ updateBillingCtas({ authenticated: false, isPremium: false });
         ariaApi.setToken(legacySession);
     }
 
-    if (isAuthPopup && (exchangedToken || auth === 'success' || auth === 'error' || auth === 'invalid_state')) {
+    if (isAuthPopup && (exchangedToken || auth === 'success' || auth === 'error' || auth === 'invalid_state' || isDiscordOAuthReturn)) {
         notifyOpenerAuth({
-            auth: auth || (exchangedToken ? 'success' : 'error'),
+            auth: (exchangedToken || auth === 'success') ? 'success' : (auth || 'error'),
             token: exchangedToken || undefined,
         });
         setTimeout(() => { try { window.close(); } catch (_) { /* ignore */ } }, 120);
         return;
     }
 
-    if (auth === 'success') showTopToast('Login com Discord concluído.');
+    if (auth === 'success' || (isDiscordOAuthReturn && exchangedToken)) showTopToast('Login com Discord concluído.');
     if (auth === 'error' || auth === 'invalid_state') {
         ariaApi.setPendingAction('');
         showStatusPopup('Falha no login com Discord.', { tone: 'error', title: 'Login falhou' });
@@ -1235,12 +1301,13 @@ updateBillingCtas({ authenticated: false, isPremium: false });
         });
     }
 
-    if (auth || billing || handoffCode || legacySession) {
+    if (auth || billing || handoffCode || legacySession || oauthState) {
         const clean = new URL(window.location.href);
         clean.searchParams.delete('auth');
         clean.searchParams.delete('billing');
         clean.searchParams.delete('session');
         clean.searchParams.delete('code');
+        clean.searchParams.delete('state');
         window.history.replaceState({}, '', clean.pathname + clean.search + clean.hash);
     }
     await refreshAuthUi();
