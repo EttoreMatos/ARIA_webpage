@@ -77,7 +77,9 @@ const COLORS = [
     'rgba(255, 255, 255, 0.18)'   // Brilho Estelar
 ];
 
-const particlesCount = 55; // Densidade perfeita para equilíbrio visual e performance
+const particlesCount = (canvas && ctx)
+    ? (window.matchMedia('(max-width: 768px)').matches ? 22 : 55)
+    : 0;
 const particles = (canvas && ctx)
     ? Array.from({ length: particlesCount }, () => createParticle(true))
     : [];
@@ -158,6 +160,45 @@ function updateScrollChrome() {
 }
 window.addEventListener('scroll', updateScrollChrome, { passive: true });
 updateScrollChrome();
+
+/* ══════════════════════════════════════
+   MENU MOBILE
+══════════════════════════════════════ */
+const navToggle = document.getElementById('navToggle');
+const navBackdrop = document.getElementById('navBackdrop');
+const primaryNav = document.getElementById('primaryNav');
+
+function setMobileNav(open) {
+    document.body.classList.toggle('nav-open', open);
+    if (navToggle) {
+        navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        navToggle.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
+    }
+    if (navBackdrop) {
+        navBackdrop.hidden = !open;
+        navBackdrop.classList.toggle('is-open', open);
+    }
+}
+
+if (navToggle) {
+    navToggle.addEventListener('click', () => {
+        setMobileNav(!document.body.classList.contains('nav-open'));
+    });
+}
+if (navBackdrop) {
+    navBackdrop.addEventListener('click', () => setMobileNav(false));
+}
+if (primaryNav) {
+    primaryNav.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => setMobileNav(false));
+    });
+}
+window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') setMobileNav(false);
+});
+window.addEventListener('resize', () => {
+    if (window.innerWidth > 768) setMobileNav(false);
+});
 
 document.querySelectorAll('.discord-fab, .footer-discord').forEach((el) => {
     if (!cursor || prefersCoarse) return;
