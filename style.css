@@ -1477,17 +1477,62 @@ body.nav-open {
     line-height: 1.5;
     margin: 0;
 }
+.cmd-legend {
+    display: grid;
+    gap: 0.75rem;
+    margin: 0 auto 1.75rem;
+    max-width: 920px;
+    padding: 1.15rem 1.25rem;
+    background: var(--bg-glass);
+    border: 1px solid var(--border-glass);
+    border-radius: 16px;
+}
+.cmd-legend-title {
+    font-family: 'Sora', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--text-main);
+    margin: 0 0 0.15rem;
+}
+.cmd-legend-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.65rem 1rem;
+}
+.cmd-legend-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.55rem;
+    font-size: 0.78rem;
+    line-height: 1.45;
+    color: var(--text-muted);
+}
+.cmd-legend-item .cmd-badge {
+    margin-left: 0;
+    flex-shrink: 0;
+    margin-top: 0.05rem;
+}
+.cmd-badges {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-left: 0.55rem;
+    vertical-align: middle;
+}
 .cmd-badge {
     display: inline-block;
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.7rem;
-    padding: 0.2rem 0.6rem;
+    font-size: 0.68rem;
+    padding: 0.2rem 0.55rem;
     border-radius: 100px;
-    margin-left: 0.8rem;
     vertical-align: middle;
     font-weight: 600;
+    white-space: nowrap;
 }
+.badge-free { background: rgba(110, 168, 120, 0.15); color: #8FD99A; border: 1px solid rgba(110, 168, 120, 0.35); }
 .badge-premium { background: rgba(176, 82, 209, 0.15); color: #D68CF0; border: 1px solid rgba(176, 82, 209, 0.3); }
+.badge-server { background: rgba(64, 140, 220, 0.15); color: #7EC4FF; border: 1px solid rgba(64, 140, 220, 0.35); }
+.badge-perm { background: rgba(242, 117, 42, 0.12); color: var(--primary-light); border: 1px solid rgba(242, 117, 42, 0.3); }
 .badge-mod { background: rgba(242, 117, 42, 0.15); color: var(--primary-light); border: 1px solid rgba(242, 117, 42, 0.3); }
 .badge-admin { background: rgba(244, 67, 54, 0.15); color: #FF7B72; border: 1px solid rgba(244, 67, 54, 0.3); }
 
@@ -1537,8 +1582,28 @@ body.nav-open {
 .plan-tagline {
     font-size: 0.85rem;
     color: var(--text-muted);
-    margin-bottom: 1.6rem;
-    min-height: 2.6em;
+    margin-bottom: 0.85rem;
+    min-height: 0;
+}
+.plan-why {
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: var(--text-main);
+    background: rgba(242, 117, 42, 0.08);
+    border: 1px solid rgba(242, 117, 42, 0.18);
+    border-radius: 12px;
+    padding: 0.75rem 0.9rem;
+    margin-bottom: 1.35rem;
+}
+.plan-why strong {
+    color: var(--primary-light);
+    font-weight: 600;
+}
+.plan-diff {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin: -0.85rem 0 1.4rem;
+    line-height: 1.45;
 }
 .plan-price {
     font-family: 'Sora', sans-serif;
@@ -2048,7 +2113,8 @@ footer a:hover { color: var(--primary); text-decoration: underline; }
         padding: 1.15rem;
         border-radius: 16px;
     }
-    .cmd-badge { margin: 0.35rem 0 0; display: inline-block; }
+    .cmd-badges { margin-left: 0; margin-top: 0.35rem; display: flex; }
+    .cmd-badge { margin: 0; display: inline-block; }
     .tip-banner { flex-direction: column; text-align: center; gap: 0.75rem; padding: 1.1rem; }
 
     .pricing { padding: 4rem 1.25rem 5rem; }
