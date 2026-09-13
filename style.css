@@ -18,7 +18,9 @@
     --border-accent: rgba(242, 117, 42, 0.2);
 
     --band-bg: rgba(43, 24, 58, 0.78);
-    --stats-bg: #F2752A;
+    /* Ametista translúcida — única face às ondas (SVG opaco) */
+    --stats-bg: rgba(84, 48, 112, 0.52);
+    --stats-edge: rgba(72, 36, 118, 0.88);
     --wave-h: 28px;
     /* Onda mais suave e baixa para a transição home ↔ estatísticas */
     --wave-edge: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 24' preserveAspectRatio='none'%3E%3Cpath fill='%23000' d='M0 12C180 20 300 4 480 12s300-8 480 0 300 8 480 0v12H0Z'/%3E%3C/svg%3E");
@@ -883,26 +885,26 @@ nav.scrolled .nav-links {
     z-index: 0;
     overflow: hidden;
 }
-/* Leve filtro roxo Discord sobre o fundo da home */
+/* Filtro roxo suave sobre o fundo da home */
 .hero-atmosphere::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: rgba(88, 101, 242, 0.14);
+    background: rgba(88, 101, 242, 0.05);
     pointer-events: none;
 }
 .hero-glow {
     position: absolute;
     border-radius: 50%;
     filter: blur(70px);
-    opacity: 0.55;
+    opacity: 0.4;
 }
 .hero-glow-left {
     width: min(48vw, 520px);
     height: min(48vw, 520px);
     left: -8%;
     top: 18%;
-    background: rgba(88, 101, 242, 0.35);
+    background: rgba(88, 101, 242, 0.18);
 }
 .hero-glow-right {
     width: min(42vw, 420px);
@@ -1180,6 +1182,37 @@ nav.scrolled .nav-links {
     background: var(--stats-bg);
     margin-top: calc(var(--wave-h) * -1);
     padding-top: calc(4.5rem + var(--wave-h));
+    overflow: hidden;
+    isolation: isolate;
+}
+/* Degradês roxos nas ondas (SVG sem transparência): mais opacos no topo e fundo */
+.stats.section-band::before,
+.stats.section-band::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: calc(var(--wave-h) * 3.2);
+    pointer-events: none;
+    z-index: 0;
+}
+.stats.section-band::before {
+    top: 0;
+    background: linear-gradient(
+        to bottom,
+        var(--stats-edge) 0%,
+        rgba(88, 101, 242, 0.35) 42%,
+        transparent 100%
+    );
+}
+.stats.section-band::after {
+    bottom: 0;
+    background: linear-gradient(
+        to top,
+        var(--stats-edge) 0%,
+        rgba(88, 101, 242, 0.35) 42%,
+        transparent 100%
+    );
 }
 
 /* ── ESTATÍSTICAS ── */
