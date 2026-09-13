@@ -186,12 +186,12 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
    HINT DE SCROLL (FIXO NA VIEWPORT / SOME AO SAIR DA HOME)
 ══════════════════════════════════════ */
 const heroScrollHint = document.getElementById('heroScrollHint');
-const heroSection = document.getElementById('home');
-if (heroScrollHint && heroSection) {
+const statsSection = document.getElementById('stats');
+if (heroScrollHint && statsSection) {
     const hintObserver = new IntersectionObserver(([entry]) => {
-        heroScrollHint.classList.toggle('is-away', !entry.isIntersecting);
-    }, { threshold: 0.2 });
-    hintObserver.observe(heroSection);
+        heroScrollHint.classList.toggle('is-away', entry.isIntersecting);
+    }, { threshold: 0.05, rootMargin: '0px 0px -8% 0px' });
+    hintObserver.observe(statsSection);
 }
 
 /* ══════════════════════════════════════
