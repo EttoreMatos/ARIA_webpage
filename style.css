@@ -988,9 +988,12 @@ nav.scrolled .nav-links {
 
 /* ── ESTATÍSTICAS ── */
 .stats {
-    padding: 3rem 2rem 1rem;
+    padding: 4rem 2rem;
     position: relative;
     z-index: 1;
+    background: rgba(0,0,0,0.2);
+    border-top: 1px solid var(--border-glass);
+    border-bottom: 1px solid var(--border-glass);
 }
 .stats-grid {
     display: grid;
