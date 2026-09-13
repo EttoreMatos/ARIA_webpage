@@ -147,10 +147,22 @@ function drawParticles() {
 if (canvas && ctx) drawParticles();
 
 /* ══════════════════════════════════════
-   NAVBAR SCROLL (GLASSMORPHISM)
+   NAVBAR SCROLL (GLASSMORPHISM) + FAB
 ══════════════════════════════════════ */
-window.addEventListener('scroll', () => {
-    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+function updateScrollChrome() {
+    const nav = document.getElementById('navbar');
+    const fab = document.getElementById('discordFab');
+    const leftHome = window.scrollY > 80;
+    if (nav) nav.classList.toggle('scrolled', leftHome);
+    if (fab) fab.classList.toggle('is-visible', leftHome);
+}
+window.addEventListener('scroll', updateScrollChrome, { passive: true });
+updateScrollChrome();
+
+document.querySelectorAll('.discord-fab, .footer-discord').forEach((el) => {
+    if (!cursor || prefersCoarse) return;
+    el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
 });
 
 /* ══════════════════════════════════════
@@ -244,7 +256,7 @@ document.querySelectorAll('.stat-number').forEach(el => statsObserver.observe(el
 window.ARIA_API_BASE_URL = window.ARIA_API_BASE_URL || 'https://aria-api-xq1h.onrender.com';
 const ARIA_SESSION_KEY = 'aria_session_token';
 const ARIA_PENDING_KEY = 'aria_pending_action';
-const ARIA_AUTH_BUILD = '20260912-ux-v3';
+const ARIA_AUTH_BUILD = '20260912-ux-v4';
 const ARIA_PENDING_GUILD_KEY = 'aria_pending_guild_id';
 const ARIA_BOT_CLIENT_ID = '1439670009147293906';
 const ARIA_BOT_PERMISSIONS = '5419235387371120';
