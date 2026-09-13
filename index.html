@@ -30,7 +30,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Dancing+Script:wght@700&family=IBM+Plex+Mono:wght@400;600&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="style.css?v=20260912-ux-v6">
+    <link rel="stylesheet" href="style.css?v=20260912-ux-v7">
 </head>
 <body>
 
@@ -87,13 +87,23 @@
                             <div class="nav-user-banner" aria-hidden="true"></div>
                             <div class="nav-user-header">
                                 <img class="nav-user-menu-avatar" id="navUserMenuAvatar" alt="">
+                            </div>
+                            <div class="nav-user-card">
                                 <div class="nav-user-meta">
                                     <span class="nav-user-name" id="navUserName">Utilizador</span>
                                     <span class="nav-user-plan" id="navUserPlan">Conta</span>
                                 </div>
                             </div>
                             <div class="nav-user-menu-panel">
-                                <button type="button" class="nav-user-logout" id="navLogoutBtn" role="menuitem">
+                                <button type="button" class="nav-user-menu-item" id="navManagePlanBtn" role="menuitem" hidden>
+                                    <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="2" y="5" width="20" height="14" rx="2"/>
+                                        <path d="M2 10h20"/>
+                                    </svg>
+                                    Gerenciar plano
+                                </button>
+                                <div class="nav-user-menu-divider" id="navManagePlanDivider" hidden></div>
+                                <button type="button" class="nav-user-menu-item is-danger" id="navLogoutBtn" role="menuitem">
                                     <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
                                         <polyline points="16 17 21 12 16 7"/>
@@ -559,6 +569,6 @@
         </span>
     </a>
 
-    <script defer src="script.js?v=20260912-ux-v5"></script>
+    <script defer src="script.js?v=20260912-ux-v7"></script>
 </body>
 </html>
