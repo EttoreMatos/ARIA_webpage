@@ -244,7 +244,10 @@ document.querySelectorAll('.stat-number').forEach(el => statsObserver.observe(el
 window.ARIA_API_BASE_URL = window.ARIA_API_BASE_URL || 'https://aria-api-xq1h.onrender.com';
 const ARIA_SESSION_KEY = 'aria_session_token';
 const ARIA_PENDING_KEY = 'aria_pending_action';
-const ARIA_AUTH_BUILD = '20260912-checkout-v2';
+const ARIA_AUTH_BUILD = '20260912-ux-v1';
+const ARIA_PENDING_GUILD_KEY = 'aria_pending_guild_id';
+const ARIA_BOT_CLIENT_ID = '1439670009147293906';
+const ARIA_BOT_PERMISSIONS = '5419235387371120';
 const ARIA_AUTH_MSG = 'aria-auth';
 const authStore = (() => {
     try { return window.localStorage; } catch (_) { /* ignore */ }
@@ -289,6 +292,16 @@ const ariaApi = {
             else authStore.removeItem(ARIA_PENDING_KEY);
         } catch (_) { /* ignore */ }
     },
+    getPendingGuildId() {
+        try { return authStore.getItem(ARIA_PENDING_GUILD_KEY) || ''; }
+        catch (_) { return ''; }
+    },
+    setPendingGuildId(guildId) {
+        try {
+            if (guildId) authStore.setItem(ARIA_PENDING_GUILD_KEY, String(guildId));
+            else authStore.removeItem(ARIA_PENDING_GUILD_KEY);
+        } catch (_) { /* ignore */ }
+    },
     async request(path, options = {}) {
         const headers = {
             'Content-Type': 'application/json',
@@ -317,6 +330,7 @@ const ariaApi = {
         finally {
             this.setToken('');
             this.setPendingAction('');
+            this.setPendingGuildId('');
         }
     },
     me() { return this.request('/api/auth/me'); },
@@ -342,6 +356,8 @@ let authPopupRef = null;
 let authPopupPoll = null;
 let billingBusy = false;
 let lastAuthSnapshot = { authenticated: false, isPremium: false };
+let cachedGuilds = [];
+let pendingInviteGuild = null;
 
 
 function friendlyBillingError(err, fallback) {
@@ -377,7 +393,7 @@ function setAuthWaiting(visible) {
 
 function setBillingBusy(busy, label) {
     billingBusy = !!busy;
-    const ids = ['btnCheckoutUser', 'btnCheckoutGuild', 'btnConfirmGuildCheckout', 'btnManageBilling'];
+    const ids = ['btnCheckoutUser', 'btnCheckoutGuild', 'btnManageBilling', 'guildInviteDoneBtn', 'guildInviteAgainBtn'];
     ids.forEach((id) => {
         const el = document.getElementById(id);
         if (!el) return;
@@ -426,6 +442,7 @@ function setLoggedOutUi() {
     const chip = document.getElementById('navUserChip');
     if (loginBtn) loginBtn.style.display = 'inline-flex';
     if (chip) chip.classList.remove('is-visible');
+    closeNavUserMenu();
     lastAuthSnapshot = { authenticated: false, isPremium: false };
     updateBillingCtas(lastAuthSnapshot);
 }
@@ -449,6 +466,157 @@ function setLoggedInUi(user, premium) {
     chip.classList.add('is-visible');
     lastAuthSnapshot = { authenticated: true, isPremium };
     updateBillingCtas(lastAuthSnapshot);
+}
+
+function closeNavUserMenu() {
+    const menu = document.getElementById('navUserMenu');
+    const trigger = document.getElementById('navUserTrigger');
+    if (menu) menu.hidden = true;
+    if (trigger) trigger.setAttribute('aria-expanded', 'false');
+}
+
+function toggleNavUserMenu() {
+    const menu = document.getElementById('navUserMenu');
+    const trigger = document.getElementById('navUserTrigger');
+    if (!menu || !trigger) return;
+    const open = menu.hidden;
+    menu.hidden = !open;
+    trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+}
+
+function guildIconUrl(guild) {
+    if (guild && guild.icon && guild.guild_id) {
+        return `https://cdn.discordapp.com/icons/${guild.guild_id}/${guild.icon}.png?size=128`;
+    }
+    return '';
+}
+
+function guildInitial(name) {
+    const text = String(name || '?').trim();
+    return (text.charAt(0) || '?').toUpperCase();
+}
+
+function botInviteUrl(guildId) {
+    const params = new URLSearchParams({
+        client_id: ARIA_BOT_CLIENT_ID,
+        permissions: ARIA_BOT_PERMISSIONS,
+        integration_type: '0',
+        scope: 'bot',
+    });
+    if (guildId) {
+        params.set('guild_id', String(guildId));
+        params.set('disable_guild_select', 'true');
+    }
+    return `https://discord.com/oauth2/authorize?${params.toString()}`;
+}
+
+function setGuildModalVisible(visible) {
+    const modal = document.getElementById('guildModal');
+    if (!modal) return;
+    modal.classList.toggle('is-visible', !!visible);
+    modal.setAttribute('aria-hidden', visible ? 'false' : 'true');
+    if (!visible) {
+        pendingInviteGuild = null;
+        showGuildPickView();
+    }
+}
+
+function showGuildPickView() {
+    const pick = document.getElementById('guildModalPickView');
+    const invite = document.getElementById('guildModalInviteView');
+    if (pick) pick.hidden = false;
+    if (invite) invite.hidden = true;
+}
+
+function showGuildInviteView(guild) {
+    const pick = document.getElementById('guildModalPickView');
+    const invite = document.getElementById('guildModalInviteView');
+    const hint = document.getElementById('guildModalInviteHint');
+    const title = document.getElementById('guildModalInviteTitle');
+    if (pick) pick.hidden = true;
+    if (invite) invite.hidden = false;
+    const name = (guild && guild.name) || 'servidor';
+    if (title) title.textContent = 'Adiciona a ARIA';
+    if (hint) {
+        hint.textContent = `A ARIA ainda não está em “${name}”. Abre o Discord, adiciona-a e volta aqui para continuar o pagamento.`;
+    }
+}
+
+function renderGuildBalloons(guilds) {
+    const grid = document.getElementById('guildBalloonGrid');
+    const empty = document.getElementById('guildModalEmpty');
+    if (!grid) return;
+    cachedGuilds = Array.isArray(guilds) ? guilds : [];
+    if (!cachedGuilds.length) {
+        grid.innerHTML = '';
+        if (empty) empty.hidden = false;
+        return;
+    }
+    if (empty) empty.hidden = true;
+    grid.innerHTML = cachedGuilds.map((g) => {
+        const name = escapeHtml(g.name || g.guild_id);
+        const ready = !!g.aria_present;
+        const icon = guildIconUrl(g);
+        const avatarHtml = icon
+            ? `<img class="guild-balloon-avatar" src="${escapeHtml(icon)}" alt="" loading="lazy">`
+            : `<span class="guild-balloon-avatar guild-balloon-fallback" aria-hidden="true">${escapeHtml(guildInitial(g.name))}</span>`;
+        const badge = ready ? 'Pronta' : 'Adicionar ARIA';
+        return `
+            <button type="button" class="guild-balloon ${ready ? 'is-ready' : ''}" data-guild-id="${escapeHtml(g.guild_id)}" title="${name}">
+                ${avatarHtml}
+                <span class="guild-balloon-name">${name}</span>
+                <span class="guild-balloon-badge">${badge}</span>
+            </button>
+        `;
+    }).join('');
+}
+
+function openBotInvite(guildId) {
+    const url = botInviteUrl(guildId);
+    const popup = window.open(url, '_blank');
+    if (!popup || popup.closed) {
+        window.location.href = url;
+    }
+}
+
+async function onGuildBalloonClick(guildId) {
+    const guild = cachedGuilds.find((g) => String(g.guild_id) === String(guildId));
+    if (!guild) return;
+    if (guild.aria_present) {
+        setGuildModalVisible(false);
+        await startGuildCheckout(guild.guild_id);
+        return;
+    }
+    pendingInviteGuild = guild;
+    ariaApi.setPendingGuildId(guild.guild_id);
+    showGuildInviteView(guild);
+    openBotInvite(guild.guild_id);
+}
+
+async function recheckGuildAfterInvite() {
+    const guildId = (pendingInviteGuild && pendingInviteGuild.guild_id) || ariaApi.getPendingGuildId();
+    if (!guildId || billingBusy) return;
+    setBillingBusy(true);
+    try {
+        const data = await ariaApi.guilds();
+        const guilds = (data.guilds || []).filter((g) => g.can_manage);
+        renderGuildBalloons(guilds);
+        const match = guilds.find((g) => String(g.guild_id) === String(guildId));
+        if (match && match.aria_present) {
+            ariaApi.setPendingGuildId('');
+            pendingInviteGuild = null;
+            setGuildModalVisible(false);
+            setBillingBusy(false);
+            await startGuildCheckout(match.guild_id);
+            return;
+        }
+        showGuildInviteView(match || pendingInviteGuild || { guild_id: guildId, name: 'servidor' });
+        showBillingBanner('Ainda não detetei a ARIA nesse servidor. Confirma o convite e tenta outra vez.');
+    } catch (err) {
+        showBillingBanner(friendlyBillingError(err, 'Falha ao verificar o servidor.'));
+    } finally {
+        setBillingBusy(false);
+    }
 }
 
 async function refreshAuthUi() {
@@ -545,8 +713,6 @@ async function startUserCheckout() {
 
 async function openGuildPicker() {
     if (billingBusy) return;
-    const picker = document.getElementById('guildPicker');
-    const select = document.getElementById('guildSelect');
     setBillingBusy(true);
     try {
         const me = await ariaApi.me();
@@ -556,15 +722,14 @@ async function openGuildPicker() {
             return;
         }
         const data = await ariaApi.guilds();
-        const eligible = (data.guilds || []).filter(g => g.eligible_for_checkout);
-        if (!eligible.length) {
-            showBillingBanner('Nenhum servidor elegível. Precisas de permissão de admin e a ARIA presente no servidor.');
+        const manageable = (data.guilds || []).filter((g) => g.can_manage);
+        if (!manageable.length) {
+            showBillingBanner('Nenhum servidor com permissão de administrador encontrado.');
             return;
         }
-        select.innerHTML = eligible.map(g =>
-            `<option value="${escapeHtml(g.guild_id)}">${escapeHtml(g.name || g.guild_id)}</option>`
-        ).join('');
-        picker.style.display = 'block';
+        renderGuildBalloons(manageable);
+        showGuildPickView();
+        setGuildModalVisible(true);
         ariaApi.setPendingAction('');
     } catch (err) {
         const msg = String(err && err.message ? err.message : err);
@@ -587,6 +752,7 @@ async function startGuildCheckout(guildId) {
         const url = session && (session.checkout_url || session.url);
         if (!url) throw new Error('A API não devolveu o link do Stripe Checkout.');
         ariaApi.setPendingAction('');
+        ariaApi.setPendingGuildId('');
         window.location.href = url;
     } catch (err) {
         setBillingBusy(false);
@@ -664,8 +830,15 @@ document.getElementById('navLoginBtn')?.addEventListener('click', (event) => {
     startDiscordLogin();
 });
 
+document.getElementById('navUserTrigger')?.addEventListener('click', (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    toggleNavUserMenu();
+});
+
 document.getElementById('navLogoutBtn')?.addEventListener('click', async (event) => {
     event.preventDefault();
+    closeNavUserMenu();
     try {
         await ariaApi.logout();
         await refreshAuthUi();
@@ -673,6 +846,18 @@ document.getElementById('navLogoutBtn')?.addEventListener('click', async (event)
     } catch (err) {
         showBillingBanner(err.message || 'Falha ao sair.');
     }
+});
+
+document.addEventListener('click', (event) => {
+    const chip = document.getElementById('navUserChip');
+    if (!chip || !chip.contains(event.target)) closeNavUserMenu();
+});
+
+document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape') return;
+    closeNavUserMenu();
+    const modal = document.getElementById('guildModal');
+    if (modal && modal.classList.contains('is-visible')) setGuildModalVisible(false);
 });
 
 document.getElementById('authWaitingCancel')?.addEventListener('click', () => {
@@ -694,11 +879,38 @@ document.getElementById('btnCheckoutGuild')?.addEventListener('click', () => {
     openGuildPicker();
 });
 
-document.getElementById('btnConfirmGuildCheckout')?.addEventListener('click', async () => {
-    const select = document.getElementById('guildSelect');
-    const guildId = select?.value;
+document.getElementById('guildModalClose')?.addEventListener('click', () => {
+    setGuildModalVisible(false);
+});
+
+document.getElementById('guildModalBackdrop')?.addEventListener('click', () => {
+    setGuildModalVisible(false);
+});
+
+document.getElementById('guildBalloonGrid')?.addEventListener('click', async (event) => {
+    const btn = event.target.closest('.guild-balloon');
+    if (!btn) return;
+    const guildId = btn.getAttribute('data-guild-id');
     if (!guildId) return;
-    await startGuildCheckout(guildId);
+    await onGuildBalloonClick(guildId);
+});
+
+if (cursor && !prefersCoarse) {
+    document.getElementById('guildBalloonGrid')?.addEventListener('mouseover', (event) => {
+        if (event.target.closest('.guild-balloon')) cursor.classList.add('hover');
+    });
+    document.getElementById('guildBalloonGrid')?.addEventListener('mouseout', (event) => {
+        if (event.target.closest('.guild-balloon')) cursor.classList.remove('hover');
+    });
+}
+
+document.getElementById('guildInviteAgainBtn')?.addEventListener('click', () => {
+    const guildId = (pendingInviteGuild && pendingInviteGuild.guild_id) || ariaApi.getPendingGuildId();
+    if (guildId) openBotInvite(guildId);
+});
+
+document.getElementById('guildInviteDoneBtn')?.addEventListener('click', () => {
+    recheckGuildAfterInvite();
 });
 
 // Estado inicial dos CTAs (Gerenciar escondido até haver Premium).
