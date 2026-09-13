@@ -186,12 +186,26 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
    HINT DE SCROLL (FIXO NA VIEWPORT / SOME AO SAIR DA HOME)
 ══════════════════════════════════════ */
 const heroScrollHint = document.getElementById('heroScrollHint');
+const heroSection = document.getElementById('home');
 const statsSection = document.getElementById('stats');
-if (heroScrollHint && statsSection) {
-    const hintObserver = new IntersectionObserver(([entry]) => {
-        heroScrollHint.classList.toggle('is-away', entry.isIntersecting);
-    }, { threshold: 0.05, rootMargin: '0px 0px -8% 0px' });
-    hintObserver.observe(statsSection);
+if (heroScrollHint && heroSection && statsSection) {
+    let heroVisible = true;
+    let statsVisible = false;
+
+    const updateHint = () => {
+        // Só aparece na home; some ao ver stats e não volta ao descer mais
+        heroScrollHint.classList.toggle('is-away', !heroVisible || statsVisible);
+    };
+
+    new IntersectionObserver(([entry]) => {
+        heroVisible = entry.isIntersecting;
+        updateHint();
+    }, { threshold: 0.2 }).observe(heroSection);
+
+    new IntersectionObserver(([entry]) => {
+        statsVisible = entry.isIntersecting;
+        updateHint();
+    }, { threshold: 0.05, rootMargin: '0px 0px -8% 0px' }).observe(statsSection);
 }
 
 /* ══════════════════════════════════════
