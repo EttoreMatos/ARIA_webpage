@@ -28,7 +28,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Dancing+Script:wght@700&family=IBM+Plex+Mono:wght@400;600&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="style.css?v=20260913-ux-v27">
+    <link rel="stylesheet" href="style.css?v=20260913-ux-v28">
 </head>
 <body>
 
@@ -253,14 +253,23 @@
     <section class="commands" id="commands">
         <div class="container">
             <h2 class="section-title">Os Meus Comandos</h2>
-            <p class="section-subtitle">Olha só o que eu sei fazer! Em cada comando eu mostro o plano. (Atualizado em 13/09/2026)</p>
+            <p class="section-subtitle">Atualizado em 13/09/2026</p>
 
             <div class="cmd-legend reveal">
-                <p class="cmd-legend-title">Explicação das etiquetas dos meus comandos:</p>
+                <p class="cmd-legend-title">O que significam as etiquetas</p>
                 <div class="cmd-legend-grid">
-                    <div class="cmd-legend-item"><span class="cmd-badge badge-free">Grátis</span><span>Está no <strong>Aria Free</strong> — você pode usar sem assinatura.</span></div>
-                    <div class="cmd-legend-item"><span class="cmd-badge badge-premium">Aria Premium</span><span>Libera se você estiver assinando o <strong>Aria Premium</strong> ou se o servidor tiver <strong>Aria Server</strong>.</span></div>
-                    <div class="cmd-legend-item"><span class="cmd-badge badge-server">Aria Server</span><span>Só no plano do servidor. O Premium individual sozinho não chega aqui.</span></div>
+                    <div class="cmd-legend-item">
+                        <span class="cmd-badge badge-free">Grátis</span>
+                        <span>Aria Free — pode usar sem assinatura.</span>
+                    </div>
+                    <div class="cmd-legend-item">
+                        <span class="cmd-badge badge-premium">Aria Premium</span>
+                        <span>Sua assinatura pessoal ou servidor com Aria Server.</span>
+                    </div>
+                    <div class="cmd-legend-item">
+                        <span class="cmd-badge badge-server">Aria Server</span>
+                        <span>Só no plano do servidor.</span>
+                    </div>
                 </div>
             </div>
 
@@ -286,95 +295,95 @@
             <!-- GERAL -->
             <div class="cmd-panel active" id="tab-geral">
                 <div class="command-list">
-                    <div class="command-item reveal"><div class="cmd-icon">📡</div><div class="cmd-body"><code>/latencia</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span></span><p>Quer ver se eu tô online e rápida? Mostro latência, tempo ligado e versão.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">❓</div><div class="cmd-body"><code>/ajuda</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span></span><p>Abro o menu de ajuda com meus comandos e ainda te mostro qual plano você tá usando.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🏠</div><div class="cmd-body"><code>/info_servidor</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span></span><p>Te conto o básico deste servidor bem rapidinho.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">📡</div><div class="cmd-body"><code>/latencia</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span></span><p>Latência, uptime e versão.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">❓</div><div class="cmd-body"><code>/ajuda</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span></span><p>Menu de ajuda e seu plano.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🏠</div><div class="cmd-body"><code>/info_servidor</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span></span><p>Info básica do servidor.</p></div></div>
                 </div>
             </div>
 
             <!-- TÓPICO -->
             <div class="cmd-panel" id="tab-topico">
                 <div class="command-list">
-                    <div class="command-item reveal"><div class="cmd-icon">🔐</div><div class="cmd-body"><code>/criar_topico</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span></span><p>Crio um tópico privado só nosso pra você falar comigo sem me marcar toda hora.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🚪</div><div class="cmd-body"><code>/fechar_topico</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span></span><p>Fecha o seu tópico privado. Só quem criou consegue fechar.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🔐</div><div class="cmd-body"><code>/criar_topico</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span></span><p>Cria um tópico privado comigo.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🚪</div><div class="cmd-body"><code>/fechar_topico</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span></span><p>Fecha seu tópico privado.</p></div></div>
                 </div>
             </div>
 
             <!-- HISTÓRICO -->
             <div class="cmd-panel" id="tab-historico">
                 <div class="command-list">
-                    <div class="command-item reveal"><div class="cmd-icon">📖</div><div class="cmd-body"><code>/relembrar</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span></span><p>Abro nosso histórico, você filtra por data e ainda pode baixar em .txt. Vou pedir seu PIN, ok?</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🗑️</div><div class="cmd-body"><code>/esquecer</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span></span><p>Apago parte ou todo o nosso histórico — mas só depois que você confirmar.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🧹</div><div class="cmd-body"><code>/limpar_dm</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span></span><p>Na DM, limpo minhas mensagens depois que você confirmar. Só funciona em mensagem direta.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🔑</div><div class="cmd-body"><code>/editar_pin</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span></span><p>Troca o PIN do histórico (4 a 12 dígitos). Guarda bem pra não esquecer!</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">⚙️</div><div class="cmd-body"><code>/limite_hist</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span></span><p>Define quantas mensagens eu levo no contexto: até <strong>20</strong> no Free, até <strong>100</strong> no Aria Premium ou Aria Server.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">📖</div><div class="cmd-body"><code>/relembrar</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span></span><p>Consulta o histórico (com PIN).</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🗑️</div><div class="cmd-body"><code>/esquecer</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span></span><p>Apaga o histórico.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🧹</div><div class="cmd-body"><code>/limpar_dm</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span></span><p>Limpa minhas mensagens na DM.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🔑</div><div class="cmd-body"><code>/editar_pin</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span></span><p>Troca o PIN do histórico.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">⚙️</div><div class="cmd-body"><code>/limite_hist</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span></span><p>Ajusta o tamanho do contexto.</p></div></div>
                 </div>
             </div>
 
             <!-- UTILIDADES -->
             <div class="cmd-panel" id="tab-utilidades">
                 <div class="command-list">
-                    <div class="command-item reveal"><div class="cmd-icon">⏰</div><div class="cmd-body"><code>/lembrete</code> <span class="cmd-badges"><span class="cmd-badge badge-premium">Aria Premium</span></span><p>Agenda um lembrete de até 30 dias. Eu te aviso na DM (ou no canal se a DM não der certo).</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🌍</div><div class="cmd-body"><code>/traduzir</code> <span class="cmd-badges"><span class="cmd-badge badge-premium">Aria Premium</span></span><p>Manda um texto que eu traduzo pro idioma que você quiser.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">📝</div><div class="cmd-body"><code>/resumir</code> <span class="cmd-badges"><span class="cmd-badge badge-premium">Aria Premium</span></span><p>Textão demais? Eu resumo pra ficar bem mais fácil de ler.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">✉️</div><div class="cmd-body"><code>/cartao</code> <span class="cmd-badges"><span class="cmd-badge badge-premium">Aria Premium</span></span><p>Monto um cartãozinho (embed) bonito. Pra postar em outro canal, precisa de <strong>Gerenciar Mensagens</strong> lá.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🎫</div><div class="cmd-body"><code>/ticket</code> <span class="cmd-badges"><span class="cmd-badge badge-premium">Aria Premium</span></span><p>Abro um ticket privado de suporte. O servidor precisa ter tickets configurados com <code>/configurar_tickets</code>.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">📚</div><div class="cmd-body"><code>/resumir_canal</code> <span class="cmd-badges"><span class="cmd-badge badge-premium">Aria Premium</span></span><p>Chegou no meio da conversa? Eu resumo as últimas 5 a 50 mensagens do canal pra você.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">✍️</div><div class="cmd-body"><code>/revisar</code> <span class="cmd-badges"><span class="cmd-badge badge-premium">Aria Premium</span></span><p>Reviso seu texto: gramática, clareza e estilo.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🎭</div><div class="cmd-body"><code>/personalizar</code> <span class="cmd-badges"><span class="cmd-badge badge-premium">Aria Premium</span></span><p>Escolhe como eu falo com você. O tom do servidor só admin do Discord muda.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">⏰</div><div class="cmd-body"><code>/lembrete</code> <span class="cmd-badges"><span class="cmd-badge badge-premium">Aria Premium</span></span><p>Agenda um lembrete.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🌍</div><div class="cmd-body"><code>/traduzir</code> <span class="cmd-badges"><span class="cmd-badge badge-premium">Aria Premium</span></span><p>Traduz um texto.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">📝</div><div class="cmd-body"><code>/resumir</code> <span class="cmd-badges"><span class="cmd-badge badge-premium">Aria Premium</span></span><p>Resume um texto.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">✉️</div><div class="cmd-body"><code>/cartao</code> <span class="cmd-badges"><span class="cmd-badge badge-premium">Aria Premium</span></span><p>Cria uma embed.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🎫</div><div class="cmd-body"><code>/ticket</code> <span class="cmd-badges"><span class="cmd-badge badge-premium">Aria Premium</span></span><p>Abre um ticket.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">📚</div><div class="cmd-body"><code>/resumir_canal</code> <span class="cmd-badges"><span class="cmd-badge badge-premium">Aria Premium</span></span><p>Resume o canal.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">✍️</div><div class="cmd-body"><code>/revisar</code> <span class="cmd-badges"><span class="cmd-badge badge-premium">Aria Premium</span></span><p>Revisa um texto.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🎭</div><div class="cmd-body"><code>/personalizar</code> <span class="cmd-badges"><span class="cmd-badge badge-premium">Aria Premium</span></span><p>Escolhe meu estilo de fala.</p></div></div>
                 </div>
             </div>
 
             <!-- DIVERSÃO -->
             <div class="cmd-panel" id="tab-diversao">
                 <div class="command-list">
-                    <div class="command-item reveal"><div class="cmd-icon">🎲</div><div class="cmd-body"><code>/diversao</code> <span class="cmd-badges"><span class="cmd-badge badge-premium">Aria Premium</span></span><p>Hora de zoar! Menu com Jokenpô, Ship, Palavra, Moeda e Dados.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🎲</div><div class="cmd-body"><code>/diversao</code> <span class="cmd-badges"><span class="cmd-badge badge-premium">Aria Premium</span></span><p>Mini-jogos.</p></div></div>
                 </div>
             </div>
 
             <!-- MODERAÇÃO -->
             <div class="cmd-panel" id="tab-moderacao">
                 <div class="command-list">
-                    <div class="command-item reveal"><div class="cmd-icon">⚠️</div><div class="cmd-body"><code>/aviso</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span><span class="cmd-badge badge-perm">Discord · Gerenciar Mensagens</span></span><p>Dou um aviso pra um membro. Precisa da permissão <strong>Gerenciar Mensagens</strong> no Discord.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">📋</div><div class="cmd-body"><code>/avisos</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span><span class="cmd-badge badge-perm">Discord · Gerenciar Mensagens</span></span><p>Mostro a lista de avisos de um membro.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">♻️</div><div class="cmd-body"><code>/limpar_avisos</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span><span class="cmd-badge badge-perm">Discord · Gerenciar Mensagens</span></span><p>Limpo todos os avisos de um membro.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🗑️</div><div class="cmd-body"><code>/limpar</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span><span class="cmd-badge badge-perm">Discord · Gerenciar Mensagens</span></span><p>Apago de 1 a 100 mensagens recentes do canal.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🐢</div><div class="cmd-body"><code>/modo_lento</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span><span class="cmd-badge badge-perm">Discord · Gerenciar Canais</span></span><p>Ativo o modo lento do canal (0 a 21600s). Precisa de <strong>Gerenciar Canais</strong>.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🔒</div><div class="cmd-body"><code>/trancar</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span><span class="cmd-badge badge-perm">Discord · Gerenciar Canais</span></span><p>Tranco o canal pra membros comuns não mandarem mensagem.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🔓</div><div class="cmd-body"><code>/destrancar</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span><span class="cmd-badge badge-perm">Discord · Gerenciar Canais</span></span><p>Destranco o canal e todo mundo volta a poder falar.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">⚠️</div><div class="cmd-body"><code>/aviso</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span><span class="cmd-badge badge-perm">Discord · Gerenciar Mensagens</span></span><p>Dá um aviso a um membro.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">📋</div><div class="cmd-body"><code>/avisos</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span><span class="cmd-badge badge-perm">Discord · Gerenciar Mensagens</span></span><p>Lista os avisos.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">♻️</div><div class="cmd-body"><code>/limpar_avisos</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span><span class="cmd-badge badge-perm">Discord · Gerenciar Mensagens</span></span><p>Limpa os avisos.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🗑️</div><div class="cmd-body"><code>/limpar</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span><span class="cmd-badge badge-perm">Discord · Gerenciar Mensagens</span></span><p>Apaga mensagens do canal.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🐢</div><div class="cmd-body"><code>/modo_lento</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span><span class="cmd-badge badge-perm">Discord · Gerenciar Canais</span></span><p>Ativa o modo lento.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🔒</div><div class="cmd-body"><code>/trancar</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span><span class="cmd-badge badge-perm">Discord · Gerenciar Canais</span></span><p>Tranca o canal.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🔓</div><div class="cmd-body"><code>/destrancar</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span><span class="cmd-badge badge-perm">Discord · Gerenciar Canais</span></span><p>Destranca o canal.</p></div></div>
                 </div>
             </div>
 
             <!-- VOZ -->
             <div class="cmd-panel" id="tab-voz">
                 <div class="command-list">
-                    <div class="command-item reveal"><div class="cmd-icon">🎙️</div><div class="cmd-body"><code>/entrar_voice</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span></span><p>Entro na call pra te ouvir e responder por voz quando der. Você precisa estar num canal de voz.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🔌</div><div class="cmd-body"><code>/sair_voice</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span></span><p>Saio da call e limpo as gravações temporárias da sessão.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🎙️</div><div class="cmd-body"><code>/entrar_voice</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span></span><p>Entro na call.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🔌</div><div class="cmd-body"><code>/sair_voice</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span></span><p>Saio da call.</p></div></div>
                 </div>
             </div>
 
             <!-- ECONOMIA -->
             <div class="cmd-panel" id="tab-economia">
                 <div class="command-list">
-                    <div class="command-item reveal"><div class="cmd-icon">🏅</div><div class="cmd-body"><code>/nivel</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span></span><p>Mostro seu nível e XP (ou de outra pessoa, se você marcar).</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🏆</div><div class="cmd-body"><code>/placar</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span></span><p>Mostro o top 10 de XP do servidor.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">✏️</div><div class="cmd-body"><code>/definir_xp</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span><span class="cmd-badge badge-perm">Discord · Administrador</span></span><p>Define o XP de alguém. Só pra quem tem <strong>Administrador</strong> no Discord.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🔄</div><div class="cmd-body"><code>/resetar_xp</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span><span class="cmd-badge badge-perm">Discord · Administrador</span></span><p>Zera o XP de um membro (com confirmação). Também só admin do Discord.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🏅</div><div class="cmd-body"><code>/nivel</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span></span><p>Mostra nível e XP.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🏆</div><div class="cmd-body"><code>/placar</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span></span><p>Top 10 de XP.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">✏️</div><div class="cmd-body"><code>/definir_xp</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span><span class="cmd-badge badge-perm">Discord · Administrador</span></span><p>Define o XP de alguém.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🔄</div><div class="cmd-body"><code>/resetar_xp</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span><span class="cmd-badge badge-perm">Discord · Administrador</span></span><p>Zera o XP de alguém.</p></div></div>
                 </div>
             </div>
 
             <!-- ARIA SERVER -->
             <div class="cmd-panel" id="tab-premium">
                 <div class="command-list">
-                    <div class="command-item reveal"><div class="cmd-icon">🌐</div><div class="cmd-body"><code>/config_servidor</code> <span class="cmd-badges"><span class="cmd-badge badge-server">Aria Server</span><span class="cmd-badge badge-perm">Discord · Administrador</span></span><p>Me fala o tema e eu monto categorias, canais e cargos. Ainda salvo um backup da estrutura antiga.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">↩️</div><div class="cmd-body"><code>/reverter_servidor</code> <span class="cmd-badges"><span class="cmd-badge badge-server">Aria Server</span><span class="cmd-badge badge-perm">Discord · Administrador</span></span><p>Mudou de ideia? Eu desfaço a última configuração que salvei.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">💾</div><div class="cmd-body"><code>/backup_servidor</code> <span class="cmd-badges"><span class="cmd-badge badge-server">Aria Server</span><span class="cmd-badge badge-perm">Discord · Administrador</span></span><p>Exporto um backup JSON da configuração do servidor.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">📥</div><div class="cmd-body"><code>/restaurar_servidor</code> <span class="cmd-badges"><span class="cmd-badge badge-server">Aria Server</span><span class="cmd-badge badge-perm">Discord · Administrador</span></span><p>Me manda o backup e eu restauro a estrutura do servidor.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">👋</div><div class="cmd-body"><code>/onboarding</code> <span class="cmd-badges"><span class="cmd-badge badge-server">Aria Server</span><span class="cmd-badge badge-perm">Discord · Administrador</span></span><p>Vai ser pra onboarding e boas-vindas… ainda tô terminando. Em breve!</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🗂️</div><div class="cmd-body"><code>/configurar_tickets</code> <span class="cmd-badges"><span class="cmd-badge badge-server">Aria Server</span><span class="cmd-badge badge-perm">Discord · Administrador</span></span><p>Configuro categoria, cargo de suporte e canal de logs dos tickets.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🏷️</div><div class="cmd-body"><code>/cargo_automatico</code> <span class="cmd-badges"><span class="cmd-badge badge-server">Aria Server</span><span class="cmd-badge badge-perm">Discord · Administrador</span></span><p>Configuro cargos automáticos por entrada, boost ou abertura de ticket.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🎯</div><div class="cmd-body"><code>/modo_foco</code> <span class="cmd-badges"><span class="cmd-badge badge-server">Aria Server</span><span class="cmd-badge badge-perm">Discord · Administrador</span></span><p>Faço eu responder só quando me mencionam ou usam o prefixo do servidor.</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">⚙️</div><div class="cmd-body"><code>/configurar_aria</code> <span class="cmd-badges"><span class="cmd-badge badge-server">Aria Server</span><span class="cmd-badge badge-perm">Discord · Administrador</span></span><p>Meu painel geral: boas-vindas, despedidas, logs, cargos, prefixo, eventos, modo foco e tom do servidor.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🌐</div><div class="cmd-body"><code>/config_servidor</code> <span class="cmd-badges"><span class="cmd-badge badge-server">Aria Server</span><span class="cmd-badge badge-perm">Discord · Administrador</span></span><p>Monta o servidor por tema.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">↩️</div><div class="cmd-body"><code>/reverter_servidor</code> <span class="cmd-badges"><span class="cmd-badge badge-server">Aria Server</span><span class="cmd-badge badge-perm">Discord · Administrador</span></span><p>Desfaz a última config.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">💾</div><div class="cmd-body"><code>/backup_servidor</code> <span class="cmd-badges"><span class="cmd-badge badge-server">Aria Server</span><span class="cmd-badge badge-perm">Discord · Administrador</span></span><p>Backup da configuração.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">📥</div><div class="cmd-body"><code>/restaurar_servidor</code> <span class="cmd-badges"><span class="cmd-badge badge-server">Aria Server</span><span class="cmd-badge badge-perm">Discord · Administrador</span></span><p>Restaura um backup.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">👋</div><div class="cmd-body"><code>/onboarding</code> <span class="cmd-badges"><span class="cmd-badge badge-server">Aria Server</span><span class="cmd-badge badge-perm">Discord · Administrador</span></span><p>Onboarding (em breve).</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🗂️</div><div class="cmd-body"><code>/configurar_tickets</code> <span class="cmd-badges"><span class="cmd-badge badge-server">Aria Server</span><span class="cmd-badge badge-perm">Discord · Administrador</span></span><p>Configura o sistema de tickets.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🏷️</div><div class="cmd-body"><code>/cargo_automatico</code> <span class="cmd-badges"><span class="cmd-badge badge-server">Aria Server</span><span class="cmd-badge badge-perm">Discord · Administrador</span></span><p>Cargos automáticos.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🎯</div><div class="cmd-body"><code>/modo_foco</code> <span class="cmd-badges"><span class="cmd-badge badge-server">Aria Server</span><span class="cmd-badge badge-perm">Discord · Administrador</span></span><p>Respondo só com menção/prefixo.</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">⚙️</div><div class="cmd-body"><code>/configurar_aria</code> <span class="cmd-badges"><span class="cmd-badge badge-server">Aria Server</span><span class="cmd-badge badge-perm">Discord · Administrador</span></span><p>Painel geral da ARIA.</p></div></div>
                 </div>
             </div>
 
