@@ -28,7 +28,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Dancing+Script:wght@700&family=IBM+Plex+Mono:wght@400;600&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="style.css?v=20260913-ux-v28">
+    <link rel="stylesheet" href="style.css?v=20260913-ux-v29">
 </head>
 <body>
 
@@ -367,7 +367,7 @@
                 <div class="command-list">
                     <div class="command-item reveal"><div class="cmd-icon">🏅</div><div class="cmd-body"><code>/nivel</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span></span><p>Mostra nível e XP</p></div></div>
                     <div class="command-item reveal"><div class="cmd-icon">🏆</div><div class="cmd-body"><code>/placar</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span></span><p>Top 10 de XP</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">✏️</div><div class="cmd-body"><code>/definir_xp</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span><span class="cmd-badge badge-perm">Permissão: Administrador</span></span><p>Define o XP de alguém</
+                    <div class="command-item reveal"><div class="cmd-icon">✏️</div><div class="cmd-body"><code>/definir_xp</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span><span class="cmd-badge badge-perm">Permissão: Administrador</span></span><p>Define o XP de alguém</p></div></div>
                     <div class="command-item reveal"><div class="cmd-icon">🔄</div><div class="cmd-body"><code>/resetar_xp</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span><span class="cmd-badge badge-perm">Permissão: Administrador</span></span><p>Zera o XP de alguém</p></div></div>
                 </div>
             </div>
@@ -403,14 +403,14 @@
 
             <div class="pricing-grid">
                 <!-- ARIA FREE -->
-                <div class="plan-card reveal">
+                <div class="plan-card plan-card-free reveal">
                     <div class="plan-name">Aria Free</div>
                     <p class="plan-tagline">Pra me conhecer, conversar um pouco e usar o básico sem pagar nada.</p>
                     <p class="plan-why"><strong>Pra você se…</strong> quer testar, falar comigo no dia a dia e usar XP e moderação de graça.</p>
                     <div class="plan-price">R$ 0</div>
                     <ul class="plan-features">
-                        <li><span><strong>12</strong> mensagens de IA por usuário, por dia</span></li>
-                        <li><span>Lembro de até <strong>20</strong> mensagens no contexto</span></li>
+                        <li><span><strong>6</strong> mensagens de IA por usuário, por dia</span></li>
+                        <li><span>Lembro de até <strong>12</strong> mensagens no contexto</span></li>
                         <li><span>Comandos gerais, histórico básico, XP e moderação</span></li>
                         <li><span>Sem utilidades Premium (<code>/lembrete</code>, <code>/traduzir</code>…)</span></li>
                         <li><span>Sem painéis avançados de servidor</span></li>
@@ -447,9 +447,9 @@
                     <ul class="plan-features">
                         <li><span>Benefícios <strong>Aria Premium</strong> pra <strong>todos</strong> os membros</span></li>
                         <li><span>IA <strong>ilimitada</strong> no servidor</span></li>
-                        <li><span>Ferramentas de admin: <code>/configurar_aria</code>, tickets, cargos, modo foco</span></li>
-                        <li><span>Montagem, backup, restauração e reversão do servidor</span></li>
-                        <li><span>Boas-vindas, despedidas, boost e tom do servidor</span></li>
+                        <li><span><code>/configurar_aria</code>, <code>/configurar_tickets</code>, <code>/cargo_automatico</code>, <code>/modo_foco</code></span></li>
+                        <li><span><code>/config_servidor</code>, <code>/backup_servidor</code>, <code>/restaurar_servidor</code>, <code>/reverter_servidor</code></span></li>
+                        <li><span><code>/onboarding</code>, boas-vindas, despedidas, boost e tom do servidor</span></li>
                     </ul>
                     <button type="button" class="btn btn-primary plan-cta" id="btnCheckoutGuild" data-plan="SERVER_PREMIUM">Assinar para servidor</button>
                 </div>
@@ -475,7 +475,7 @@
                 <ul>
                     <li><strong>Mensagens e contexto:</strong> o que me envias para conversar (perguntas, respostas, código, links e ficheiros de texto), ligado aos IDs de utilizador, servidor e canal.</li>
                     <li><strong>O nosso diário:</strong> histórico para continuidade; limite de histórico; PIN do histórico (guardado como hash); e o que fazes com <strong>/relembrar</strong>, <strong>/esquecer</strong>, <strong>/editar_pin</strong> e <strong>/limite_hist</strong>.</li>
-                    <li><strong>Uso diário de IA:</strong> no Free, conto quantas mensagens de IA usaste no dia (para o limite de 12).</li>
+                    <li><strong>Uso diário de IA:</strong> no Free, conto quantas mensagens de IA usaste no dia (para o limite de 6).</li>
                     <li><strong>Metadados do Discord:</strong> IDs, nome de exibição, cargos/permissões relevantes, data/hora, comandos usados e dados públicos básicos do servidor.</li>
                     <li><strong>Preferências e XP:</strong> o estilo de fala que escolheste, o teu XP/nível e bloqueios temporários se houver abuso.</li>
                     <li><strong>Voz e áudio:</strong> áudio processado na sessão para transcrição, TTS e wake word. É operacional — não guardo arquivo comercial permanente de áudio.</li>
@@ -501,7 +501,7 @@
                 <h4>Retenção e exclusão</h4>
                 <ul>
                     <li>Com <strong>/relembrar</strong> vês o histórico disponível; com <strong>/esquecer</strong> apagas o que pedires.</li>
-                    <li><strong>/limite_hist</strong> controla o contexto da IA; no Free, corto automaticamente o histórico guardado às últimas 20 mensagens.</li>
+                    <li><strong>/limite_hist</strong> controla o contexto da IA; no Free, corto automaticamente o histórico guardado às últimas 12 mensagens.</li>
                     <li>No Premium (conta ou servidor), esse corte automático do Free não se aplica.</li>
                     <li>Se cancelares a assinatura, o Premium acaba no fim do período pago — mas o histórico e as configurações <strong>não</strong> desaparecem sozinhos.</li>
                     <li>Logs técnicos, backups e registos de segurança/faturação podem ficar um tempo para diagnóstico e obrigações legais.</li>
@@ -595,6 +595,7 @@
                 <a href="#pricing">Planos</a>
                 <a href="#legal">Privacidade</a>
                 <a href="#legal">Termos</a>
+                <a href="/acknowledgments/">Agradecimentos</a>
                 <a href="#home">Voltar ao topo ↑</a>
             </div>
             <a class="footer-discord" href="https://discord.gg/E99uQdfCvB" target="_blank" rel="noopener noreferrer" aria-label="Servidor oficial no Discord" title="Servidor oficial">
