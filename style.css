@@ -3,7 +3,7 @@
     --primary: #F2752A; /* Laranja da pelagem */
     --primary-light: #FF9A6C; 
     --gold: #FFC857; /* Dourado quente para destacar os botões */
-    --secondary: #6B345D; /* Roxo escuro da camisola */
+    --secondary: #6B345D; /* Roxo escuro do moletom*/
     --accent: #5865F2; /* Blurple, a cor tema do Discord */
     --accent-light: #8C99FF; /* Variante clara do blurple para texto/detalhes */
     
@@ -2433,7 +2433,7 @@ footer a:hover { color: var(--primary); text-decoration: underline; }
     color: var(--primary-light);
     background: rgba(242, 117, 42, 0.12);
     border: 1px solid rgba(242, 117, 42, 0.28);
-    border-radius: 999px;
+    border-radius: 5px;
     padding: 0.35rem 0.75rem;
 }
 .ack-lib-list {
