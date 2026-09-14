@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agradecimentos — ARIA</title>
+
+    <meta name="description" content="Linguagens, bibliotecas e serviços que tornam a ARIA possível.">
+    <meta name="theme-color" content="#F2752A">
+    <link rel="icon" href="https://raw.githubusercontent.com/EttoreMatos/ARIA_webpage/refs/heads/main/favicon.ico">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Agradecimentos — ARIA">
+    <meta property="og:description" content="Linguagens, bibliotecas e serviços que tornam a ARIA possível.">
+    <meta property="og:url" content="https://ariawebpage.onrender.com/acknowledgments/">
+    <meta property="og:site_name" content="ARIA Bot">
+    <meta property="og:image" content="https://cdn.jsdelivr.net/gh/EttoreMatos/ARIA_webpage@main/banner.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Dancing+Script:wght@700&family=IBM+Plex+Mono:wght@400;600&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css?v=20260913-ux-v30">
+</head>
+<body class="page-ack">
+
+    <div class="bg-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <nav id="navbar" class="scrolled">
+        <div class="container">
+            <a class="logo aria-name-styled" href="/">ARIA</a>
+            <div class="nav-end">
+                <ul class="nav-links" id="primaryNav">
+                    <li><a href="/#home">Início</a></li>
+                    <li><a href="/#features">Recursos</a></li>
+                    <li><a href="/#commands">Comandos</a></li>
+                    <li><a href="/#pricing">Planos</a></li>
+                    <li><a href="/acknowledgments/">Agradecimentos</a></li>
+                </ul>
+                <button type="button" class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="primaryNav" aria-label="Abrir menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+    <div class="nav-backdrop" id="navBackdrop" hidden></div>
+
+    <main class="ack-page">
+        <div class="container">
+            <header class="ack-hero">
+                <h1 class="section-title">Agradecimentos</h1>
+                <p class="ack-intro">A ARIA existe graças a uma pilha enorme de código aberto, APIs e ferramentas. Esta página lista as linguagens, bibliotecas e serviços usados no bot, na API e no site.</p>
+            </header>
+
+            <section class="ack-block">
+                <h3>Linguagens</h3>
+                <p>O coração da ARIA e a cola entre Discord, IA, voz, pagamentos e a página.</p>
+                <div class="ack-tags">
+                    <span class="ack-tag">Python</span>
+                    <span class="ack-tag">HTML</span>
+                    <span class="ack-tag">CSS</span>
+                    <span class="ack-tag">JavaScript</span>
+                    <span class="ack-tag">SQL</span>
+                    <span class="ack-tag">Shell</span>
+                </div>
+            </section>
+
+            <section class="ack-block">
+                <h3>Bot Discord — núcleo</h3>
+                <ul class="ack-lib-list">
+                    <li><code>discord.py</code><span>Framework do bot, slash commands, embeds, eventos e voice client.</span></li>
+                    <li><code>python-dotenv</code><span>Carrega variáveis de ambiente e segredos de configuração.</span></li>
+                    <li><code>asyncpg</code><span>Cliente assíncrono PostgreSQL para histórico, XP, planos e configs.</span></li>
+                    <li><code>aiohttp</code><span>HTTP assíncrono para busca web, mídia e integrações externas.</span></li>
+                    <li><code>pytz</code> / <code>zoneinfo</code><span>Fusos horários em lembretes, logs e agendamentos.</span></li>
+                    <li><code>json-repair</code><span>Repara JSON inválido devolvido por modelos de IA.</span></li>
+                </ul>
+            </section>
+
+            <section class="ack-block">
+                <h3>Bot — voz e áudio</h3>
+                <ul class="ack-lib-list">
+                    <li><code>discord.py[voice]</code><span>Suporte de voz nativo do discord.py.</span></li>
+                    <li><code>discord-ext-voice-recv</code><span>Recebe áudio dos membros na call para STT.</span></li>
+                    <li><code>davey</code><span>Suporte DAVE / encriptação moderna de voz Discord.</span></li>
+                    <li><code>pydub</code><span>Manipulação e conversão de áudio.</span></li>
+                    <li><code>soundfile</code><span>Leitura/escrita de ficheiros de áudio.</span></li>
+                    <li><code>numpy</code><span>Processamento numérico de buffers de áudio.</span></li>
+                    <li><code>elevenlabs</code><span>TTS premium da ElevenLabs.</span></li>
+                    <li><code>edge-tts</code><span>TTS gratuito via Edge como fallback.</span></li>
+                </ul>
+            </section>
+
+            <section class="ack-block">
+                <h3>Bot — IA, mídia e web</h3>
+                <ul class="ack-lib-list">
+                    <li><code>mistralai</code><span>SDK oficial Mistral para chat, visão e ferramentas.</span></li>
+                    <li><code>easy-pil</code><span>Geração de imagens (cartões, mini-jogos, overlays).</span></li>
+                    <li><code>youtube-transcript-api</code><span>Transcrições de vídeos do YouTube.</span></li>
+                    <li><code>yt-dlp</code><span>Metadados e extração de informação de vídeos.</span></li>
+                    <li><code>Tavily</code><span>API de busca web (via HTTP, sem pacote Python dedicado).</span></li>
+                </ul>
+            </section>
+
+            <section class="ack-block">
+                <h3>API de assinaturas (<code>aria-api</code>)</h3>
+                <ul class="ack-lib-list">
+                    <li><code>fastapi</code><span>API HTTP para OAuth Discord, checkout e webhooks.</span></li>
+                    <li><code>uvicorn</code><span>Servidor ASGI de produção.</span></li>
+                    <li><code>pydantic</code><span>Validação de payloads e modelos de dados.</span></li>
+                    <li><code>httpx</code><span>Cliente HTTP para Discord OAuth e serviços externos.</span></li>
+                    <li><code>stripe</code><span>Checkout, assinaturas e webhooks de pagamento.</span></li>
+                    <li><code>itsdangerous</code><span>Tokens assinados no fluxo de autenticação/handoff.</span></li>
+                    <li><code>asyncpg</code><span>Persistência dos estados Premium / Server.</span></li>
+                    <li><code>python-dotenv</code><span>Configuração da API por ambiente.</span></li>
+                </ul>
+            </section>
+
+            <section class="ack-block">
+                <h3>Site e frontend</h3>
+                <ul class="ack-lib-list">
+                    <li><code>HTML5</code><span>Estrutura das páginas públicas.</span></li>
+                    <li><code>CSS3</code><span>Layout, tema visual e responsividade.</span></li>
+                    <li><code>JavaScript</code><span>Navegação, auth Discord, checkout Stripe e animações.</span></li>
+                    <li><code>Google Fonts</code><span>Caveat, Dancing Script, Sora e IBM Plex Mono.</span></li>
+                </ul>
+            </section>
+
+            <section class="ack-block">
+                <h3>Infraestrutura e serviços</h3>
+                <ul class="ack-lib-list">
+                    <li><code>PostgreSQL</code><span>Base de dados principal da ARIA.</span></li>
+                    <li><code>Discord</code><span>Plataforma onde a ARIA vive e fala.</span></li>
+                    <li><code>Stripe</code><span>Pagamentos Aria Premium e Aria Server.</span></li>
+                    <li><code>Render</code><span>Hosting do site, da API e do bot.</span></li>
+                    <li><code>Mistral AI</code><span>Modelos de linguagem e multimodal.</span></li>
+                    <li><code>ElevenLabs</code><span>Voz sintética premium.</span></li>
+                    <li><code>Tavily</code><span>Busca web para respostas com fontes.</span></li>
+                    <li><code>FFmpeg</code><span>Backend de conversão de áudio usado pelo pydub/voz.</span></li>
+                </ul>
+            </section>
+
+            <section class="ack-block">
+                <h3>Testes e qualidade</h3>
+                <ul class="ack-lib-list">
+                    <li><code>pytest</code><span>Suíte de testes do bot e da API.</span></li>
+                    <li><code>pytest-asyncio</code><span>Suporte a testes assíncronos.</span></li>
+                </ul>
+            </section>
+
+            <section class="ack-block">
+                <h3>Módulos internos da ARIA</h3>
+                <p>Além das libs externas, o projeto organiza a lógica nestes pacotes:</p>
+                <ul class="ack-lib-list">
+                    <li><code>aria/</code><span>Núcleo do bot: eventos, IA, STT/TTS, DB, personalidade, DM relay.</span></li>
+                    <li><code>cogs/</code><span>Comandos Discord (geral, moderação, utilidades, admin, diversão).</span></li>
+                    <li><code>services/</code><span>Planos Premium, embeds, filas de IA, helpers e bancos locais.</span></li>
+                    <li><code>aria-api/</code><span>Backend FastAPI de login Discord, billing e webhooks Stripe.</span></li>
+                    <li><code>site/</code><span>Página pública, planos, legal e estes agradecimentos.</span></li>
+                    <li><code>prompts/</code><span>System prompts e instruções de comportamento da ARIA.</span></li>
+                </ul>
+            </section>
+
+            <section class="ack-block">
+                <h3>Obrigada 🦊</h3>
+                <p>Obrigada a todas as pessoas e projetos open source que tornam isto possível. Sem vocês, eu seria só uma ideia com orelhas.</p>
+                <p>Desenvolvida por <strong>Ettore Bruno (@46_6f_78)</strong>.</p>
+                <a class="btn btn-primary ack-back" href="/">Voltar ao site</a>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="logo-bottom aria-name-styled">ARIA</div>
+            <p>&copy; 2026 <strong>ARIA Discord Bot</strong>.</p>
+            <div class="footer-links">
+                <a href="/">Início</a>
+                <a href="/#pricing">Planos</a>
+                <a href="/#legal">Legal</a>
+                <a href="/acknowledgments/">Agradecimentos</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const navToggle = document.getElementById('navToggle');
+        const navBackdrop = document.getElementById('navBackdrop');
+        function setMobileNav(open) {
+            document.body.classList.toggle('nav-open', open);
+            if (navToggle) {
+                navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+                navToggle.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
+            }
+            if (navBackdrop) {
+                navBackdrop.hidden = !open;
+                navBackdrop.classList.toggle('is-open', open);
+            }
+        }
+        if (navToggle) navToggle.addEventListener('click', () => setMobileNav(!document.body.classList.contains('nav-open')));
+        if (navBackdrop) navBackdrop.addEventListener('click', () => setMobileNav(false));
+        document.querySelectorAll('#primaryNav a').forEach((link) => link.addEventListener('click', () => setMobileNav(false)));
+        window.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMobileNav(false); });
+        window.addEventListener('resize', () => { if (window.innerWidth > 768) setMobileNav(false); });
+    </script>
+</body>
+</html>
