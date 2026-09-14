@@ -1433,7 +1433,13 @@ body.nav-open {
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     border: 1px solid rgba(255,255,255,0.08);
 }
-
+.cmd-tab:focus {
+    outline: none;
+}
+.cmd-tab:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
 .cmd-panel { display: none; }
 .cmd-panel.active { display: block; animation: fadeIn 0.4s ease; }
 
