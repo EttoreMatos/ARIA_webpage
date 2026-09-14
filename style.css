@@ -1342,7 +1342,7 @@ body.nav-open {
 
 /* ── COMANDOS ── */
 .commands {
-    padding: 6rem 2rem 8rem;
+    padding: 6rem 2rem 5rem;
     position: relative;
     z-index: 1;
 }
