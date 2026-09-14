@@ -1461,7 +1461,7 @@ body.nav-open {
     background: rgba(255,255,255,0.03);
     width: 50px; height: 50px;
     display: flex; align-items: center; justify-content: center;
-    border-radius: 12px;
+    border-radius: 60px;
 }
 .command-item .cmd-body {
     flex: 1;
