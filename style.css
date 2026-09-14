@@ -2325,12 +2325,6 @@ footer a:hover { color: var(--primary); text-decoration: underline; }
 }
 
 /* ── AGRADECIMENTOS ── */
-body.page-ack {
-    cursor: auto;
-}
-body.page-ack * { cursor: auto !important; }
-body.page-ack .cursor { display: none; }
-
 .ack-page {
     position: relative;
     z-index: 1;
@@ -2484,13 +2478,10 @@ body.page-ack .cursor { display: none; }
 
 /* ── LEGAL (VISUAL DISCORD) ── */
 body.page-legal {
-    cursor: auto;
     background: var(--bg-deep);
     overflow: hidden;
     height: 100dvh;
 }
-body.page-legal * { cursor: auto !important; }
-body.page-legal .cursor { display: none; }
 body.page-legal .bg-blobs {
     z-index: 0;
 }
@@ -2526,28 +2517,28 @@ body.page-legal .bg-blobs .blob {
 }
 .dc-server-banner {
     padding: 1.15rem 1rem 1.15rem;
-    background: linear-gradient(160deg, #4752c4 0%, #5865f2 42%, #3c45a5 100%);
-    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.25);
+    background: linear-gradient(180deg, rgba(43, 24, 58, 0.95) 0%, rgba(32, 18, 46, 0.9) 100%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
 }
 .dc-brand {
     display: inline-block;
     font-size: 2rem;
     line-height: 1;
-    color: #fff;
     text-decoration: none;
 }
 .dc-brand.aria-name-styled {
-    background: none;
-    background-clip: unset;
-    -webkit-background-clip: unset;
-    -webkit-text-fill-color: #fff;
-    color: #fff;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+    background: var(--gradient-1);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    text-shadow: none;
 }
 .dc-server-sub {
     margin-top: 0.45rem;
     font-size: 0.78rem;
-    color: rgba(255, 255, 255, 0.85);
+    color: rgba(244, 238, 245, 0.72);
 }
 .dc-channel-group {
     padding: 1rem 0.5rem 0.35rem;
