@@ -1404,8 +1404,8 @@ body.nav-open {
     padding: 0.5rem;
     border-radius: 10px;
     border: 1px solid var(--border-glass);
-    width: 100%;
-    max-width: 100%;
+    width: 80%;
+    max-width: 90%;
     overflow-x: auto;
     scrollbar-width: thin;
 }
@@ -1443,7 +1443,7 @@ body.nav-open {
     background: var(--bg-glass);
     backdrop-filter: blur(8px);
     padding: 1.5rem;
-    border-radius: 16px;
+    border-radius: 100px;
     border: 1px solid var(--border-glass);
     transition: all 0.3s ease;
     display: flex;
