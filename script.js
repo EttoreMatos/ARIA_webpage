@@ -445,7 +445,7 @@ function friendlyBillingError(err, fallback) {
         return 'Checkout indisponível: Stripe ainda não está configurado na API (chaves/preços de teste).';
     }
     if (/network|failed to fetch|load failed/i.test(raw)) {
-        return 'Não foi possível contactar a API. Verifica a ligação ou se o serviço no Render está online.';
+        return 'Não foi possível contatar a API. Verifique a conexão ou se o serviço no Render está online.';
     }
     return raw || fallback;
 }
@@ -454,14 +454,14 @@ function inferStatusTone(message) {
     const msg = String(message || '');
     if (/recebido|sucesso|concluído|ativo|aberta|aberto/i.test(msg)) return 'success';
     if (/cancel|falha|erro|indispon|impossível|não foi|invalid/i.test(msg)) return 'error';
-    if (/permite|aguarda|entra|escolhe|ainda não/i.test(msg)) return 'warn';
+    if (/permite|permita|aguarda|entra|entre|escolhe|escolha|ainda não/i.test(msg)) return 'warn';
     return 'info';
 }
 
 function statusTitleFor(tone, customTitle) {
     if (customTitle) return customTitle;
     if (tone === 'success') return 'Tudo certo';
-    if (tone === 'error') return 'Algo correu mal';
+    if (tone === 'error') return 'Algo deu errado';
     if (tone === 'warn') return 'Atenção';
     return 'Aviso';
 }
@@ -549,7 +549,7 @@ function setButtonLoading(btn, loading) {
         }
         btn.classList.add('is-loading');
         btn.setAttribute('aria-busy', 'true');
-        btn.innerHTML = '<span class="btn-spinner" aria-hidden="true"></span><span class="sr-only">A carregar…</span>';
+        btn.innerHTML = '<span class="btn-spinner" aria-hidden="true"></span><span class="sr-only">Carregando…</span>';
         return;
     }
     btn.classList.remove('is-loading');
@@ -767,9 +767,9 @@ function showGuildInviteView(guild) {
     if (pick) pick.hidden = true;
     if (invite) invite.hidden = false;
     const name = (guild && guild.name) || 'servidor';
-    if (title) title.textContent = 'Adiciona a ARIA';
+    if (title) title.textContent = 'Adicione a ARIA';
     if (hint) {
-        hint.textContent = `A ARIA ainda não está em “${name}”. Abre o Discord, adiciona-a e volta aqui para continuar o pagamento.`;
+        hint.textContent = `A ARIA ainda não está em “${name}”. Abra o Discord, adicione-a e volte aqui para continuar o pagamento.`;
     }
 }
 
@@ -840,7 +840,7 @@ async function recheckGuildAfterInvite() {
             return;
         }
         showGuildInviteView(match || pendingInviteGuild || { guild_id: guildId, name: 'servidor' });
-        showBillingBanner('Ainda não detetei a ARIA nesse servidor. Confirma o convite e tenta outra vez.');
+        showBillingBanner('Ainda não detectei a ARIA nesse servidor. Confirme o convite e tente de novo.');
     } catch (err) {
         showBillingBanner(friendlyBillingError(err, 'Falha ao verificar o servidor.'));
     } finally {
@@ -887,7 +887,7 @@ function requireLoginThen(action) {
     ariaApi.setPendingAction(action);
     const pricing = document.getElementById('pricing');
     if (pricing) pricing.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    showBillingBanner('Entra com Discord para continuar. Depois seguimos para o pagamento.');
+    showBillingBanner('Entre com Discord para continuar. Depois seguimos para o pagamento.');
     startDiscordLogin();
 }
 
@@ -902,7 +902,7 @@ function startDiscordLogin() {
     authPopupRef = window.open(url, '_blank');
     const opened = !!(authPopupRef && !authPopupRef.closed);
     if (!opened) {
-        showBillingBanner('Permite pop-ups para autenticar, ou o login abre nesta aba.');
+        showBillingBanner('Permita pop-ups para autenticar, ou o login abre nesta aba.');
         window.location.assign(url);
         return;
     }
@@ -919,7 +919,7 @@ function startDiscordLogin() {
 
 async function startUserCheckout() {
     if (billingBusy) return;
-    setBillingBusy(true, 'A redirecionar…', 'btnCheckoutUser');
+    setBillingBusy(true, 'Redirecionando…', 'btnCheckoutUser');
     try {
         const me = await ariaApi.me();
         if (!me.authenticated) {
@@ -930,7 +930,7 @@ async function startUserCheckout() {
         if (me.premium && me.premium.enabled) {
             ariaApi.setPendingAction('');
             setBillingBusy(false);
-            showBillingBanner('Já tens Aria Premium ativo.');
+            showBillingBanner('Você já tem ARIA Premium ativo.');
             await refreshAuthUi();
             return;
         }
@@ -986,7 +986,7 @@ async function openGuildPicker() {
 
 async function startGuildCheckout(guildId) {
     if (billingBusy || !guildId) return;
-    setBillingBusy(true, 'A redirecionar…', 'btnCheckoutGuild');
+    setBillingBusy(true, 'Redirecionando…', 'btnCheckoutGuild');
     try {
         const session = await ariaApi.checkoutGuild(guildId);
         const url = session && (session.checkout_url || session.url);
@@ -1003,15 +1003,15 @@ async function startGuildCheckout(guildId) {
 async function openBillingPortal(sourceBtnId) {
     if (billingBusy) return;
     const activeId = sourceBtnId || 'btnManageBilling';
-    setBillingBusy(true, 'A redirecionar…', activeId);
+    setBillingBusy(true, 'Redirecionando…', activeId);
     try {
         const me = await ariaApi.me();
         if (!me.authenticated) {
-            showBillingBanner('Entra com Discord para gerir a assinatura.');
+            showBillingBanner('Entre com Discord para gerenciar a assinatura.');
             return;
         }
         if (!(me.premium && me.premium.enabled)) {
-            showBillingBanner('Ainda não tens uma assinatura ativa para gerir.');
+            showBillingBanner('Você ainda não tem uma assinatura ativa para gerenciar.');
             await refreshAuthUi();
             return;
         }
@@ -1040,12 +1040,12 @@ async function resumePendingAction() {
     const action = ariaApi.getPendingAction();
     if (!action || billingBusy) return;
     if (action === 'checkout_user') {
-        showBillingBanner('Login concluído. A abrir o Stripe…');
+        showBillingBanner('Login concluído. Abrindo o Stripe…');
         await startUserCheckout();
         return;
     }
     if (action === 'checkout_guild') {
-        showBillingBanner('Login concluído. Escolhe o servidor para assinar.');
+        showBillingBanner('Login concluído. Escolha o servidor para assinar.');
         await openGuildPicker();
         return;
     }
@@ -1240,7 +1240,7 @@ updateBillingCtas({ authenticated: false, isPremium: false });
         });
     }
     if (billing === 'portal') {
-        showStatusPopup('Voltaste do portal de cobrança.', {
+        showStatusPopup('Você voltou do portal de cobrança.', {
             tone: 'info',
             title: 'Portal de cobrança',
         });
@@ -1296,5 +1296,3 @@ if (searchInput && commandsSection) {
         }
     });
 }
-
-
