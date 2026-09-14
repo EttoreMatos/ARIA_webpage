@@ -1404,8 +1404,8 @@ body.nav-open {
     padding: 0.5rem;
     border-radius: 10px;
     border: 1px solid var(--border-glass);
-    width: 95%;
-    max-width: 95%;
+    width: 100%;
+    max-width: 100%;
     overflow-x: auto;
     scrollbar-width: thin;
 }
