@@ -1250,7 +1250,7 @@ body.nav-open {
     margin-top: calc(var(--wave-h) * -1);
     /* Mais espaço em baixo p/ compensar a onda e centrar os cards */
     padding-top: calc(2.6rem + var(--wave-h));
-    padding-bottom: calc(3.0rem + var(--wave-h));
+    padding-bottom: calc(2.5rem + var(--wave-h));
     overflow: hidden;
     isolation: isolate;
 }
