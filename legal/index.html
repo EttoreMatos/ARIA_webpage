@@ -19,7 +19,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Dancing+Script:wght@700&family=IBM+Plex+Mono:wght@400;600&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../style.css?v=20260913-ux-v33">
+    <link rel="stylesheet" href="../style.css?v=20260913-ux-v34">
 </head>
 <body class="page-legal">
 
@@ -30,6 +30,7 @@
                 <p class="dc-server-sub">Documentos oficiais</p>
             </div>
 
+            <div class="dc-sidebar-nav">
             <div class="dc-channel-group">
                 <p class="dc-channel-label">Informações</p>
                 <a class="dc-channel is-active" href="#privacy" data-panel="privacy">
@@ -52,9 +53,10 @@
                     <span class="dc-hash">#</span> planos
                 </a>
             </div>
+            </div>
 
             <div class="dc-userbar">
-                <div class="dc-avatar" aria-hidden="true">🦊</div>
+                <img class="dc-avatar" src="https://raw.githubusercontent.com/EttoreMatos/ARIA_webpage/refs/heads/main/perfil2.png" alt="ARIA" width="32" height="32">
                 <div class="dc-user-meta">
                     <strong>ARIA</strong>
                     <span>online</span>
@@ -72,7 +74,7 @@
             <main class="dc-content">
                 <article class="dc-panel is-active" id="privacy">
                     <div class="dc-message">
-                        <div class="dc-msg-avatar" aria-hidden="true">📋</div>
+                        <img class="dc-msg-avatar" src="https://raw.githubusercontent.com/EttoreMatos/ARIA_webpage/refs/heads/main/perfil2.png" alt="" width="40" height="40">
                         <div class="dc-msg-body">
                             <div class="dc-msg-head">
                                 <span class="dc-msg-author">ARIA</span>
@@ -164,7 +166,7 @@
 
                 <article class="dc-panel" id="terms">
                     <div class="dc-message">
-                        <div class="dc-msg-avatar" aria-hidden="true">📜</div>
+                        <img class="dc-msg-avatar" src="https://raw.githubusercontent.com/EttoreMatos/ARIA_webpage/refs/heads/main/perfil2.png" alt="" width="40" height="40">
                         <div class="dc-msg-body">
                             <div class="dc-msg-head">
                                 <span class="dc-msg-author">ARIA</span>
@@ -264,7 +266,9 @@
                 history.replaceState(null, '', '#' + key);
             }
             closeMenu();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            const content = document.querySelector('.dc-content');
+            if (content) content.scrollTop = 0;
+            else window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function openMenu() {
