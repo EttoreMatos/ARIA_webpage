@@ -1466,10 +1466,6 @@ body.nav-open {
 .command-item .cmd-body {
     flex: 1;
     min-width: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.35rem;
 }
 .command-item code {
     font-family: 'IBM Plex Mono', monospace;
@@ -1479,16 +1475,17 @@ body.nav-open {
     background: rgba(242, 117, 42, 0.1);
     padding: 0.2rem 0.6rem;
     border-radius: 6px;
-    display: inline-block;
+    display: inline;
     margin-bottom: 0;
-    max-width: 100%;
-    overflow-wrap: anywhere;
+    margin-right: 0.35rem;
+    line-height: 1.7;
+    white-space: nowrap;
 }
 .command-item p {
     font-size: 0.9rem;
     color: var(--text-muted);
     line-height: 1.5;
-    margin: 0;
+    margin: 0.35rem 0 0;
 }
 .cmd-legend {
     position: relative;
@@ -1554,11 +1551,12 @@ body.nav-open {
     margin-top: 0;
 }
 .cmd-badges {
-    display: flex;
+    display: inline-flex;
     flex-wrap: wrap;
     gap: 0.35rem;
     margin-left: 0;
     max-width: 100%;
+    vertical-align: middle;
 }
 .cmd-badge {
     display: inline-block;
@@ -1655,17 +1653,22 @@ body.nav-open {
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    display: block;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: baseline;
+    gap: 0.35rem;
     line-height: 1.15;
+    white-space: nowrap;
 }
 .plan-price .period {
     font-family: 'Sora', sans-serif;
     font-weight: 400;
-    font-size: 0.85rem;
+    font-size: 0.78rem;
     color: var(--text-muted);
     -webkit-text-fill-color: var(--text-muted);
-    margin-left: 0.3rem;
+    margin-left: 0;
     white-space: nowrap;
+    flex-shrink: 0;
 }
 .plan-features {
     list-style: none;
@@ -2195,21 +2198,25 @@ footer a:hover { color: var(--primary); text-decoration: underline; }
     .command-item code {
         font-size: 0.88rem;
         padding: 0.15rem 0.45rem;
+        margin-right: 0.3rem;
     }
     .command-item p {
         font-size: 0.84rem;
         line-height: 1.45;
+        margin-top: 0.3rem;
     }
     .cmd-badges {
         margin-left: 0;
         margin-top: 0;
-        width: 100%;
+        width: auto;
+        max-width: calc(100% - 0.5rem);
         gap: 0.3rem;
+        vertical-align: middle;
     }
     .cmd-badge {
         font-size: 0.62rem;
         padding: 0.18rem 0.45rem;
-        white-space: normal;
+        white-space: nowrap;
         line-height: 1.25;
         border-radius: 8px;
     }
@@ -2242,14 +2249,16 @@ footer a:hover { color: var(--primary); text-decoration: underline; }
     }
     .plan-name { font-size: 1.85rem; }
     .plan-price {
-        font-size: 2rem;
+        font-size: 1.75rem;
         line-height: 1.2;
+        gap: 0.28rem;
     }
     .plan-price .period {
-        display: block;
-        margin: 0.35rem 0 0;
-        white-space: normal;
-        line-height: 1.35;
+        display: inline;
+        margin: 0;
+        font-size: 0.68rem;
+        white-space: nowrap;
+        line-height: 1.2;
     }
     .plan-features {
         margin: 0.9rem 0 1.5rem;
