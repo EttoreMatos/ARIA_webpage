@@ -2486,7 +2486,8 @@ body.page-ack .cursor { display: none; }
 body.page-legal {
     cursor: auto;
     background: #313338;
-    overflow-x: hidden;
+    overflow: hidden;
+    height: 100dvh;
 }
 body.page-legal * { cursor: auto !important; }
 body.page-legal .cursor { display: none; }
@@ -2494,7 +2495,9 @@ body.page-legal .cursor { display: none; }
 .dc-app {
     display: grid;
     grid-template-columns: 240px 1fr;
-    min-height: 100dvh;
+    height: 100dvh;
+    max-height: 100dvh;
+    overflow: hidden;
     background: #313338;
     color: #dbdee1;
 }
@@ -2503,8 +2506,12 @@ body.page-legal .cursor { display: none; }
     background: #2b2d31;
     display: flex;
     flex-direction: column;
-    min-height: 100dvh;
+    height: 100dvh;
+    max-height: 100dvh;
+    position: sticky;
+    top: 0;
     border-right: 1px solid rgba(0, 0, 0, 0.35);
+    overflow: hidden;
 }
 .dc-server-banner {
     padding: 1.15rem 1rem 1rem;
@@ -2525,6 +2532,11 @@ body.page-legal .cursor { display: none; }
 }
 .dc-channel-group {
     padding: 1rem 0.5rem 0.35rem;
+}
+.dc-sidebar-nav {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
 }
 .dc-channel-label {
     font-size: 0.68rem;
@@ -2562,6 +2574,7 @@ body.page-legal .cursor { display: none; }
 }
 .dc-userbar {
     margin-top: auto;
+    flex-shrink: 0;
     display: flex;
     align-items: center;
     gap: 0.65rem;
@@ -2572,10 +2585,10 @@ body.page-legal .cursor { display: none; }
     width: 32px;
     height: 32px;
     border-radius: 50%;
+    object-fit: cover;
     background: #5865f2;
-    display: grid;
-    place-items: center;
-    font-size: 0.95rem;
+    display: block;
+    flex-shrink: 0;
 }
 .dc-user-meta {
     display: flex;
@@ -2595,6 +2608,9 @@ body.page-legal .cursor { display: none; }
     display: flex;
     flex-direction: column;
     min-width: 0;
+    height: 100dvh;
+    max-height: 100dvh;
+    overflow: hidden;
     background: #313338;
 }
 .dc-topbar {
@@ -2652,10 +2668,9 @@ body.page-legal .cursor { display: none; }
     width: 40px;
     height: 40px;
     border-radius: 50%;
+    object-fit: cover;
     background: #5865f2;
-    display: grid;
-    place-items: center;
-    font-size: 1.1rem;
+    display: block;
 }
 .dc-msg-head {
     display: flex;
@@ -2752,11 +2767,12 @@ body.page-legal .cursor { display: none; }
 .dc-backdrop.is-open { display: block; }
 
 @media (max-width: 860px) {
-    .dc-app { grid-template-columns: 1fr; }
+    .dc-app { grid-template-columns: 1fr; height: 100dvh; }
     .dc-sidebar {
         position: fixed;
         inset: 0 auto 0 0;
         width: min(80vw, 280px);
+        height: 100dvh;
         z-index: 50;
         transform: translateX(-105%);
         transition: transform 0.28s ease;
@@ -2764,7 +2780,7 @@ body.page-legal .cursor { display: none; }
     body.dc-nav-open .dc-sidebar { transform: translateX(0); }
     .dc-menu-btn { display: inline-flex; }
     .dc-content { padding: 1rem 0.9rem 2.5rem; }
-    .dc-message { grid-template-columns: 1fr; }
-    .dc-msg-avatar { display: none; }
+    .dc-message { grid-template-columns: 32px 1fr; gap: 0.65rem; }
+    .dc-msg-avatar { width: 32px; height: 32px; }
 }
 
