@@ -19,7 +19,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Dancing+Script:wght@700&family=IBM+Plex+Mono:wght@400;600&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../style.css?v=20260913-ux-v30">
+    <link rel="stylesheet" href="../style.css?v=20260913-ux-v31">
 </head>
 <body class="page-ack">
 
@@ -52,12 +52,11 @@
         <div class="container">
             <header class="ack-hero">
                 <h1 class="section-title">Agradecimentos</h1>
-                <p class="ack-intro">A ARIA existe graças a uma pilha enorme de código aberto, APIs e ferramentas. Esta página lista as linguagens, bibliotecas e serviços usados no bot, na API e no site.</p>
+                <p class="ack-intro">Linguagens, bibliotecas e serviços que tornam a ARIA possível.</p>
             </header>
 
             <section class="ack-block">
                 <h3>Linguagens</h3>
-                <p>O coração da ARIA e a cola entre Discord, IA, voz, pagamentos e a página.</p>
                 <div class="ack-tags">
                     <span class="ack-tag">Python</span>
                     <span class="ack-tag">HTML</span>
@@ -69,104 +68,73 @@
             </section>
 
             <section class="ack-block">
-                <h3>Bot Discord — núcleo</h3>
-                <ul class="ack-lib-list">
-                    <li><code>discord.py</code><span>Framework do bot, slash commands, embeds, eventos e voice client.</span></li>
-                    <li><code>python-dotenv</code><span>Carrega variáveis de ambiente e segredos de configuração.</span></li>
-                    <li><code>asyncpg</code><span>Cliente assíncrono PostgreSQL para histórico, XP, planos e configs.</span></li>
-                    <li><code>aiohttp</code><span>HTTP assíncrono para busca web, mídia e integrações externas.</span></li>
-                    <li><code>pytz</code> / <code>zoneinfo</code><span>Fusos horários em lembretes, logs e agendamentos.</span></li>
-                    <li><code>json-repair</code><span>Repara JSON inválido devolvido por modelos de IA.</span></li>
-                </ul>
+                <h3>Bibliotecas — bot</h3>
+                <div class="ack-tags">
+                    <span class="ack-tag">discord.py</span>
+                    <span class="ack-tag">discord-ext-voice-recv</span>
+                    <span class="ack-tag">davey</span>
+                    <span class="ack-tag">python-dotenv</span>
+                    <span class="ack-tag">asyncpg</span>
+                    <span class="ack-tag">aiohttp</span>
+                    <span class="ack-tag">mistralai</span>
+                    <span class="ack-tag">json-repair</span>
+                    <span class="ack-tag">elevenlabs</span>
+                    <span class="ack-tag">edge-tts</span>
+                    <span class="ack-tag">pydub</span>
+                    <span class="ack-tag">soundfile</span>
+                    <span class="ack-tag">numpy</span>
+                    <span class="ack-tag">pytz</span>
+                    <span class="ack-tag">easy-pil</span>
+                    <span class="ack-tag">youtube-transcript-api</span>
+                    <span class="ack-tag">yt-dlp</span>
+                    <span class="ack-tag">pytest</span>
+                    <span class="ack-tag">pytest-asyncio</span>
+                </div>
             </section>
 
             <section class="ack-block">
-                <h3>Bot — voz e áudio</h3>
-                <ul class="ack-lib-list">
-                    <li><code>discord.py[voice]</code><span>Suporte de voz nativo do discord.py.</span></li>
-                    <li><code>discord-ext-voice-recv</code><span>Recebe áudio dos membros na call para STT.</span></li>
-                    <li><code>davey</code><span>Suporte DAVE / encriptação moderna de voz Discord.</span></li>
-                    <li><code>pydub</code><span>Manipulação e conversão de áudio.</span></li>
-                    <li><code>soundfile</code><span>Leitura/escrita de ficheiros de áudio.</span></li>
-                    <li><code>numpy</code><span>Processamento numérico de buffers de áudio.</span></li>
-                    <li><code>elevenlabs</code><span>TTS premium da ElevenLabs.</span></li>
-                    <li><code>edge-tts</code><span>TTS gratuito via Edge como fallback.</span></li>
-                </ul>
+                <h3>Bibliotecas — API</h3>
+                <div class="ack-tags">
+                    <span class="ack-tag">fastapi</span>
+                    <span class="ack-tag">uvicorn</span>
+                    <span class="ack-tag">pydantic</span>
+                    <span class="ack-tag">httpx</span>
+                    <span class="ack-tag">stripe</span>
+                    <span class="ack-tag">itsdangerous</span>
+                    <span class="ack-tag">asyncpg</span>
+                    <span class="ack-tag">python-dotenv</span>
+                    <span class="ack-tag">pytest</span>
+                    <span class="ack-tag">pytest-asyncio</span>
+                </div>
             </section>
 
             <section class="ack-block">
-                <h3>Bot — IA, mídia e web</h3>
-                <ul class="ack-lib-list">
-                    <li><code>mistralai</code><span>SDK oficial Mistral para chat, visão e ferramentas.</span></li>
-                    <li><code>easy-pil</code><span>Geração de imagens (cartões, mini-jogos, overlays).</span></li>
-                    <li><code>youtube-transcript-api</code><span>Transcrições de vídeos do YouTube.</span></li>
-                    <li><code>yt-dlp</code><span>Metadados e extração de informação de vídeos.</span></li>
-                    <li><code>Tavily</code><span>API de busca web (via HTTP, sem pacote Python dedicado).</span></li>
-                </ul>
+                <h3>Site</h3>
+                <div class="ack-tags">
+                    <span class="ack-tag">HTML5</span>
+                    <span class="ack-tag">CSS3</span>
+                    <span class="ack-tag">JavaScript</span>
+                    <span class="ack-tag">Google Fonts</span>
+                </div>
             </section>
 
             <section class="ack-block">
-                <h3>API de assinaturas (<code>aria-api</code>)</h3>
-                <ul class="ack-lib-list">
-                    <li><code>fastapi</code><span>API HTTP para OAuth Discord, checkout e webhooks.</span></li>
-                    <li><code>uvicorn</code><span>Servidor ASGI de produção.</span></li>
-                    <li><code>pydantic</code><span>Validação de payloads e modelos de dados.</span></li>
-                    <li><code>httpx</code><span>Cliente HTTP para Discord OAuth e serviços externos.</span></li>
-                    <li><code>stripe</code><span>Checkout, assinaturas e webhooks de pagamento.</span></li>
-                    <li><code>itsdangerous</code><span>Tokens assinados no fluxo de autenticação/handoff.</span></li>
-                    <li><code>asyncpg</code><span>Persistência dos estados Premium / Server.</span></li>
-                    <li><code>python-dotenv</code><span>Configuração da API por ambiente.</span></li>
-                </ul>
-            </section>
-
-            <section class="ack-block">
-                <h3>Site e frontend</h3>
-                <ul class="ack-lib-list">
-                    <li><code>HTML5</code><span>Estrutura das páginas públicas.</span></li>
-                    <li><code>CSS3</code><span>Layout, tema visual e responsividade.</span></li>
-                    <li><code>JavaScript</code><span>Navegação, auth Discord, checkout Stripe e animações.</span></li>
-                    <li><code>Google Fonts</code><span>Caveat, Dancing Script, Sora e IBM Plex Mono.</span></li>
-                </ul>
-            </section>
-
-            <section class="ack-block">
-                <h3>Infraestrutura e serviços</h3>
-                <ul class="ack-lib-list">
-                    <li><code>PostgreSQL</code><span>Base de dados principal da ARIA.</span></li>
-                    <li><code>Discord</code><span>Plataforma onde a ARIA vive e fala.</span></li>
-                    <li><code>Stripe</code><span>Pagamentos Aria Premium e Aria Server.</span></li>
-                    <li><code>Render</code><span>Hosting do site, da API e do bot.</span></li>
-                    <li><code>Mistral AI</code><span>Modelos de linguagem e multimodal.</span></li>
-                    <li><code>ElevenLabs</code><span>Voz sintética premium.</span></li>
-                    <li><code>Tavily</code><span>Busca web para respostas com fontes.</span></li>
-                    <li><code>FFmpeg</code><span>Backend de conversão de áudio usado pelo pydub/voz.</span></li>
-                </ul>
-            </section>
-
-            <section class="ack-block">
-                <h3>Testes e qualidade</h3>
-                <ul class="ack-lib-list">
-                    <li><code>pytest</code><span>Suíte de testes do bot e da API.</span></li>
-                    <li><code>pytest-asyncio</code><span>Suporte a testes assíncronos.</span></li>
-                </ul>
-            </section>
-
-            <section class="ack-block">
-                <h3>Módulos internos da ARIA</h3>
-                <p>Além das libs externas, o projeto organiza a lógica nestes pacotes:</p>
-                <ul class="ack-lib-list">
-                    <li><code>aria/</code><span>Núcleo do bot: eventos, IA, STT/TTS, DB, personalidade, DM relay.</span></li>
-                    <li><code>cogs/</code><span>Comandos Discord (geral, moderação, utilidades, admin, diversão).</span></li>
-                    <li><code>services/</code><span>Planos Premium, embeds, filas de IA, helpers e bancos locais.</span></li>
-                    <li><code>aria-api/</code><span>Backend FastAPI de login Discord, billing e webhooks Stripe.</span></li>
-                    <li><code>site/</code><span>Página pública, planos, legal e estes agradecimentos.</span></li>
-                    <li><code>prompts/</code><span>System prompts e instruções de comportamento da ARIA.</span></li>
-                </ul>
+                <h3>Serviços</h3>
+                <div class="ack-tags">
+                    <span class="ack-tag">PostgreSQL</span>
+                    <span class="ack-tag">Discord</span>
+                    <span class="ack-tag">Stripe</span>
+                    <span class="ack-tag">Render</span>
+                    <span class="ack-tag">Mistral AI</span>
+                    <span class="ack-tag">ElevenLabs</span>
+                    <span class="ack-tag">Tavily</span>
+                    <span class="ack-tag">FFmpeg</span>
+                </div>
             </section>
 
             <section class="ack-block">
                 <h3>Obrigada 🦊</h3>
-                <p>Obrigada a todas as pessoas e projetos open source que tornam isto possível. Sem vocês, eu seria só uma ideia com orelhas.</p>
+                <p>Obrigada a todos os projetos open source por trás da ARIA.</p>
                 <p>Desenvolvida por <strong>Ettore Bruno (@46_6f_78)</strong>.</p>
                 <a class="btn btn-primary ack-back" href="/">Voltar ao site</a>
             </section>
