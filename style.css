@@ -1402,7 +1402,7 @@ body.nav-open {
     margin-bottom: 3.5rem;
     background: rgba(255,255,255,0.02);
     padding: 0.5rem;
-    border-radius: 60px;
+    border-radius: 10px;
     border: 1px solid var(--border-glass);
     width: 100%;
     max-width: 100%;
@@ -1411,7 +1411,7 @@ body.nav-open {
 }
 .cmd-tab {
     padding: 0.55rem 1.1rem;
-    border-radius: 60px;
+    border-radius: 10px;
     border: none;
     background: transparent;
     color: var(--text-muted);
