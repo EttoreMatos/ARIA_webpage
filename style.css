@@ -1404,8 +1404,8 @@ body.nav-open {
     padding: 0.5rem;
     border-radius: 10px;
     border: 1px solid var(--border-glass);
-    width: 80%;
-    max-width: 90%;
+    width: 95%;
+    max-width: 95%;
     overflow-x: auto;
     scrollbar-width: thin;
 }
@@ -1441,8 +1441,8 @@ body.nav-open {
 
 .command-item {
     background: var(--bg-glass);
-    backdrop-filter: blur(8px);
-    padding: 1.5rem;
+    backdrop-filter: blur(7px);
+    padding: 1.0rem;
     border-radius: 100px;
     border: 1px solid var(--border-glass);
     transition: all 0.3s ease;
