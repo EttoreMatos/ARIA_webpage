@@ -1006,10 +1006,6 @@ body.nav-open {
     animation: fadeInUp 0.8s ease-out 0.2s both;
     line-height: 1.65;
 }
-.hero-note {
-    font-size: 1.02rem !important;
-    opacity: 0.85;
-}
 .cta-buttons {
     display: flex;
     gap: 1rem;
