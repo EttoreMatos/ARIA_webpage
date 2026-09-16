@@ -440,14 +440,54 @@ let pendingInviteGuild = null;
 
 
 function friendlyBillingError(err, fallback) {
-    const raw = String(err && err.message ? err.message : err || '');
-    if (/stripe|price|secret|api key|not configured|misconfigured/i.test(raw)) {
-        return 'Checkout indisponível: Stripe ainda não está configurado na API (chaves/preços de teste).';
+    const raw = String(err && err.message ? err.message : err || '').trim();
+    const text = raw.replace(/^Stripe:\s*/i, '');
+
+    if (/401|unauthor|não autentic|not authenticated/i.test(text)) {
+        return 'Sua sessão expirou. Entre com Discord e tente de novo.';
     }
-    if (/network|failed to fetch|load failed/i.test(raw)) {
-        return 'Não foi possível contatar a API. Verifique a conexão ou se o serviço no Render está online.';
+    if (/403|sem permissão|não está presente|não encontrado ou sem permissão/i.test(text)) {
+        return 'Não foi possível seguir com esse servidor. Confira se você é admin e se a ARIA já está nele.';
     }
-    return raw || fallback;
+    if (/409|já ativa|já possui assinatura|already/i.test(text)) {
+        return 'Essa assinatura já está ativa. Use “Gerenciar assinatura” se quiser alterar o plano.';
+    }
+    if (/payment method types|compatible with your chosen currency|activated payment methods/i.test(text)) {
+        return 'O pagamento está temporariamente indisponível. Estamos liberando os métodos de cobrança — tente de novo em instantes.';
+    }
+    if (/no such price|price.*(invalid|not found)|STRIPE price não configurado/i.test(text)) {
+        return 'Este plano ainda não está disponível para compra. Tente mais tarde ou fale com o suporte no servidor oficial.';
+    }
+    if (/api key|invalid.?key|authentication.?error|not configured|misconfigured|secret/i.test(text)) {
+        return 'O checkout está temporariamente fora do ar. Já estamos ajustando — tente novamente em breve.';
+    }
+    if (/card.?declined|insufficient.?funds|incorrect.?cvc|expired.?card/i.test(text)) {
+        return 'Não conseguimos concluir o pagamento com esse cartão. Confira os dados ou use outro método.';
+    }
+    if (/rate.?limit|too many requests|429/i.test(text)) {
+        return 'Muitas tentativas seguidas. Espere alguns segundos e tente de novo.';
+    }
+    if (/502|503|504|bad gateway|service unavailable|gateway timeout/i.test(text)) {
+        return 'Não deu para abrir o pagamento agora. Tente novamente em alguns instantes.';
+    }
+    if (/network|failed to fetch|load failed|networkerror/i.test(text)) {
+        return 'Não foi possível conectar. Verifique sua internet e tente de novo.';
+    }
+    if (/portal/i.test(text) && /indispon|unavailable|customer/i.test(text)) {
+        return 'Não encontramos uma assinatura ativa para abrir o portal de cobrança.';
+    }
+    // Evita jogar jargão técnico (Stripe/API/IDs) na cara do usuário.
+    if (/stripe|checkout session|payment_method|whsec|sk_live|sk_test|pk_live|price_/i.test(text)) {
+        return fallback || 'Não foi possível concluir o pagamento agora. Tente novamente em instantes.';
+    }
+    if (/^HTTP\s*\d+/i.test(text) || /^\{/.test(text)) {
+        return fallback || 'Algo deu errado ao processar o pagamento. Tente novamente.';
+    }
+    // Mensagens da API que já estão em português e são legíveis.
+    if (text && text.length <= 180 && !/[A-Za-z]+Error|Traceback|Exception/i.test(text)) {
+        return text;
+    }
+    return fallback || 'Não foi possível concluir. Tente novamente em instantes.';
 }
 
 function inferStatusTone(message) {
@@ -1094,7 +1134,7 @@ document.getElementById('navLogoutBtn')?.addEventListener('click', async (event)
         await refreshAuthUi();
         showTopToast('Sessão encerrada.');
     } catch (err) {
-        showBillingBanner(err.message || 'Falha ao sair.');
+        showBillingBanner(friendlyBillingError(err, 'Falha ao sair.'));
     }
 });
 
@@ -1206,7 +1246,7 @@ updateBillingCtas({ authenticated: false, isPremium: false });
                 window.close();
                 return;
             }
-            showBillingBanner(err.message || 'Falha ao concluir login.');
+            showBillingBanner(friendlyBillingError(err, 'Falha ao concluir o login com Discord.'));
         }
     } else if (legacySession) {
         exchangedToken = legacySession;
