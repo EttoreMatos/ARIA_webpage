@@ -491,6 +491,53 @@
         </div>
     </div>
 
+    <div class="checkout-modal" id="checkoutModal" aria-hidden="true">
+        <div class="checkout-modal-backdrop" id="checkoutModalBackdrop"></div>
+        <div class="checkout-modal-shell" role="dialog" aria-modal="true" aria-labelledby="checkoutModalTitle">
+            <div class="checkout-modal-chrome" id="checkoutModalChrome">
+                <div class="checkout-modal-head">
+                    <div class="checkout-modal-brand">
+                        <span class="checkout-modal-dot" aria-hidden="true"></span>
+                        <div>
+                            <h3 id="checkoutModalTitle">Finalizar pagamento</h3>
+                            <p class="checkout-modal-sub" id="checkoutModalSub">Assinatura segura via Asaas</p>
+                        </div>
+                    </div>
+                    <button type="button" class="checkout-modal-close" id="checkoutModalClose" aria-label="Fechar">&times;</button>
+                </div>
+                <button type="button" class="checkout-modal-popout" id="checkoutPopoutBtn" title="Abrir em janela separada">Abrir em janela</button>
+                <div class="checkout-modal-frame-wrap" id="checkoutFrameWrap">
+                    <div class="checkout-modal-loader" id="checkoutLoader" aria-hidden="false">
+                        <div class="checkout-spinner" aria-hidden="true"></div>
+                        <p>Abrindo checkout…</p>
+                    </div>
+                    <iframe
+                        id="checkoutFrame"
+                        class="checkout-modal-frame"
+                        title="Checkout Asaas"
+                        allow="payment *"
+                        referrerpolicy="no-referrer-when-downgrade"
+                    ></iframe>
+                    <div class="checkout-modal-fallback" id="checkoutFallback" hidden>
+                        <p>Não foi possível embutir o checkout neste navegador.</p>
+                        <button type="button" class="btn btn-primary" id="checkoutOpenExternal">Abrir pagamento</button>
+                    </div>
+                </div>
+            </div>
+            <div class="checkout-modal-success" id="checkoutSuccess" hidden>
+                <div class="checkout-check" id="checkoutCheck" aria-hidden="true">
+                    <svg viewBox="0 0 64 64" fill="none">
+                        <circle class="checkout-check-ring" cx="32" cy="32" r="28" />
+                        <path class="checkout-check-mark" d="M18 33.5 L28 43 L46 22" />
+                    </svg>
+                </div>
+                <h3 id="checkoutSuccessTitle">Pagamento confirmado</h3>
+                <p id="checkoutSuccessText">Sua conta agora é <strong>Premium</strong>.</p>
+                <button type="button" class="btn btn-primary" id="checkoutSuccessOk">Continuar</button>
+            </div>
+        </div>
+    </div>
+
     <a class="discord-fab" id="discordFab" href="https://discord.gg/E99uQdfCvB" target="_blank" rel="noopener noreferrer" aria-label="Entre no nosso servidor">
         <span class="discord-fab-label">Entre no nosso servidor</span>
         <span class="discord-fab-icon" aria-hidden="true">
@@ -500,6 +547,6 @@
         </span>
     </a>
 
-    <script defer src="script.js?v=20260924-asaas-billing-v1"></script>
+    <script defer src="script.js?v=20260924-checkout-modal-v1"></script>
 </body>
 </html>
