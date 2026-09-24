@@ -1,6 +1,20 @@
 /* ══════════════════════════════════════
    CURSOR CUSTOMIZADO (PATINHA SUAVE)
 ══════════════════════════════════════ */
+
+/* Se o Asaas redirecionar o success/cancel para o site dentro do iframe do checkout,
+   avisa o parent e evita renderizar a landing inteira no frame. */
+(function bridgeBillingFromIframe() {
+    try {
+        if (window.self === window.top) return;
+        const params = new URLSearchParams(window.location.search);
+        const billing = params.get('billing');
+        if (!billing) return;
+        window.parent.postMessage({ source: 'aria-billing', billing }, '*');
+        document.documentElement.innerHTML = '<body style="margin:0;background:#0d0612;color:#f4eef5;font-family:system-ui;display:flex;align-items:center;justify-content:center;min-height:100vh">Concluído…</body>';
+    } catch (_) { /* ignore */ }
+})();
+
 const cursor = document.getElementById('cursor');
 const prefersCoarse = window.matchMedia('(hover: none), (pointer: coarse)').matches;
 let mx = 0, my = 0;
@@ -441,6 +455,12 @@ let billingBusy = false;
 let lastAuthSnapshot = { authenticated: false, isPremium: false };
 let cachedGuilds = [];
 let pendingInviteGuild = null;
+let checkoutPollTimer = null;
+let checkoutFallbackTimer = null;
+let checkoutActiveUrl = '';
+let checkoutExternalWin = null;
+let checkoutExpectPremium = true;
+let checkoutCelebrated = false;
 
 
 function friendlyBillingError(err, fallback) {
@@ -723,8 +743,16 @@ function setLoggedInUi(user, premium) {
         menuAvatar.alt = label;
     }
     nameEl.textContent = label;
+    const wasPremium = !!(lastAuthSnapshot && lastAuthSnapshot.isPremium);
     planEl.textContent = isPremium ? 'Premium' : 'Conta gratuita';
     planEl.classList.toggle('is-premium', isPremium);
+    if (isPremium && !wasPremium) {
+        planEl.classList.remove('plan-just-upgraded');
+        // retrigger animation
+        void planEl.offsetWidth;
+        planEl.classList.add('plan-just-upgraded');
+        window.setTimeout(() => planEl.classList.remove('plan-just-upgraded'), 1200);
+    }
     applyUserBanner(user);
     if (loginBtn) loginBtn.style.display = 'none';
     chip.classList.add('is-visible');
@@ -963,7 +991,7 @@ function startDiscordLogin() {
 
 async function startUserCheckout() {
     if (billingBusy) return;
-    setBillingBusy(true, 'Redirecionando…', 'btnCheckoutUser');
+    setBillingBusy(true, 'Abrindo…', 'btnCheckoutUser');
     try {
         const me = await ariaApi.me();
         if (!me.authenticated) {
@@ -982,7 +1010,8 @@ async function startUserCheckout() {
         const url = session && (session.checkout_url || session.url);
         if (!url) throw new Error('A API não devolveu o link do checkout Asaas.');
         ariaApi.setPendingAction('');
-        window.location.href = url;
+        setBillingBusy(false);
+        openCheckoutModal(url, { expectPremium: true, title: 'Assinar ARIA Premium' });
     } catch (err) {
         setBillingBusy(false);
         const msg = friendlyBillingError(err, 'Não foi possível iniciar o checkout.');
@@ -1030,17 +1059,189 @@ async function openGuildPicker() {
 
 async function startGuildCheckout(guildId) {
     if (billingBusy || !guildId) return;
-    setBillingBusy(true, 'Redirecionando…', 'btnCheckoutGuild');
+    setBillingBusy(true, 'Abrindo…', 'btnCheckoutGuild');
     try {
         const session = await ariaApi.checkoutGuild(guildId);
         const url = session && (session.checkout_url || session.url);
         if (!url) throw new Error('A API não devolveu o link do checkout Asaas.');
         ariaApi.setPendingAction('');
         ariaApi.setPendingGuildId('');
-        window.location.href = url;
+        setGuildModalVisible(false);
+        setBillingBusy(false);
+        openCheckoutModal(url, { expectPremium: true, title: 'Assinar ARIA Server' });
     } catch (err) {
         setBillingBusy(false);
         showBillingBanner(friendlyBillingError(err, 'Não foi possível iniciar o checkout do servidor.'));
+    }
+}
+
+function stopCheckoutWatchers() {
+    if (checkoutPollTimer) {
+        clearInterval(checkoutPollTimer);
+        checkoutPollTimer = null;
+    }
+    if (checkoutFallbackTimer) {
+        clearTimeout(checkoutFallbackTimer);
+        checkoutFallbackTimer = null;
+    }
+}
+
+function closeCheckoutModal({ keepExternal } = {}) {
+    const modal = document.getElementById('checkoutModal');
+    const frame = document.getElementById('checkoutFrame');
+    if (!modal) return;
+    stopCheckoutWatchers();
+    modal.classList.remove('is-visible', 'is-success');
+    modal.setAttribute('aria-hidden', 'true');
+    if (frame) {
+        frame.removeAttribute('src');
+        frame.classList.remove('is-ready');
+    }
+    checkoutActiveUrl = '';
+    checkoutCelebrated = false;
+    if (!keepExternal && checkoutExternalWin && !checkoutExternalWin.closed) {
+        try { checkoutExternalWin.close(); } catch (_) { /* ignore */ }
+    }
+    checkoutExternalWin = null;
+    document.body.style.overflow = '';
+}
+
+function showCheckoutSuccessUi() {
+    const modal = document.getElementById('checkoutModal');
+    const chrome = document.getElementById('checkoutModalChrome');
+    const success = document.getElementById('checkoutSuccess');
+    const check = document.getElementById('checkoutCheck');
+    if (!modal || !success) return;
+    stopCheckoutWatchers();
+    if (chrome) chrome.hidden = true;
+    success.hidden = false;
+    modal.classList.add('is-success', 'is-visible');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    if (check) {
+        check.classList.remove('is-animating');
+        void check.offsetWidth;
+        check.classList.add('is-animating');
+    }
+    if (checkoutExternalWin && !checkoutExternalWin.closed) {
+        try { checkoutExternalWin.close(); } catch (_) { /* ignore */ }
+        checkoutExternalWin = null;
+    }
+}
+
+async function celebrateCheckoutSuccess() {
+    if (checkoutCelebrated) return;
+    checkoutCelebrated = true;
+    showCheckoutSuccessUi();
+    await refreshAuthUi();
+}
+
+function openCheckoutExternalWindow(url) {
+    const w = 520;
+    const h = 720;
+    const left = Math.max(0, Math.round((window.screen.width - w) / 2));
+    const top = Math.max(0, Math.round((window.screen.height - h) / 2));
+    checkoutExternalWin = window.open(
+        url,
+        'aria_asaas_checkout',
+        `popup=yes,width=${w},height=${h},left=${left},top=${top},noopener=no`
+    );
+    return checkoutExternalWin;
+}
+
+function showCheckoutFallback() {
+    const fallback = document.getElementById('checkoutFallback');
+    const loader = document.getElementById('checkoutLoader');
+    const frame = document.getElementById('checkoutFrame');
+    if (loader) loader.classList.add('is-hidden');
+    if (frame) frame.classList.remove('is-ready');
+    if (fallback) fallback.hidden = false;
+}
+
+function openCheckoutModal(url, options = {}) {
+    const modal = document.getElementById('checkoutModal');
+    const frame = document.getElementById('checkoutFrame');
+    const loader = document.getElementById('checkoutLoader');
+    const fallback = document.getElementById('checkoutFallback');
+    const chrome = document.getElementById('checkoutModalChrome');
+    const success = document.getElementById('checkoutSuccess');
+    const titleEl = document.getElementById('checkoutModalTitle');
+    if (!modal || !frame) {
+        window.location.href = url;
+        return;
+    }
+
+    checkoutExpectPremium = options.expectPremium !== false;
+    checkoutActiveUrl = url;
+    checkoutCelebrated = false;
+    stopCheckoutWatchers();
+
+    if (titleEl && options.title) titleEl.textContent = options.title;
+    if (chrome) chrome.hidden = false;
+    if (success) success.hidden = true;
+    if (fallback) fallback.hidden = true;
+    modal.classList.remove('is-success');
+    modal.classList.add('is-visible');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+
+    if (loader) {
+        loader.classList.remove('is-hidden');
+        loader.setAttribute('aria-hidden', 'false');
+    }
+    frame.classList.remove('is-ready');
+    frame.onload = () => {
+        if (loader) {
+            loader.classList.add('is-hidden');
+            loader.setAttribute('aria-hidden', 'true');
+        }
+        frame.classList.add('is-ready');
+    };
+    frame.src = url;
+
+    // Se o Asaas bloquear iframe (X-Frame-Options), mostra fallback depois de alguns segundos.
+    checkoutFallbackTimer = window.setTimeout(() => {
+        try {
+            // Se ainda não ficou "ready" visualmente, oferece atalho externo
+            if (!frame.classList.contains('is-ready')) {
+                showCheckoutFallback();
+            }
+        } catch (_) {
+            showCheckoutFallback();
+        }
+    }, 3500);
+
+    // Poll Premium enquanto o modal estiver aberto
+    checkoutPollTimer = window.setInterval(async () => {
+        if (!checkoutExpectPremium) return;
+        try {
+            const me = await ariaApi.me();
+            if (me && me.premium && me.premium.enabled) {
+                await celebrateCheckoutSuccess();
+            }
+        } catch (_) { /* ignore */ }
+    }, 2500);
+}
+
+function handleBillingBridgeMessage(event) {
+    const data = event && event.data;
+    if (!data || data.source !== 'aria-billing') return;
+    const billing = data.billing;
+    if (billing === 'success') {
+        celebrateCheckoutSuccess();
+        return;
+    }
+    if (billing === 'cancel' || billing === 'expired') {
+        closeCheckoutModal();
+        showStatusPopup(
+            billing === 'expired'
+                ? 'O link de pagamento expirou. Inicie o checkout novamente.'
+                : 'Checkout cancelado. Nenhuma cobrança foi feita.',
+            {
+                tone: 'warn',
+                title: billing === 'expired' ? 'Checkout expirado' : 'Pagamento cancelado',
+            }
+        );
     }
 }
 
@@ -1160,6 +1361,11 @@ document.addEventListener('keydown', (event) => {
     if (event.key !== 'Escape') return;
     closeNavUserMenu();
     closeStatusModal();
+    const checkout = document.getElementById('checkoutModal');
+    if (checkout && checkout.classList.contains('is-visible')) {
+        closeCheckoutModal();
+        return;
+    }
     const modal = document.getElementById('guildModal');
     if (modal && modal.classList.contains('is-visible')) setGuildModalVisible(false);
 });
@@ -1171,6 +1377,39 @@ document.getElementById('statusModalOk')?.addEventListener('click', () => {
 document.getElementById('statusModalBackdrop')?.addEventListener('click', () => {
     closeStatusModal();
 });
+
+document.getElementById('checkoutModalClose')?.addEventListener('click', () => {
+    closeCheckoutModal();
+});
+
+document.getElementById('checkoutModalBackdrop')?.addEventListener('click', () => {
+    closeCheckoutModal();
+});
+
+document.getElementById('checkoutSuccessOk')?.addEventListener('click', () => {
+    closeCheckoutModal();
+});
+
+document.getElementById('checkoutOpenExternal')?.addEventListener('click', () => {
+    if (!checkoutActiveUrl) return;
+    const win = openCheckoutExternalWindow(checkoutActiveUrl);
+    if (!win) {
+        showBillingBanner('Permita pop-ups para concluir o pagamento.');
+        return;
+    }
+    const fallback = document.getElementById('checkoutFallback');
+    if (fallback) {
+        fallback.innerHTML = '<p>Finalize o pagamento na janela aberta.<br>Esta tela atualiza sozinha quando confirmar.</p>';
+    }
+});
+
+document.getElementById('checkoutPopoutBtn')?.addEventListener('click', () => {
+    if (!checkoutActiveUrl) return;
+    const win = openCheckoutExternalWindow(checkoutActiveUrl);
+    if (!win) showBillingBanner('Permita pop-ups para concluir o pagamento.');
+});
+
+window.addEventListener('message', handleBillingBridgeMessage);
 
 document.getElementById('authWaitingCancel')?.addEventListener('click', () => {
     setAuthWaiting(false);
@@ -1275,10 +1514,7 @@ updateBillingCtas({ authenticated: false, isPremium: false });
         showStatusPopup('Falha no login com Discord.', { tone: 'error', title: 'Login falhou' });
     }
     if (billing === 'success') {
-        showStatusPopup('Pagamento recebido. O Premium será ativado em instantes.', {
-            tone: 'success',
-            title: 'Pagamento efetuado',
-        });
+        celebrateCheckoutSuccess();
     }
     if (billing === 'cancel') {
         showStatusPopup('Checkout cancelado. Nenhuma cobrança foi feita.', {
