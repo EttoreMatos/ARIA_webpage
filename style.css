@@ -1006,6 +1006,10 @@ body.nav-open {
     animation: fadeInUp 0.8s ease-out 0.2s both;
     line-height: 1.65;
 }
+.hero-note {
+    font-size: 1.02rem !important;
+    opacity: 0.85;
+}
 .cta-buttons {
     display: flex;
     gap: 1rem;
@@ -1818,6 +1822,280 @@ body.nav-open {
     min-width: 120px;
     padding: 0.8rem 1.4rem;
     font-size: 0.88rem;
+}
+
+/* ── CHECKOUT MODAL (Asaas embutido) ── */
+.checkout-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 10060;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+.checkout-modal.is-visible { display: flex; }
+.checkout-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(6, 3, 10, 0.82);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+}
+.checkout-modal-shell {
+    position: relative;
+    z-index: 1;
+    width: min(560px, calc(100vw - 1.5rem));
+    max-height: min(92vh, 820px);
+    display: flex;
+    flex-direction: column;
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background:
+        radial-gradient(120% 80% at 10% 0%, rgba(242, 117, 42, 0.18), transparent 55%),
+        radial-gradient(90% 70% at 100% 10%, rgba(88, 101, 242, 0.16), transparent 50%),
+        linear-gradient(180deg, rgba(36, 22, 48, 0.98), rgba(14, 8, 22, 0.99));
+    box-shadow:
+        0 0 0 1px rgba(255, 200, 87, 0.08),
+        0 32px 80px rgba(0, 0, 0, 0.55);
+    animation: checkoutModalIn 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes checkoutModalIn {
+    from { opacity: 0; transform: translateY(18px) scale(0.97); }
+    to { opacity: 1; transform: none; }
+}
+.checkout-modal-chrome {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    flex: 1;
+}
+.checkout-modal-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.15rem 1.2rem 0.9rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.checkout-modal-brand {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+}
+.checkout-modal-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--gradient-btn);
+    box-shadow: 0 0 16px rgba(242, 117, 42, 0.55);
+    flex-shrink: 0;
+}
+.checkout-modal-head h3 {
+    font-family: 'Sora', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text-main);
+    margin: 0;
+}
+.checkout-modal-sub {
+    margin: 0.15rem 0 0;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+}
+.checkout-modal-close {
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text-muted);
+    font-size: 1.4rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+.checkout-modal-close:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-main);
+}
+.checkout-modal-popout {
+    align-self: flex-end;
+    margin: 0 1.2rem 0.65rem;
+    border: 0;
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+.checkout-modal-popout:hover {
+    color: var(--primary-light);
+}
+.checkout-modal-frame-wrap {
+    position: relative;
+    flex: 1;
+    min-height: min(68vh, 620px);
+    background: #f7f7f8;
+}
+.checkout-modal-frame {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background: #fff;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+.checkout-modal-frame.is-ready {
+    opacity: 1;
+}
+.checkout-modal-loader {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.85rem;
+    background: linear-gradient(180deg, #fafafa, #f0f0f2);
+    color: #5a5560;
+    font-size: 0.9rem;
+    transition: opacity 0.2s ease;
+}
+.checkout-modal-loader.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+.checkout-spinner {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 3px solid rgba(242, 117, 42, 0.2);
+    border-top-color: var(--primary);
+    animation: checkoutSpin 0.75s linear infinite;
+}
+@keyframes checkoutSpin {
+    to { transform: rotate(360deg); }
+}
+.checkout-modal-fallback {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    text-align: center;
+    background: linear-gradient(180deg, rgba(36, 22, 48, 0.98), rgba(14, 8, 22, 0.99));
+    color: var(--text-muted);
+}
+.checkout-modal-fallback[hidden] { display: none !important; }
+.checkout-modal-fallback p {
+    max-width: 28ch;
+    line-height: 1.5;
+}
+
+.checkout-modal-success {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2.6rem 1.6rem 2rem;
+    min-height: 360px;
+}
+.checkout-modal-success[hidden] { display: none !important; }
+.checkout-modal-success h3 {
+    font-family: 'Sora', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 650;
+    color: var(--text-main);
+    margin: 1.25rem 0 0.45rem;
+}
+.checkout-modal-success p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.55;
+    margin-bottom: 1.5rem;
+}
+.checkout-modal-success strong {
+    color: var(--gold);
+}
+
+.checkout-check {
+    width: 88px;
+    height: 88px;
+}
+.checkout-check svg {
+    width: 100%;
+    height: 100%;
+}
+.checkout-check-ring {
+    fill: none;
+    stroke: rgba(110, 231, 165, 0.95);
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-dasharray: 176;
+    stroke-dashoffset: 176;
+    transform-origin: 32px 32px;
+}
+.checkout-check-mark {
+    fill: none;
+    stroke: #6EE7A5;
+    stroke-width: 4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 52;
+    stroke-dashoffset: 52;
+}
+.checkout-modal.is-success .checkout-check-ring {
+    animation: checkoutRingDraw 0.55s ease-out forwards;
+}
+.checkout-modal.is-success .checkout-check-mark {
+    animation: checkoutMarkDraw 0.4s ease-out 0.35s forwards;
+}
+.checkout-modal.is-success .checkout-check {
+    animation: checkoutCheckPop 0.45s cubic-bezier(0.22, 1.4, 0.36, 1) 0.15s both;
+}
+@keyframes checkoutRingDraw {
+    to { stroke-dashoffset: 0; }
+}
+@keyframes checkoutMarkDraw {
+    to { stroke-dashoffset: 0; }
+}
+@keyframes checkoutCheckPop {
+    from { transform: scale(0.6); opacity: 0.4; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.nav-user-plan.is-premium {
+    color: var(--gold);
+}
+.nav-user-plan.plan-just-upgraded {
+    animation: planPremiumFlash 1.1s ease;
+}
+@keyframes planPremiumFlash {
+    0% { transform: scale(1); text-shadow: none; }
+    35% { transform: scale(1.08); text-shadow: 0 0 18px rgba(255, 200, 87, 0.55); }
+    100% { transform: scale(1); text-shadow: 0 0 0 transparent; }
+}
+
+@media (max-width: 640px) {
+    .checkout-modal-shell {
+        width: 100%;
+        max-height: 96vh;
+        border-radius: 18px;
+    }
+    .checkout-modal-frame-wrap {
+        min-height: min(72vh, 560px);
+    }
 }
 
 /* ── LEGAL (TERMOS E PRIVACIDADE) ── */
@@ -2833,4 +3111,3 @@ body.page-legal .bg-blobs .blob {
     .dc-message { grid-template-columns: 32px 1fr; gap: 0.65rem; }
     .dc-msg-avatar { width: 32px; height: 32px; }
 }
-
