@@ -426,8 +426,12 @@ const ariaApi = {
             body: JSON.stringify({ plan: 'SERVER_PREMIUM', guild_id: String(guildId) }),
         });
     },
+    cancelSubscription() {
+        return this.request('/api/billing/cancel', { method: 'POST' });
+    },
+    // Compat: antigo portal Stripe
     portal() {
-        return this.request('/api/billing/portal', { method: 'POST' });
+        return this.cancelSubscription();
     },
 };
 
@@ -441,7 +445,7 @@ let pendingInviteGuild = null;
 
 function friendlyBillingError(err, fallback) {
     const raw = String(err && err.message ? err.message : err || '').trim();
-    const text = raw.replace(/^Stripe:\s*/i, '');
+    const text = raw.replace(/^(Stripe|Asaas):\s*/i, '');
 
     if (/401|unauthor|não autentic|not authenticated/i.test(text)) {
         return 'Sua sessão expirou. Entre com Discord e tente de novo.';
@@ -450,15 +454,15 @@ function friendlyBillingError(err, fallback) {
         return 'Não foi possível seguir com esse servidor. Confira se você é admin e se a ARIA já está nele.';
     }
     if (/409|já ativa|já possui assinatura|already/i.test(text)) {
-        return 'Essa assinatura já está ativa. Use “Gerenciar assinatura” se quiser alterar o plano.';
+        return 'Essa assinatura já está ativa. Use “Cancelar assinatura” se quiser encerrar a renovação.';
     }
     if (/payment method types|compatible with your chosen currency|activated payment methods/i.test(text)) {
         return 'O pagamento está temporariamente indisponível. Estamos liberando os métodos de cobrança — tente de novo em instantes.';
     }
-    if (/no such price|price.*(invalid|not found)|STRIPE price não configurado/i.test(text)) {
+    if (/no such price|price.*(invalid|not found)|valor asaas não configurado|ASAAS.*não configurad/i.test(text)) {
         return 'Este plano ainda não está disponível para compra. Tente mais tarde ou fale com o suporte no servidor oficial.';
     }
-    if (/api key|invalid.?key|authentication.?error|not configured|misconfigured|secret/i.test(text)) {
+    if (/api key|invalid.?key|authentication.?error|not configured|misconfigured|secret|access_token/i.test(text)) {
         return 'O checkout está temporariamente fora do ar. Já estamos ajustando — tente novamente em breve.';
     }
     if (/card.?declined|insufficient.?funds|incorrect.?cvc|expired.?card/i.test(text)) {
@@ -473,11 +477,11 @@ function friendlyBillingError(err, fallback) {
     if (/network|failed to fetch|load failed|networkerror/i.test(text)) {
         return 'Não foi possível conectar. Verifique sua internet e tente de novo.';
     }
-    if (/portal/i.test(text) && /indispon|unavailable|customer/i.test(text)) {
-        return 'Não encontramos uma assinatura ativa para abrir o portal de cobrança.';
+    if (/nenhuma assinatura|não encontramos|404/i.test(text) && /assinatura|cancel/i.test(text)) {
+        return 'Não encontramos uma assinatura ativa para cancelar.';
     }
-    // Evita jogar jargão técnico (Stripe/API/IDs) na cara do usuário.
-    if (/stripe|checkout session|payment_method|whsec|sk_live|sk_test|pk_live|price_/i.test(text)) {
+    // Evita jogar jargão técnico (Asaas/API/IDs) na cara do usuário.
+    if (/stripe|asaas|checkout session|payment_method|whsec|sk_live|sk_test|pk_live|price_|aact_/i.test(text)) {
         return fallback || 'Não foi possível concluir o pagamento agora. Tente novamente em instantes.';
     }
     if (/^HTTP\s*\d+/i.test(text) || /^\{/.test(text)) {
@@ -638,9 +642,9 @@ function updateBillingCtas(state) {
         manageBtn.hidden = !(authenticated && isPremium);
         manageBtn.disabled = billingBusy || manageBtn.hidden;
         if (!billingBusy && !manageBtn.classList.contains('is-loading')) {
-            manageBtn.dataset.labelBackup = 'Gerenciar assinatura';
+            manageBtn.dataset.labelBackup = 'Cancelar assinatura';
             if (!manageBtn.textContent.trim() || manageBtn.querySelector('.btn-spinner')) {
-                manageBtn.textContent = 'Gerenciar assinatura';
+                manageBtn.textContent = 'Cancelar assinatura';
             }
         }
     }
@@ -976,7 +980,7 @@ async function startUserCheckout() {
         }
         const session = await ariaApi.checkoutUser();
         const url = session && (session.checkout_url || session.url);
-        if (!url) throw new Error('A API não devolveu o link do Stripe Checkout.');
+        if (!url) throw new Error('A API não devolveu o link do checkout Asaas.');
         ariaApi.setPendingAction('');
         window.location.href = url;
     } catch (err) {
@@ -1030,7 +1034,7 @@ async function startGuildCheckout(guildId) {
     try {
         const session = await ariaApi.checkoutGuild(guildId);
         const url = session && (session.checkout_url || session.url);
-        if (!url) throw new Error('A API não devolveu o link do Stripe Checkout.');
+        if (!url) throw new Error('A API não devolveu o link do checkout Asaas.');
         ariaApi.setPendingAction('');
         ariaApi.setPendingGuildId('');
         window.location.href = url;
@@ -1043,7 +1047,7 @@ async function startGuildCheckout(guildId) {
 async function openBillingPortal(sourceBtnId) {
     if (billingBusy) return;
     const activeId = sourceBtnId || 'btnManageBilling';
-    setBillingBusy(true, 'Redirecionando…', activeId);
+    setBillingBusy(true, 'Cancelando…', activeId);
     try {
         const me = await ariaApi.me();
         if (!me.authenticated) {
@@ -1051,26 +1055,29 @@ async function openBillingPortal(sourceBtnId) {
             return;
         }
         if (!(me.premium && me.premium.enabled)) {
-            showBillingBanner('Você ainda não tem uma assinatura ativa para gerenciar.');
+            showBillingBanner('Você ainda não tem uma assinatura ativa para cancelar.');
             await refreshAuthUi();
             return;
         }
-        const portal = await ariaApi.portal();
-        const url = portal && (portal.portal_url || portal.url);
-        if (!url) throw new Error('Portal de cobrança indisponível.');
-        const portalTab = window.open(url, '_blank', 'noopener,noreferrer');
-        if (!portalTab) {
-            // Pop-up bloqueado: tenta link sem navegar a aba atual.
-            const link = document.createElement('a');
-            link.href = url;
-            link.target = '_blank';
-            link.rel = 'noopener noreferrer';
-            document.body.appendChild(link);
-            link.click();
-            link.remove();
+        const ok = window.confirm(
+            'Cancelar a renovação automática? Você continua com Premium até o fim do período já pago.'
+        );
+        if (!ok) return;
+        const result = await ariaApi.cancelSubscription();
+        const until = result && result.access_until;
+        let msg = 'Assinatura cancelada. A renovação automática foi desligada.';
+        if (until) {
+            try {
+                const d = new Date(until);
+                if (!Number.isNaN(d.getTime())) {
+                    msg += ` Acesso Premium até ${d.toLocaleDateString('pt-BR')}.`;
+                }
+            } catch (_) { /* ignore */ }
         }
+        showBillingBanner(msg);
+        await refreshAuthUi();
     } catch (err) {
-        showBillingBanner(friendlyBillingError(err, 'Portal de cobrança indisponível.'));
+        showBillingBanner(friendlyBillingError(err, 'Não foi possível cancelar a assinatura.'));
     } finally {
         setBillingBusy(false);
     }
@@ -1080,7 +1087,7 @@ async function resumePendingAction() {
     const action = ariaApi.getPendingAction();
     if (!action || billingBusy) return;
     if (action === 'checkout_user') {
-        showBillingBanner('Login concluído. Abrindo o Stripe…');
+        showBillingBanner('Login concluído. Abrindo o checkout…');
         await startUserCheckout();
         return;
     }
@@ -1279,10 +1286,16 @@ updateBillingCtas({ authenticated: false, isPremium: false });
             title: 'Pagamento cancelado',
         });
     }
+    if (billing === 'expired') {
+        showStatusPopup('O link de pagamento expirou. Inicie o checkout novamente.', {
+            tone: 'warn',
+            title: 'Checkout expirado',
+        });
+    }
     if (billing === 'portal') {
-        showStatusPopup('Você voltou do portal de cobrança.', {
+        showStatusPopup('Assinatura gerenciada. Se você cancelou, o Premium segue até o fim do período pago.', {
             tone: 'info',
-            title: 'Portal de cobrança',
+            title: 'Assinatura',
         });
     }
 
