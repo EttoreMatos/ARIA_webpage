@@ -516,8 +516,17 @@ function friendlyBillingError(err, fallback) {
 
 function inferStatusTone(message) {
     const msg = String(message || '');
-    if (/recebido|sucesso|concluído|ativo|aberta|aberto/i.test(msg)) return 'success';
-    if (/cancel|falha|erro|indispon|impossível|não foi|invalid/i.test(msg)) return 'error';
+    // Cancelamento bem-sucedido (antes do match genérico de "cancel")
+    if (/assinatura cancelada|renovação automática foi desligada|acesso premium até/i.test(msg)) {
+        return 'success';
+    }
+    if (/recebido|sucesso|concluído|ativo|aberta|aberto|pagamento confirmado/i.test(msg)) {
+        return 'success';
+    }
+    if (/falha|erro|indispon|impossível|não foi|invalid|não encontramos|não foi possível/i.test(msg)) {
+        return 'error';
+    }
+    if (/checkout cancelado|pagamento cancelado|expir/i.test(msg)) return 'warn';
     if (/permite|permita|aguarda|entra|entre|escolhe|escolha|ainda não/i.test(msg)) return 'warn';
     return 'info';
 }
@@ -1275,7 +1284,10 @@ async function openBillingPortal(sourceBtnId) {
                 }
             } catch (_) { /* ignore */ }
         }
-        showBillingBanner(msg);
+        showStatusPopup(msg, {
+            tone: 'success',
+            title: 'Assinatura cancelada',
+        });
         await refreshAuthUi();
     } catch (err) {
         showBillingBanner(friendlyBillingError(err, 'Não foi possível cancelar a assinatura.'));
