@@ -2,15 +2,15 @@
    CURSOR CUSTOMIZADO (PATINHA SUAVE)
 ══════════════════════════════════════ */
 
-/* Se o Asaas redirecionar o success/cancel para o site dentro do iframe do checkout,
-   avisa o parent e evita renderizar a landing inteira no frame. */
-(function bridgeBillingFromIframe() {
+/* Se o Asaas redirecionar o success/cancel para o site dentro de uma janela externa,
+   avisa a janela principal e fecha a ponte. */
+(function bridgeBillingFromExternalWindow() {
     try {
         if (window.self === window.top) return;
         const params = new URLSearchParams(window.location.search);
         const billing = params.get('billing');
         if (!billing) return;
-        window.parent.postMessage({ source: 'aria-billing', billing }, '*');
+        window.parent.postMessage({ source: 'aria-billing', billing }, window.location.origin);
         document.documentElement.innerHTML = '<body style="margin:0;background:#0d0612;color:#f4eef5;font-family:system-ui;display:flex;align-items:center;justify-content:center;min-height:100vh">Concluído…</body>';
     } catch (_) { /* ignore */ }
 })();
@@ -1188,37 +1188,32 @@ function openCheckoutModal(url, options = {}) {
     if (titleEl && options.title) titleEl.textContent = options.title;
     if (chrome) chrome.hidden = false;
     if (success) success.hidden = true;
-    if (fallback) fallback.hidden = true;
+    // O Checkout Asaas não deve ser renderizado em iframe: a página hospedada
+    // pelo Asaas pode recusar esse contexto com "Unauthorized". O modal fica
+    // como ponte visual, e o pagamento abre na janela própria do Asaas.
+    if (fallback) {
+        fallback.hidden = false;
+        const message = fallback.querySelector('.checkout-modal-copy');
+        const button = fallback.querySelector('button');
+        if (message) message.textContent = 'O Asaas precisa abrir o pagamento em uma janela própria por segurança.';
+        if (button) button.textContent = 'Abrir pagamento seguro';
+    }
     modal.classList.remove('is-success');
     modal.classList.add('is-visible');
     modal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
 
+    // Nunca atribuir o link do Asaas ao iframe. Mesmo que o navegador aceite o
+    // carregamento, o checkout hospedado pode recusá-lo por política de origem.
     if (loader) {
-        loader.classList.remove('is-hidden');
-        loader.setAttribute('aria-hidden', 'false');
+        loader.classList.add('is-hidden');
+        loader.setAttribute('aria-hidden', 'true');
     }
-    frame.classList.remove('is-ready');
-    frame.onload = () => {
-        if (loader) {
-            loader.classList.add('is-hidden');
-            loader.setAttribute('aria-hidden', 'true');
-        }
-        frame.classList.add('is-ready');
-    };
-    frame.src = url;
-
-    // Se o Asaas bloquear iframe (X-Frame-Options), mostra fallback depois de alguns segundos.
-    checkoutFallbackTimer = window.setTimeout(() => {
-        try {
-            // Se ainda não ficou "ready" visualmente, oferece atalho externo
-            if (!frame.classList.contains('is-ready')) {
-                showCheckoutFallback();
-            }
-        } catch (_) {
-            showCheckoutFallback();
-        }
-    }, 3500);
+    if (frame) {
+        frame.removeAttribute('src');
+        frame.classList.remove('is-ready');
+        frame.hidden = true;
+    }
 
     // Poll Premium enquanto o modal estiver aberto
     checkoutPollTimer = window.setInterval(async () => {
@@ -1233,10 +1228,18 @@ function openCheckoutModal(url, options = {}) {
 }
 
 function handleBillingBridgeMessage(event) {
+    if (event && event.origin && event.origin !== window.location.origin) return;
     const data = event && event.data;
     if (!data || data.source !== 'aria-billing') return;
     const billing = data.billing;
     if (billing === 'success') {
+        if (window.opener && !window.opener.closed) {
+            try {
+                window.opener.postMessage({ source: 'aria-billing', billing }, window.location.origin);
+                window.close();
+                return;
+            } catch (_) { /* continue in this window */ }
+        }
         celebrateCheckoutSuccess();
         return;
     }
@@ -1411,14 +1414,21 @@ document.getElementById('checkoutOpenExternal')?.addEventListener('click', () =>
     }
     const fallback = document.getElementById('checkoutFallback');
     if (fallback) {
-        fallback.innerHTML = '<p>Finalize o pagamento na janela aberta.<br>Esta tela atualiza sozinha quando confirmar.</p>';
+        const message = fallback.querySelector('.checkout-modal-copy');
+        if (message) message.innerHTML = 'Finalize o pagamento na janela aberta.<br>Esta tela atualiza sozinha quando confirmar.';
     }
 });
 
 document.getElementById('checkoutPopoutBtn')?.addEventListener('click', () => {
     if (!checkoutActiveUrl) return;
     const win = openCheckoutExternalWindow(checkoutActiveUrl);
-    if (!win) showBillingBanner('Permita pop-ups para concluir o pagamento.');
+    if (!win) {
+        showBillingBanner('Permita pop-ups para concluir o pagamento.');
+        return;
+    }
+    const fallback = document.getElementById('checkoutFallback');
+    const message = fallback?.querySelector('.checkout-modal-copy');
+    if (message) message.innerHTML = 'Finalize o pagamento na janela aberta.<br>Esta tela atualiza sozinha quando confirmar.';
 });
 
 window.addEventListener('message', handleBillingBridgeMessage);
@@ -1526,15 +1536,36 @@ updateBillingCtas({ authenticated: false, isPremium: false });
         showStatusPopup('Falha no login com Discord.', { tone: 'error', title: 'Login falhou' });
     }
     if (billing === 'success') {
+        if (window.opener && !window.opener.closed) {
+            try {
+                window.opener.postMessage({ source: 'aria-billing', billing }, window.location.origin);
+                window.close();
+                return;
+            } catch (_) { /* continue in this window */ }
+        }
         celebrateCheckoutSuccess();
     }
     if (billing === 'cancel') {
+        if (window.opener && !window.opener.closed) {
+            try {
+                window.opener.postMessage({ source: 'aria-billing', billing }, window.location.origin);
+                window.close();
+                return;
+            } catch (_) { /* continue in this window */ }
+        }
         showStatusPopup('Checkout cancelado. Nenhuma cobrança foi feita.', {
             tone: 'warn',
             title: 'Pagamento cancelado',
         });
     }
     if (billing === 'expired') {
+        if (window.opener && !window.opener.closed) {
+            try {
+                window.opener.postMessage({ source: 'aria-billing', billing }, window.location.origin);
+                window.close();
+                return;
+            } catch (_) { /* continue in this window */ }
+        }
         showStatusPopup('O link de pagamento expirou. Inicie o checkout novamente.', {
             tone: 'warn',
             title: 'Checkout expirado',
