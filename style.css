@@ -518,6 +518,7 @@ body.nav-open {
     border-radius: 4px;
     padding: 0.2rem 0.5rem;
 }
+
 .nav-user-plan.is-premium {
     color: #f0b132;
     background: rgba(240, 177, 50, 0.12);
@@ -1824,7 +1825,7 @@ body.nav-open {
     font-size: 0.88rem;
 }
 
-/* ── CHECKOUT MODAL (Asaas embutido) ── */
+/* ── CHECKOUT MODAL (ponte para o checkout externo do Asaas) ── */
 .checkout-modal {
     position: fixed;
     inset: 0;
@@ -2074,7 +2075,39 @@ body.nav-open {
     from { transform: scale(0.6); opacity: 0.4; }
     to { transform: scale(1); opacity: 1; }
 }
-
+/* ── CHECKOUT BRIDGE POLISH ── */
+.checkout-modal { padding: 1.25rem; }
+.checkout-modal-backdrop { background: radial-gradient(circle at 50% 15%, rgba(242, 117, 42, 0.14), transparent 34%), radial-gradient(circle at 12% 85%, rgba(126, 87, 194, 0.18), transparent 38%), rgba(6, 3, 10, 0.86); }
+.checkout-modal-shell { width: min(620px, calc(100vw - 1.5rem)); border-radius: 28px; border-color: rgba(255, 255, 255, 0.14); background: radial-gradient(90% 70% at 0% 0%, rgba(255, 173, 98, 0.17), transparent 58%), radial-gradient(90% 80% at 100% 0%, rgba(113, 99, 255, 0.2), transparent 58%), linear-gradient(145deg, #281735 0%, #150d22 52%, #0d0817 100%); box-shadow: 0 0 0 1px rgba(255, 196, 112, 0.08), 0 28px 90px rgba(0, 0, 0, 0.62), 0 0 70px rgba(126, 87, 194, 0.12); }
+.checkout-modal-head { padding: 1.3rem 1.4rem 1.15rem; border-bottom-color: rgba(255, 255, 255, 0.08); }
+.checkout-modal-brand { gap: 0.9rem; }
+.checkout-modal-brand-mark { width: 48px; height: 48px; display: grid; place-items: center; flex-shrink: 0; border-radius: 16px; color: #fff3e7; background: linear-gradient(145deg, #ffb45f, #f2742a 52%, #8c55c8); box-shadow: 0 10px 26px rgba(242, 117, 42, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.3); }
+.checkout-modal-brand-mark svg { width: 25px; height: 25px; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.checkout-modal-kicker { margin: 0 0 0.28rem; color: #ffbd78; font-size: 0.63rem; font-weight: 800; letter-spacing: 0.16em; }
+.checkout-modal-head h3 { font-size: 1.16rem; letter-spacing: -0.02em; }
+.checkout-modal-sub { color: rgba(244, 238, 245, 0.58); }
+.checkout-modal-close { width: 38px; height: 38px; border-radius: 13px; background: rgba(255, 255, 255, 0.06); }
+.checkout-modal-close:hover { background: rgba(255, 255, 255, 0.13); }
+.checkout-modal-popout { z-index: 4; margin: 0.9rem 1.4rem 0.8rem; align-self: flex-end; padding: 0.48rem 0.72rem; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 999px; color: rgba(244, 238, 245, 0.68); background: rgba(255, 255, 255, 0.04); text-decoration: none; transition: 0.2s ease; }
+.checkout-modal-popout:hover { color: #fff; border-color: rgba(255, 189, 120, 0.4); background: rgba(255, 189, 120, 0.1); transform: translateY(-1px); }
+.checkout-modal-frame-wrap { min-height: 460px; background: transparent; }
+.checkout-modal-fallback { gap: 0.72rem; padding: 2.1rem 1.5rem 2rem; background: radial-gradient(circle at 50% 10%, rgba(255, 171, 93, 0.1), transparent 34%), linear-gradient(180deg, rgba(29, 17, 40, 0.72), rgba(13, 8, 23, 0.96)); }
+.checkout-payment-art { position: relative; width: 108px; height: 96px; margin-bottom: 0.1rem; }
+.checkout-payment-art-glow { position: absolute; inset: 16px 4px 0; border-radius: 50%; background: rgba(242, 117, 42, 0.22); filter: blur(18px); }
+.checkout-payment-art-card { position: absolute; left: 8px; top: 18px; width: 82px; height: 54px; padding: 10px; display: flex; flex-direction: column; justify-content: flex-end; gap: 5px; border: 1px solid rgba(255, 255, 255, 0.32); border-radius: 14px; background: linear-gradient(145deg, rgba(255, 192, 117, 0.95), rgba(125, 76, 177, 0.96)); box-shadow: 0 14px 28px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.35); transform: rotate(-8deg); }
+.checkout-payment-art-card::before { content: ""; position: absolute; top: 11px; left: 10px; width: 18px; height: 12px; border-radius: 4px; background: rgba(255, 248, 225, 0.85); }
+.checkout-payment-art-card span { display: block; width: 22px; height: 3px; border-radius: 99px; background: rgba(255, 255, 255, 0.62); }
+.checkout-payment-art-card span:nth-child(2) { width: 34px; }
+.checkout-payment-art-card span:nth-child(3) { width: 28px; }
+.checkout-payment-art-lock { position: absolute; right: 4px; bottom: 2px; width: 38px; height: 38px; display: grid; place-items: center; border: 3px solid #171021; border-radius: 50%; color: #171021; background: #7cf0b0; font-size: 1.3rem; font-weight: 900; transform: rotate(10deg); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); }
+.checkout-modal-fallback h4 { margin: 0.05rem 0 0.05rem; color: #fff; font-family: "Sora", sans-serif; font-size: 1.35rem; letter-spacing: -0.03em; }
+.checkout-modal-fallback p:not(.checkout-modal-kicker) { max-width: 35ch; margin: 0; color: rgba(244, 238, 245, 0.64); line-height: 1.6; }
+.checkout-modal-open-btn { min-width: 228px; margin-top: 0.55rem; display: inline-flex; align-items: center; justify-content: center; gap: 0.55rem; box-shadow: 0 12px 28px rgba(242, 117, 42, 0.22); }
+.checkout-modal-open-btn svg { width: 17px; height: 17px; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.checkout-modal-security { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 0.42rem; margin-top: 0.8rem; color: rgba(244, 238, 245, 0.42); font-size: 0.68rem; }
+.checkout-security-icon { width: 17px; height: 17px; display: inline-grid; place-items: center; border-radius: 50%; color: #0d1b15; background: #7cf0b0; font-size: 0.65rem; font-weight: 900; }
+.checkout-security-separator { color: rgba(255, 255, 255, 0.2); }
+@media (max-width: 640px) { .checkout-modal { padding: 0.7rem; } .checkout-modal-shell { border-radius: 22px; } .checkout-modal-head { padding: 1rem; } .checkout-modal-brand-mark { width: 43px; height: 43px; border-radius: 14px; } .checkout-modal-frame-wrap { min-height: 430px; } .checkout-modal-fallback { padding-inline: 1rem; } .checkout-modal-fallback h4 { font-size: 1.18rem; } .checkout-security-separator { display: none; } }
 .nav-user-plan.is-premium {
     color: var(--gold);
 }
