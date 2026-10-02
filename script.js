@@ -1,7 +1,3 @@
-/* ══════════════════════════════════════
-   CURSOR CUSTOMIZADO (PATINHA SUAVE)
-══════════════════════════════════════ */
-
 /* Se o Asaas redirecionar o success/cancel para o site dentro de uma janela externa,
    avisa a janela principal e fecha a ponte. */
 (function bridgeBillingFromExternalWindow() {
@@ -456,7 +452,6 @@ let lastAuthSnapshot = { authenticated: false, isPremium: false };
 let cachedGuilds = [];
 let pendingInviteGuild = null;
 let checkoutPollTimer = null;
-let checkoutFallbackTimer = null;
 let checkoutActiveUrl = '';
 let checkoutExternalWin = null;
 let checkoutExpectPremium = true;
@@ -1089,10 +1084,6 @@ function stopCheckoutWatchers() {
         clearInterval(checkoutPollTimer);
         checkoutPollTimer = null;
     }
-    if (checkoutFallbackTimer) {
-        clearTimeout(checkoutFallbackTimer);
-        checkoutFallbackTimer = null;
-    }
 }
 
 function closeCheckoutModal({ keepExternal } = {}) {
@@ -1139,10 +1130,26 @@ function showCheckoutSuccessUi() {
 }
 
 async function celebrateCheckoutSuccess() {
-    if (checkoutCelebrated) return;
-    checkoutCelebrated = true;
-    showCheckoutSuccessUi();
-    await refreshAuthUi();
+    if (checkoutCelebrated) return true;
+    try {
+        const me = await ariaApi.me();
+        if (checkoutExpectPremium && !(me && me.premium && me.premium.enabled)) {
+            return false;
+        }
+        checkoutCelebrated = true;
+        showCheckoutSuccessUi();
+        await refreshAuthUi();
+        return true;
+    } catch (_) {
+        return false;
+    }
+}
+
+function showCheckoutActivationPending() {
+    const message = document.querySelector("#checkoutFallback .checkout-modal-copy");
+    if (message) {
+        message.textContent = "Pagamento recebido. Estamos liberando seu Premium — esta tela atualiza sozinha.";
+    }
 }
 
 function openCheckoutExternalWindow(url) {
@@ -1227,7 +1234,7 @@ function openCheckoutModal(url, options = {}) {
     }, 2500);
 }
 
-function handleBillingBridgeMessage(event) {
+async function handleBillingBridgeMessage(event) {
     if (event && event.origin && event.origin !== window.location.origin) return;
     const data = event && event.data;
     if (!data || data.source !== 'aria-billing') return;
@@ -1240,7 +1247,8 @@ function handleBillingBridgeMessage(event) {
                 return;
             } catch (_) { /* continue in this window */ }
         }
-        celebrateCheckoutSuccess();
+        const activated = await celebrateCheckoutSuccess();
+        if (!activated) showCheckoutActivationPending();
         return;
     }
     if (billing === 'cancel' || billing === 'expired') {
@@ -1419,18 +1427,6 @@ document.getElementById('checkoutOpenExternal')?.addEventListener('click', () =>
     }
 });
 
-document.getElementById('checkoutPopoutBtn')?.addEventListener('click', () => {
-    if (!checkoutActiveUrl) return;
-    const win = openCheckoutExternalWindow(checkoutActiveUrl);
-    if (!win) {
-        showBillingBanner('Permita pop-ups para concluir o pagamento.');
-        return;
-    }
-    const fallback = document.getElementById('checkoutFallback');
-    const message = fallback?.querySelector('.checkout-modal-copy');
-    if (message) message.innerHTML = 'Finalize o pagamento na janela aberta.<br>Esta tela atualiza sozinha quando confirmar.';
-});
-
 window.addEventListener('message', handleBillingBridgeMessage);
 
 document.getElementById('authWaitingCancel')?.addEventListener('click', () => {
@@ -1543,7 +1539,7 @@ updateBillingCtas({ authenticated: false, isPremium: false });
                 return;
             } catch (_) { /* continue in this window */ }
         }
-        celebrateCheckoutSuccess();
+        await celebrateCheckoutSuccess();
     }
     if (billing === 'cancel') {
         if (window.opener && !window.opener.closed) {
