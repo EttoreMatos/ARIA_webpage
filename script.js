@@ -477,6 +477,9 @@ function friendlyBillingError(err, fallback) {
     if (/no such price|price.*(invalid|not found)|valor asaas não configurado|ASAAS.*não configurad/i.test(text)) {
         return 'Este plano ainda não está disponível para compra. Tente mais tarde ou fale com o suporte no servidor oficial.';
     }
+    if (/campo customer.*(inválid|invalid)|customer.*(inválid|invalid|not found)/i.test(text)) {
+        return 'Houve um problema ao vincular seu cadastro de pagamento. Atualize a página e tente novamente — se persistir, fale com o suporte.';
+    }
     if (/api key|invalid.?key|authentication.?error|not configured|misconfigured|secret|access_token/i.test(text)) {
         return 'O checkout está temporariamente fora do ar. Já estamos ajustando — tente novamente em breve.';
     }
