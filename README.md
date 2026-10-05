@@ -45,6 +45,24 @@ Eventos: `CHECKOUT_PAID`, `PAYMENT_CONFIRMED`, `PAYMENT_RECEIVED`,
 `PAYMENT_OVERDUE`, `PAYMENT_REFUNDED`, `PAYMENT_DELETED`.
 Header `asaas-access-token` deve coincidir com `ASAAS_WEBHOOK_TOKEN`.
 
+## Estatísticas públicas
+
+O site consulta `GET /api/stats` a cada 30 segundos. A resposta esperada é:
+
+```json
+{
+  "servers": 9,
+  "commands": 42,
+  "online": true,
+  "updated_at": "2026-10-05T01:00:00+00:00"
+}
+```
+
+O bot envia o mesmo payload para `POST /api/stats` usando
+`Authorization: Bearer <ARIA_API_STATS_TOKEN>`. A API deve proteger essa rota,
+armazenar o último heartbeat e considerar a ARIA offline quando o heartbeat
+estiver expirado.
+
 ## Local
 
 Sirva `site/` com qualquer static server. Para apontar a API local, altere o default

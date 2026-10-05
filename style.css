@@ -1340,6 +1340,48 @@ body.nav-open {
     letter-spacing: 1px;
     font-weight: 600;
 }
+.stat-card-status {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 160px;
+}
+.aria-status-value {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    min-height: 3.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-main);
+    font-size: 1.7rem;
+    font-weight: 700;
+}
+.aria-status-dot {
+    width: 0.75rem;
+    height: 0.75rem;
+    flex: 0 0 auto;
+    border-radius: 50%;
+    background: var(--text-muted);
+    box-shadow: 0 0 0 5px rgba(175, 165, 181, 0.12);
+}
+.aria-status-value.is-online .aria-status-dot {
+    background: #4CD97B;
+    box-shadow: 0 0 0 5px rgba(76, 217, 123, 0.14), 0 0 18px rgba(76, 217, 123, 0.65);
+}
+.aria-status-value.is-offline .aria-status-dot {
+    background: #ff8b8f;
+    box-shadow: 0 0 0 5px rgba(255, 139, 143, 0.12);
+}
+.stats-updated {
+    position: relative;
+    z-index: 1;
+    margin: 1rem auto 0;
+    color: var(--text-muted);
+    font-size: 0.72rem;
+    text-align: center;
+    opacity: 0.8;
+}
 
 /* ── COMANDOS ── */
 .commands {

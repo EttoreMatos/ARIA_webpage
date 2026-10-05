@@ -298,34 +298,40 @@ setTimeout(() => {
 }, 500);
 
 /* ══════════════════════════════════════
-   ANIMAÇÃO DAS ESTATÍSTICAS (CONTADOR)
+   ESTATÍSTICAS DINÂMICAS
+   Os valores são preenchidos pela ARIA API mais abaixo.
 ══════════════════════════════════════ */
-const statsObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            const target = entry.target;
-            const finalValue = parseInt(target.getAttribute('data-target'));
-            const duration = 2000; 
-            const startTime = performance.now();
+const statNumberEls = {
+    servers: document.getElementById('statServers'),
+    commands: document.getElementById('statCommands'),
+};
 
-            function updateCounter(currentTime) {
-                const elapsedTime = currentTime - startTime;
-                if (elapsedTime < duration) {
-                    const progress = elapsedTime / duration;
-                    const easeProgress = 1 - Math.pow(1 - progress, 3);
-                    target.innerText = Math.floor(easeProgress * finalValue);
-                    requestAnimationFrame(updateCounter);
-                } else {
-                    target.innerText = finalValue;
-                }
-            }
-            requestAnimationFrame(updateCounter);
-            statsObserver.unobserve(target);
-        }
-    });
-}, { threshold: 0.5 });
+function animateStatValue(element, value) {
+    if (!element || !Number.isFinite(value)) return;
 
-document.querySelectorAll('.stat-number').forEach(el => statsObserver.observe(el));
+    const from = Number.isFinite(Number(element.dataset.value))
+        ? Number(element.dataset.value)
+        : 0;
+    const duration = 700;
+    const startTime = performance.now();
+    const formatter = new Intl.NumberFormat('pt-BR');
+
+    element.dataset.value = String(value);
+    element.dataset.target = String(value);
+
+    function updateCounter(currentTime) {
+        const progress = Math.min(1, (currentTime - startTime) / duration);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        element.textContent = formatter.format(Math.round(from + ((value - from) * eased)));
+        if (progress < 1) requestAnimationFrame(updateCounter);
+    }
+
+    requestAnimationFrame(updateCounter);
+}
+
+document.querySelectorAll('.stat-number').forEach((element) => {
+    element.dataset.value = '';
+});
 
 /* ══════════════════════════════════════
    ARIA API (auth / checkout / billing)
@@ -424,6 +430,12 @@ const ariaApi = {
     },
     me() { return this.request('/api/auth/me'); },
     guilds() { return this.request('/api/guilds'); },
+    stats() {
+        return this.request('/api/stats', {
+            cache: 'no-store',
+            headers: { Accept: 'application/json' },
+        });
+    },
     checkoutUser() {
         return this.request('/api/checkout/user', {
             method: 'POST',
@@ -444,6 +456,108 @@ const ariaApi = {
         return this.cancelSubscription();
     },
 };
+
+const ARIA_STATS_REFRESH_MS = 30_000;
+let ariaStatsRefreshTimer = null;
+
+function firstStatsValue(source, keys) {
+    for (const key of keys) {
+        if (source && source[key] !== undefined && source[key] !== null) {
+            return source[key];
+        }
+    }
+    return null;
+}
+
+function normalizeAriaStats(payload) {
+    const source = payload && payload.stats && typeof payload.stats === 'object'
+        ? payload.stats
+        : (payload || {});
+    const rawOnline = firstStatsValue(source, ['online', 'is_online', 'bot_online']);
+    let online = null;
+    if (typeof rawOnline === 'boolean') {
+        online = rawOnline;
+    } else if (typeof rawOnline === 'string') {
+        if (/^(online|up|ready|ok|true|1)$/i.test(rawOnline.trim())) online = true;
+        if (/^(offline|down|false|0)$/i.test(rawOnline.trim())) online = false;
+    }
+    if (online === null) {
+        const status = String(firstStatsValue(source, ['status', 'bot_status']) || '').toLowerCase();
+        if (['online', 'ready', 'up'].includes(status)) online = true;
+        if (['offline', 'down'].includes(status)) online = false;
+    }
+
+    const toNumber = (value) => {
+        const number = Number(value);
+        return Number.isFinite(number) && number >= 0 ? Math.floor(number) : null;
+    };
+
+    return {
+        servers: toNumber(firstStatsValue(source, ['servers', 'server_count', 'guilds', 'guild_count'])),
+        commands: toNumber(firstStatsValue(source, ['commands', 'command_count'])),
+        online,
+        updatedAt: firstStatsValue(source, ['updated_at', 'last_updated', 'timestamp']),
+    };
+}
+
+function setStatsUnavailable() {
+    Object.values(statNumberEls).forEach((element) => {
+        if (element) {
+            element.textContent = '—';
+            element.dataset.value = '';
+            element.dataset.target = '';
+        }
+    });
+    const statusValue = document.getElementById('ariaStatusValue');
+    const statusText = statusValue?.querySelector('span:last-child');
+    if (statusValue) statusValue.classList.remove('is-online', 'is-offline');
+    if (statusText) statusText.textContent = 'Indisponível';
+    const updated = document.getElementById('statsUpdated');
+    if (updated) updated.textContent = 'Não foi possível atualizar os dados agora.';
+}
+
+function renderAriaStats(payload) {
+    const stats = normalizeAriaStats(payload);
+    if (stats.servers === null || stats.commands === null || stats.online === null) {
+        setStatsUnavailable();
+        return;
+    }
+
+    animateStatValue(statNumberEls.servers, stats.servers);
+    animateStatValue(statNumberEls.commands, stats.commands);
+
+    const statusValue = document.getElementById('ariaStatusValue');
+    const statusText = statusValue?.querySelector('span:last-child');
+    if (statusValue) {
+        statusValue.classList.toggle('is-online', stats.online === true);
+        statusValue.classList.toggle('is-offline', stats.online === false);
+    }
+    if (statusText) statusText.textContent = stats.online ? 'Online' : 'Offline';
+
+    const updated = document.getElementById('statsUpdated');
+    if (updated) {
+        const timestamp = stats.updatedAt ? new Date(stats.updatedAt) : new Date();
+        const time = Number.isNaN(timestamp.getTime())
+            ? new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
+            : timestamp.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+        updated.textContent = `Atualizado às ${time}`;
+    }
+}
+
+async function refreshAriaStats() {
+    try {
+        const payload = await ariaApi.stats();
+        renderAriaStats(payload);
+    } catch (_) {
+        setStatsUnavailable();
+    }
+}
+
+function initDynamicStats() {
+    refreshAriaStats();
+    if (ariaStatsRefreshTimer) clearInterval(ariaStatsRefreshTimer);
+    ariaStatsRefreshTimer = window.setInterval(refreshAriaStats, ARIA_STATS_REFRESH_MS);
+}
 
 let authPopupRef = null;
 let authPopupPoll = null;
@@ -1487,6 +1601,7 @@ document.getElementById('guildInviteDoneBtn')?.addEventListener('click', () => {
 
 // Estado inicial dos CTAs (Gerenciar escondido até haver Premium).
 updateBillingCtas({ authenticated: false, isPremium: false });
+initDynamicStats();
 
 (async function handleBillingQuery() {
     const params = new URLSearchParams(window.location.search);

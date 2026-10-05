@@ -28,7 +28,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Dancing+Script:wght@700&family=IBM+Plex+Mono:wght@400;600&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="style.css?v=20260913-ux-v39">
+    <link rel="stylesheet" href="style.css?v=20261005-stats-v1">
 </head>
 <body>
 
@@ -194,18 +194,22 @@
         <div class="container">
             <div class="stats-grid">
                 <div class="stat-card reveal">
-                    <div class="stat-number" data-target="9">0</div>
+                    <div class="stat-number" id="statServers" data-stat-key="servers">—</div>
                     <div class="stat-label">Servidores Ativos</div>
                 </div>
                 <div class="stat-card reveal">
-                    <div class="stat-number" data-target="42">0</div>
+                    <div class="stat-number" id="statCommands" data-stat-key="commands">—</div>
                     <div class="stat-label">Comandos Úteis</div>
                 </div>
-                <div class="stat-card reveal">
-                    <div class="stat-number" data-target="100">0</div><span class="stat-suffix">%</span>
-                    <div class="stat-label">Tempo online</div>
+                <div class="stat-card stat-card-status reveal" id="ariaStatusCard">
+                    <div class="aria-status-value" id="ariaStatusValue" role="status" aria-live="polite">
+                        <span class="aria-status-dot" aria-hidden="true"></span>
+                        <span>Carregando…</span>
+                    </div>
+                    <div class="stat-label">Status da ARIA</div>
                 </div>
             </div>
+            <p class="stats-updated" id="statsUpdated" aria-live="polite">Atualizando dados…</p>
         </div>
     </section>
 
@@ -574,6 +578,6 @@
         </span>
     </a>
 
-    <script defer src="script.js?v=20260924-cancel-tone-v1"></script>
+    <script defer src="script.js?v=20261005-stats-v1"></script>
 </body>
 </html>
