@@ -1357,6 +1357,12 @@ body.nav-open {
     font-size: 1.7rem;
     font-weight: 700;
 }
+.aria-status-value > span:last-child {
+    background: var(--gradient-1);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
 .aria-status-dot {
     width: 0.75rem;
     height: 0.75rem;
