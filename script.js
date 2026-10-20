@@ -66,6 +66,110 @@ if (ariaImg && !prefersCoarse) {
 }
 
 /* ══════════════════════════════════════
+   GLITCH NA IMAGEM DA ARIA
+══════════════════════════════════════ */
+(function setupAriaGlitch() {
+    const glitch = document.getElementById('ariaGlitch');
+    const img = document.getElementById('ariaImg');
+    const bars = document.getElementById('ariaGlitchBars');
+    if (!glitch || !img) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const layers = glitch.querySelectorAll('.aria-glitch-layer');
+    const rand = (min, max) => min + Math.random() * (max - min);
+
+    function syncLayers() {
+        const src = img.currentSrc || img.src;
+        if (!src) return;
+        layers.forEach((layer) => {
+            layer.style.backgroundImage = `url("${src}")`;
+        });
+    }
+    if (img.complete) syncLayers();
+    img.addEventListener('load', syncLayers);
+
+    function bandVars(prefix) {
+        const top = rand(8, 80);
+        const height = rand(6, 12);
+        const bottom = Math.max(4, 100 - top - height);
+        glitch.style.setProperty(`--${prefix}`, `${top}%`);
+        glitch.style.setProperty(`--${prefix}b`, `${bottom}%`);
+    }
+
+    function triggerLight() {
+        if (glitch.classList.contains('is-corrupt')) {
+            scheduleLight();
+            return;
+        }
+        bandVars('g-y1');
+        bandVars('g-y2');
+        bandVars('g-y3');
+        glitch.style.setProperty('--g-shift', `${rand(-14, 14).toFixed(1)}px`);
+        glitch.style.setProperty('--g-shift2', `${rand(-16, 16).toFixed(1)}px`);
+        glitch.style.setProperty('--g-shift3', `${rand(-12, 12).toFixed(1)}px`);
+        const turb = document.getElementById('ariaTurbLite');
+        if (turb) turb.setAttribute('seed', String(Math.floor(rand(1, 40))));
+        glitch.classList.add('is-glitch');
+        window.setTimeout(() => glitch.classList.remove('is-glitch'), 1000);
+        scheduleLight();
+    }
+
+    function paintCorruptBars() {
+        if (!bars) return;
+        bars.replaceChildren();
+        const colors = [
+            'rgba(255, 31, 61, 0.85)',
+            'rgba(25, 227, 107, 0.8)',
+            'rgba(47, 107, 255, 0.85)'
+        ];
+        const count = 5 + Math.floor(Math.random() * 3);
+        for (let i = 0; i < count; i += 1) {
+            const bar = document.createElement('span');
+            bar.className = 'aria-corrupt-bar';
+            bar.style.top = `${rand(8, 86).toFixed(1)}%`;
+            bar.style.height = `${rand(5, 11).toFixed(1)}px`;
+            bar.style.transform = `translateX(${rand(-40, 40).toFixed(1)}px) skewX(${rand(-14, 14).toFixed(1)}deg)`;
+            const color = colors[i % colors.length];
+            bar.style.background = `linear-gradient(90deg, transparent 4%, ${color} 22%, ${color} 78%, transparent 96%)`;
+            bar.style.opacity = String(rand(0.55, 0.82));
+            bars.appendChild(bar);
+        }
+    }
+
+    function triggerCorrupt() {
+        if (glitch.classList.contains('is-glitch')) {
+            window.setTimeout(triggerCorrupt, 500);
+            return;
+        }
+        bandVars('c-y1');
+        bandVars('c-y2');
+        bandVars('c-y3');
+        glitch.style.setProperty('--c-shift', `${rand(-28, 28).toFixed(1)}px`);
+        glitch.style.setProperty('--c-shift2', `${rand(-32, 32).toFixed(1)}px`);
+        glitch.style.setProperty('--c-shift3', `${rand(-24, 24).toFixed(1)}px`);
+        const turb = document.getElementById('ariaTurbHard');
+        if (turb) turb.setAttribute('seed', String(Math.floor(rand(1, 60))));
+        paintCorruptBars();
+        glitch.classList.add('is-corrupt');
+        window.setTimeout(() => {
+            glitch.classList.remove('is-corrupt');
+            if (bars) bars.replaceChildren();
+        }, 1000);
+        scheduleCorrupt();
+    }
+
+    function scheduleLight() {
+        window.setTimeout(triggerLight, rand(4500, 10000));
+    }
+    function scheduleCorrupt() {
+        window.setTimeout(triggerCorrupt, rand(16000, 32000));
+    }
+
+    window.setTimeout(triggerLight, rand(2200, 4800));
+    window.setTimeout(triggerCorrupt, rand(11000, 18000));
+})();
+
+/* ══════════════════════════════════════
    POEIRA MÁGICA INTERATIVA (PARTÍCULAS)
 ══════════════════════════════════════ */
 const canvas = document.getElementById('particles-canvas');
@@ -79,16 +183,20 @@ function resizeCanvas() {
 window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
 
-// Cores mágicas que combinam com os olhos e pelagem da Aria
-const COLORS = [
-    'rgba(242, 117, 42, 0.45)',  // Laranja Aria
-    'rgba(176, 82, 209, 0.35)',  // Roxo Mágico
-    'rgba(255, 154, 108, 0.4)',  // Laranja Claro
-    'rgba(255, 255, 255, 0.18)'   // Brilho Estelar
+const EMBER_COLORS = [
+    'rgba(180, 86, 42, 0.28)',
+    'rgba(118, 62, 140, 0.22)',
+    'rgba(196, 112, 78, 0.22)',
+    'rgba(180, 140, 72, 0.14)'
+];
+const STAR_COLORS = [
+    'rgba(255, 255, 255, 0.28)',
+    'rgba(186, 178, 210, 0.2)',
+    'rgba(220, 196, 168, 0.16)'
 ];
 
 const particlesCount = (canvas && ctx)
-    ? (window.matchMedia('(max-width: 768px)').matches ? 22 : 55)
+    ? (window.matchMedia('(max-width: 768px)').matches ? 28 : 72)
     : 0;
 const particles = (canvas && ctx)
     ? Array.from({ length: particlesCount }, () => createParticle(true))
@@ -97,16 +205,20 @@ const particles = (canvas && ctx)
 function createParticle(randomY = false) {
     const w = canvas ? canvas.width : window.innerWidth;
     const h = canvas ? canvas.height : window.innerHeight;
+    const isStar = Math.random() < 0.38;
     return {
+        kind: isStar ? 'star' : 'ember',
         x: Math.random() * w,
         y: randomY ? Math.random() * h : h + 15,
-        r: Math.random() * 2.2 + 0.6, // Tamanhos variados para profundidade 3D
-        speedY: Math.random() * 0.4 + 0.15, // Velocidade suave de subida (estilo brasas)
-        speedX: (Math.random() - 0.5) * 0.12, // Pequeno desvio lateral
-        color: COLORS[Math.floor(Math.random() * COLORS.length)],
+        r: isStar ? Math.random() * 1.15 + 0.25 : Math.random() * 2.3 + 0.55,
+        speedY: isStar ? Math.random() * 0.08 + 0.02 : Math.random() * 0.42 + 0.14,
+        speedX: (Math.random() - 0.5) * (isStar ? 0.05 : 0.12),
+        color: isStar
+            ? STAR_COLORS[Math.floor(Math.random() * STAR_COLORS.length)]
+            : EMBER_COLORS[Math.floor(Math.random() * EMBER_COLORS.length)],
         phase: Math.random() * Math.PI * 2,
-        phaseSpeed: Math.random() * 0.02 + 0.005,
-        baseAlpha: Math.random() * 0.4 + 0.2
+        phaseSpeed: Math.random() * 0.02 + 0.004,
+        baseAlpha: isStar ? Math.random() * 0.35 + 0.18 : Math.random() * 0.4 + 0.2
     };
 }
 

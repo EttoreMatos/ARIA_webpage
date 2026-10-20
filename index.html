@@ -28,7 +28,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Dancing+Script:wght@700&family=IBM+Plex+Mono:wght@400;600&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="style.css?v=20261005-stats-v2">
+    <link rel="stylesheet" href="style.css?v=20261019-atmosphere-v1">
 </head>
 <body>
 
@@ -36,15 +36,38 @@
         <span class="top-toast-text" id="topToastText"></span>
     </div>
 
-    <!-- Fundo de Formas Orgânicas -->
-    <div class="bg-blobs">
+    <div class="bg-blobs" aria-hidden="true">
         <div class="blob blob-1"></div>
         <div class="blob blob-2"></div>
         <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+        <div class="blob blob-5"></div>
     </div>
+    <div class="bg-grain" aria-hidden="true"></div>
 
-    <!-- Canvas para Partículas (Poeira Mágica) -->
     <canvas id="particles-canvas"></canvas>
+
+    <svg class="aria-fx-defs" aria-hidden="true" width="0" height="0">
+        <defs>
+            <filter id="ariaDisplaceLite" x="-12%" y="-12%" width="124%" height="124%">
+                <feTurbulence id="ariaTurbLite" type="fractalNoise" baseFrequency="0.008 0.14" numOctaves="2" seed="3" result="noise"/>
+                <feDisplacementMap in="SourceGraphic" in2="noise" scale="4" xChannelSelector="R" yChannelSelector="G"/>
+            </filter>
+            <filter id="ariaDisplaceHard" x="-18%" y="-18%" width="136%" height="136%">
+                <feTurbulence id="ariaTurbHard" type="fractalNoise" baseFrequency="0.012 0.28" numOctaves="2" seed="9" result="noise"/>
+                <feDisplacementMap in="SourceGraphic" in2="noise" scale="18" xChannelSelector="R" yChannelSelector="B"/>
+            </filter>
+            <filter id="ariaChannelR">
+                <feColorMatrix type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0"/>
+            </filter>
+            <filter id="ariaChannelG">
+                <feColorMatrix type="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0"/>
+            </filter>
+            <filter id="ariaChannelB">
+                <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0"/>
+            </filter>
+        </defs>
+    </svg>
 
     <!-- Cursor Personalizado (Patinha da ARIA) -->
     <div class="cursor" id="cursor">
@@ -170,7 +193,10 @@
         <div class="container">
             <div class="hero-content">
                 <h1>Conheça a <span class="aria-name-styled">ARIA</span></h1>
-                <p class="subtitle">Sou a ARIA (Assistente de Resposta e Interação Automatizada), a bot de Discord que monta, modera e anima seu servidor — e ainda faço muito mais que a maioria dos bots por aí. Dá uma olhada em tudo que eu faço aí embaixo 🦊💜</p>
+                <p class="subtitle">
+                    <span class="subtitle-full">Sou a ARIA (Assistente de Resposta e Interação Automatizada), a bot de Discord que monta, modera e anima seu servidor — e ainda faço muito mais que a maioria dos bots por aí. Dá uma olhada em tudo que eu faço aí embaixo 🦊💜</span>
+                    <span class="subtitle-short">Sou a ARIA, a bot que monta, modera e anima seu servidor. Dá uma olhada no que eu faço 🦊💜</span>
+                </p>
                 <div class="cta-buttons">
                     <a href="https://discord.com/oauth2/authorize?client_id=1439670009147293906&permissions=5419235387371120&integration_type=0&scope=bot" target="_blank" class="btn btn-primary">Adicionar ao Discord</a>
                     <a href="https://discord.gg/E99uQdfCvB" target="_blank" class="btn btn-secondary">Servidor Oficial</a>
@@ -179,7 +205,13 @@
             <div class="hero-image-wrapper">
                 <div class="hero-image" id="heroImage">
                     <div class="hero-image-floor" aria-hidden="true"></div>
-                    <img src="https://cdn.jsdelivr.net/gh/EttoreMatos/ARIA_webpage@main/fullbody4.png" alt="Imagem da ARIA" id="ariaImg">
+                    <div class="aria-glitch" id="ariaGlitch">
+                        <img src="https://cdn.jsdelivr.net/gh/EttoreMatos/ARIA_webpage@main/fullbody4.png" alt="Imagem da ARIA" id="ariaImg" class="aria-glitch-base">
+                        <span class="aria-glitch-layer aria-glitch-r" aria-hidden="true"></span>
+                        <span class="aria-glitch-layer aria-glitch-g" aria-hidden="true"></span>
+                        <span class="aria-glitch-layer aria-glitch-b" aria-hidden="true"></span>
+                        <div class="aria-glitch-bars" id="ariaGlitchBars" aria-hidden="true"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -258,7 +290,7 @@
     <section class="commands" id="commands">
         <div class="container">
             <h2 class="section-title">Meus Comandos</h2>
-            <p class="section-subtitle">Atualizado em 13/09/2026</p>
+            <p class="section-subtitle">Atualizado em 19/10/2026</p>
 
             <div class="cmd-legend reveal">
                 <p class="cmd-legend-title">O que significam as etiquetas</p>
@@ -349,13 +381,13 @@
             <!-- MODERAÇÃO -->
             <div class="cmd-panel" id="tab-moderacao">
                 <div class="command-list">
-                    <div class="command-item reveal"><div class="cmd-icon">⚠️</div><div class="cmd-body"><code>/aviso</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span><span class="cmd-badge badge-perm">Permissão: Gerenciar Mensagens</span></span><p>Dá um aviso para um membro</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">📋</div><div class="cmd-body"><code>/avisos</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span><span class="cmd-badge badge-perm">Permissão: Gerenciar Mensagens</span></span><p>Lista os avisos</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">♻️</div><div class="cmd-body"><code>/limpar_avisos</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span><span class="cmd-badge badge-perm">Permissão: Gerenciar Mensagens</span></span><p>Limpa os avisos</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🗑️</div><div class="cmd-body"><code>/apagar_msgs</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span><span class="cmd-badge badge-perm">Permissão: Gerenciar Mensagens</span></span><p>Apaga mensagens do canal</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🐢</div><div class="cmd-body"><code>/modo_lento</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span><span class="cmd-badge badge-perm">Permissão: Gerenciar Canais</span></span><p>Ativa o modo lento</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🔒</div><div class="cmd-body"><code>/trancar</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span><span class="cmd-badge badge-perm">Permissão: Gerenciar Canais</span></span><p>Tranca o canal</p></div></div>
-                    <div class="command-item reveal"><div class="cmd-icon">🔓</div><div class="cmd-body"><code>/destrancar</code> <span class="cmd-badges"><span class="cmd-badge badge-free">Grátis</span><span class="cmd-badge badge-perm">Permissão: Gerenciar Canais</span></span><p>Destranca o canal</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">⚠️</div><div class="cmd-body"><code>/aviso</code> <span class="cmd-badges"><span class="cmd-badge badge-premium">ARIA Premium</span><span class="cmd-badge badge-perm">Permissão: Gerenciar Mensagens</span></span><p>Dá um aviso para um membro</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">📋</div><div class="cmd-body"><code>/avisos</code> <span class="cmd-badges"><span class="cmd-badge badge-premium">ARIA Premium</span><span class="cmd-badge badge-perm">Permissão: Gerenciar Mensagens</span></span><p>Lista os avisos</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">♻️</div><div class="cmd-body"><code>/limpar_avisos</code> <span class="cmd-badges"><span class="cmd-badge badge-premium">ARIA Premium</span><span class="cmd-badge badge-perm">Permissão: Gerenciar Mensagens</span></span><p>Limpa os avisos</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🗑️</div><div class="cmd-body"><code>/apagar_msgs</code> <span class="cmd-badges"><span class="cmd-badge badge-premium">ARIA Premium</span><span class="cmd-badge badge-perm">Permissão: Gerenciar Mensagens</span></span><p>Apaga mensagens do canal</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🐢</div><div class="cmd-body"><code>/modo_lento</code> <span class="cmd-badges"><span class="cmd-badge badge-premium">ARIA Premium</span><span class="cmd-badge badge-perm">Permissão: Gerenciar Canais</span></span><p>Ativa o modo lento</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🔒</div><div class="cmd-body"><code>/trancar</code> <span class="cmd-badges"><span class="cmd-badge badge-premium">ARIA Premium</span><span class="cmd-badge badge-perm">Permissão: Gerenciar Canais</span></span><p>Tranca o canal</p></div></div>
+                    <div class="command-item reveal"><div class="cmd-icon">🔓</div><div class="cmd-body"><code>/destrancar</code> <span class="cmd-badges"><span class="cmd-badge badge-premium">ARIA Premium</span><span class="cmd-badge badge-perm">Permissão: Gerenciar Canais</span></span><p>Destranca o canal</p></div></div>
                 </div>
             </div>
 
@@ -411,13 +443,12 @@
                 <div class="plan-card plan-card-free reveal">
                     <div class="plan-name">ARIA Free</div>
                     <p class="plan-tagline">Pra me conhecer, conversar um pouco e usar o básico sem pagar nada.</p>
-                    <p class="plan-why"><strong>Pra você se…</strong> quer testar, falar comigo no dia a dia e usar XP e moderação de graça.</p>
+                    <p class="plan-why"><strong>Pra você se…</strong> quer testar, falar comigo no dia a dia e usar XP de graça.</p>
                     <div class="plan-price">R$&nbsp;0</div>
                     <ul class="plan-features">
-                        <li><span><strong>6</strong> mensagens de IA por usuário, por dia</span></li>
-                        <li><span>Contexto de até <strong>12</strong> mensagens</span></li>
-                        <li><span>Comandos gerais, histórico básico, XP e moderação</span></li>
-                        <li><span>Sem utilidades Premium</span></li>
+                        <li><span><strong>6</strong> mensagens de IA por usuário, por dia — ao estourar, 24h sem IA</span></li>
+                        <li><span>Histórico de até <strong>12</strong> mensagens</span></li>
+                        <li><span>Comandos gerais, histórico básico e XP</span></li>
                         <li><span>Sem ferramentas avançadas de servidor</span></li>
                     </ul>
                     <a href="https://discord.com/oauth2/authorize?client_id=1439670009147293906&permissions=5419235387371120&integration_type=0&scope=bot" target="_blank" class="btn btn-primary plan-cta">Adicionar ao Discord</a>
@@ -429,10 +460,11 @@
                     <p class="plan-tagline">Assinatura individual: os benefícios vão com você em qualquer servidor onde eu estiver.</p>
                     <p class="plan-why"><strong>Assine se…</strong> você fala bastante comigo e quer utilidades e jogos sem o limite diário do Free.</p>
                     <div class="plan-price">R$&nbsp;19,90<span class="period">/mês por usuário</span></div>
-                    <p class="plan-diff">Diferença do Free: IA ilimitada, memória maior e utilidades Premium. Sozinho ainda não libera as ferramentas de admin do servidor.</p>
+                    <p class="plan-diff">Diferença do Free: IA ilimitada, memória maior, utilidades Premium e moderação. Sozinho ainda não libera as ferramentas de admin do servidor.</p>
                     <ul class="plan-features">
                         <li><span>Mensagens de IA <strong>ilimitadas</strong></span></li>
                         <li><span>Contexto de até <strong>100</strong> mensagens</span></li>
+                        <li><span>Comandos de moderação</span></li>
                         <li><span>Utilidades Premium (lembretes, tradução, resumos, embeds, tickets, voz…)</span></li>
                         <li><span>Personalização, mini-jogos e contexto ajustável</span></li>
                         <li><span>Busca web e TTS mais caprichado quando der</span></li>
@@ -578,6 +610,6 @@
         </span>
     </a>
 
-    <script defer src="script.js?v=20261005-stats-v1"></script>
+    <script defer src="script.js?v=20261019-atmosphere-v1"></script>
 </body>
 </html>
