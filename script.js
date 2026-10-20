@@ -71,102 +71,63 @@ if (ariaImg && !prefersCoarse) {
 (function setupAriaGlitch() {
     const glitch = document.getElementById('ariaGlitch');
     const img = document.getElementById('ariaImg');
-    const bars = document.getElementById('ariaGlitchBars');
     if (!glitch || !img) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    const layers = glitch.querySelectorAll('.aria-glitch-layer');
+    const layers = glitch.querySelectorAll('.aria-glitch-layer, .aria-glitch-rgb');
     const rand = (min, max) => min + Math.random() * (max - min);
+    const CLASSIC = 'is-glitch-classic';
+    const RGB = 'is-glitch-rgb';
+    let active = null;
 
     function syncLayers() {
         const src = img.currentSrc || img.src;
         if (!src) return;
         layers.forEach((layer) => {
-            layer.style.backgroundImage = `url("${src}")`;
+            if (layer.src !== src) layer.src = src;
         });
     }
     if (img.complete) syncLayers();
     img.addEventListener('load', syncLayers);
 
-    function bandVars(prefix) {
-        const top = rand(8, 80);
-        const height = rand(6, 12);
-        const bottom = Math.max(4, 100 - top - height);
-        glitch.style.setProperty(`--${prefix}`, `${top}%`);
-        glitch.style.setProperty(`--${prefix}b`, `${bottom}%`);
-    }
-
-    function triggerLight() {
-        if (glitch.classList.contains('is-corrupt')) {
-            scheduleLight();
-            return;
-        }
-        bandVars('g-y1');
-        bandVars('g-y2');
-        bandVars('g-y3');
-        glitch.style.setProperty('--g-shift', `${rand(-14, 14).toFixed(1)}px`);
-        glitch.style.setProperty('--g-shift2', `${rand(-16, 16).toFixed(1)}px`);
-        glitch.style.setProperty('--g-shift3', `${rand(-12, 12).toFixed(1)}px`);
-        const turb = document.getElementById('ariaTurbLite');
-        if (turb) turb.setAttribute('seed', String(Math.floor(rand(1, 40))));
-        glitch.classList.add('is-glitch');
-        window.setTimeout(() => glitch.classList.remove('is-glitch'), 1000);
-        scheduleLight();
-    }
-
-    function paintCorruptBars() {
-        if (!bars) return;
-        bars.replaceChildren();
-        const colors = [
-            'rgba(255, 31, 61, 0.85)',
-            'rgba(25, 227, 107, 0.8)',
-            'rgba(47, 107, 255, 0.85)'
-        ];
-        const count = 5 + Math.floor(Math.random() * 3);
-        for (let i = 0; i < count; i += 1) {
-            const bar = document.createElement('span');
-            bar.className = 'aria-corrupt-bar';
-            bar.style.top = `${rand(8, 86).toFixed(1)}%`;
-            bar.style.height = `${rand(5, 11).toFixed(1)}px`;
-            bar.style.transform = `translateX(${rand(-40, 40).toFixed(1)}px) skewX(${rand(-14, 14).toFixed(1)}deg)`;
-            const color = colors[i % colors.length];
-            bar.style.background = `linear-gradient(90deg, transparent 4%, ${color} 22%, ${color} 78%, transparent 96%)`;
-            bar.style.opacity = String(rand(0.55, 0.82));
-            bars.appendChild(bar);
-        }
-    }
-
-    function triggerCorrupt() {
-        if (glitch.classList.contains('is-glitch')) {
-            window.setTimeout(triggerCorrupt, 500);
-            return;
-        }
-        bandVars('c-y1');
-        bandVars('c-y2');
-        bandVars('c-y3');
-        glitch.style.setProperty('--c-shift', `${rand(-28, 28).toFixed(1)}px`);
-        glitch.style.setProperty('--c-shift2', `${rand(-32, 32).toFixed(1)}px`);
-        glitch.style.setProperty('--c-shift3', `${rand(-24, 24).toFixed(1)}px`);
-        const turb = document.getElementById('ariaTurbHard');
-        if (turb) turb.setAttribute('seed', String(Math.floor(rand(1, 60))));
-        paintCorruptBars();
-        glitch.classList.add('is-corrupt');
+    function play(type) {
+        if (active) return false;
+        active = type;
+        glitch.classList.remove(CLASSIC, RGB);
+        void glitch.offsetWidth;
+        glitch.classList.add(type);
         window.setTimeout(() => {
-            glitch.classList.remove('is-corrupt');
-            if (bars) bars.replaceChildren();
+            glitch.classList.remove(type);
+            active = null;
         }, 1000);
-        scheduleCorrupt();
+        return true;
     }
 
-    function scheduleLight() {
-        window.setTimeout(triggerLight, rand(4500, 10000));
-    }
-    function scheduleCorrupt() {
-        window.setTimeout(triggerCorrupt, rand(16000, 32000));
+    function triggerClassic() {
+        if (!play(CLASSIC)) {
+            window.setTimeout(triggerClassic, 400);
+            return;
+        }
+        scheduleClassic();
     }
 
-    window.setTimeout(triggerLight, rand(2200, 4800));
-    window.setTimeout(triggerCorrupt, rand(11000, 18000));
+    function triggerRgb() {
+        if (!play(RGB)) {
+            window.setTimeout(triggerRgb, 400);
+            return;
+        }
+        scheduleRgb();
+    }
+
+    function scheduleClassic() {
+        window.setTimeout(triggerClassic, rand(5500, 11000));
+    }
+    function scheduleRgb() {
+        window.setTimeout(triggerRgb, rand(16000, 28000));
+    }
+
+    window.setTimeout(triggerClassic, rand(2800, 6000));
+    window.setTimeout(triggerRgb, rand(12000, 18000));
 })();
 
 /* ══════════════════════════════════════

@@ -28,7 +28,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Dancing+Script:wght@700&family=IBM+Plex+Mono:wght@400;600&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="style.css?v=20261019-atmosphere-v1">
+    <link rel="stylesheet" href="style.css?v=20261019-mobile-v3">
 </head>
 <body>
 
@@ -46,28 +46,6 @@
     <div class="bg-grain" aria-hidden="true"></div>
 
     <canvas id="particles-canvas"></canvas>
-
-    <svg class="aria-fx-defs" aria-hidden="true" width="0" height="0">
-        <defs>
-            <filter id="ariaDisplaceLite" x="-12%" y="-12%" width="124%" height="124%">
-                <feTurbulence id="ariaTurbLite" type="fractalNoise" baseFrequency="0.008 0.14" numOctaves="2" seed="3" result="noise"/>
-                <feDisplacementMap in="SourceGraphic" in2="noise" scale="4" xChannelSelector="R" yChannelSelector="G"/>
-            </filter>
-            <filter id="ariaDisplaceHard" x="-18%" y="-18%" width="136%" height="136%">
-                <feTurbulence id="ariaTurbHard" type="fractalNoise" baseFrequency="0.012 0.28" numOctaves="2" seed="9" result="noise"/>
-                <feDisplacementMap in="SourceGraphic" in2="noise" scale="18" xChannelSelector="R" yChannelSelector="B"/>
-            </filter>
-            <filter id="ariaChannelR">
-                <feColorMatrix type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0"/>
-            </filter>
-            <filter id="ariaChannelG">
-                <feColorMatrix type="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0"/>
-            </filter>
-            <filter id="ariaChannelB">
-                <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0"/>
-            </filter>
-        </defs>
-    </svg>
 
     <!-- Cursor Personalizado (Patinha da ARIA) -->
     <div class="cursor" id="cursor">
@@ -195,7 +173,7 @@
                 <h1>Conheça a <span class="aria-name-styled">ARIA</span></h1>
                 <p class="subtitle">
                     <span class="subtitle-full">Sou a ARIA (Assistente de Resposta e Interação Automatizada), a bot de Discord que monta, modera e anima seu servidor — e ainda faço muito mais que a maioria dos bots por aí. Dá uma olhada em tudo que eu faço aí embaixo 🦊💜</span>
-                    <span class="subtitle-short">Sou a ARIA, a bot que monta, modera e anima seu servidor. Dá uma olhada no que eu faço 🦊💜</span>
+                    <span class="subtitle-short">A bot que monta, modera e anima seu servidor 🦊💜</span>
                 </p>
                 <div class="cta-buttons">
                     <a href="https://discord.com/oauth2/authorize?client_id=1439670009147293906&permissions=5419235387371120&integration_type=0&scope=bot" target="_blank" class="btn btn-primary">Adicionar ao Discord</a>
@@ -207,10 +185,16 @@
                     <div class="hero-image-floor" aria-hidden="true"></div>
                     <div class="aria-glitch" id="ariaGlitch">
                         <img src="https://cdn.jsdelivr.net/gh/EttoreMatos/ARIA_webpage@main/fullbody4.png" alt="Imagem da ARIA" id="ariaImg" class="aria-glitch-base">
-                        <span class="aria-glitch-layer aria-glitch-r" aria-hidden="true"></span>
-                        <span class="aria-glitch-layer aria-glitch-g" aria-hidden="true"></span>
-                        <span class="aria-glitch-layer aria-glitch-b" aria-hidden="true"></span>
-                        <div class="aria-glitch-bars" id="ariaGlitchBars" aria-hidden="true"></div>
+                        <img class="aria-glitch-layer glitch-cyan" src="https://cdn.jsdelivr.net/gh/EttoreMatos/ARIA_webpage@main/fullbody4.png" alt="" aria-hidden="true">
+                        <img class="aria-glitch-layer glitch-violet" src="https://cdn.jsdelivr.net/gh/EttoreMatos/ARIA_webpage@main/fullbody4.png" alt="" aria-hidden="true">
+                        <img class="aria-glitch-rgb glitch-red" src="https://cdn.jsdelivr.net/gh/EttoreMatos/ARIA_webpage@main/fullbody4.png" alt="" aria-hidden="true">
+                        <img class="aria-glitch-rgb glitch-green" src="https://cdn.jsdelivr.net/gh/EttoreMatos/ARIA_webpage@main/fullbody4.png" alt="" aria-hidden="true">
+                        <img class="aria-glitch-rgb glitch-blue" src="https://cdn.jsdelivr.net/gh/EttoreMatos/ARIA_webpage@main/fullbody4.png" alt="" aria-hidden="true">
+                        <div class="aria-glitch-bars" aria-hidden="true">
+                            <span class="aria-glitch-bar aria-glitch-bar-red"></span>
+                            <span class="aria-glitch-bar aria-glitch-bar-green"></span>
+                            <span class="aria-glitch-bar aria-glitch-bar-blue"></span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -610,6 +594,6 @@
         </span>
     </a>
 
-    <script defer src="script.js?v=20261019-atmosphere-v1"></script>
+    <script defer src="script.js?v=20261019-mobile-v3"></script>
 </body>
 </html>
