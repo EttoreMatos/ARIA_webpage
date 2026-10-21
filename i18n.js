@@ -11,6 +11,58 @@
         'Agradecimentos — ARIA': 'Acknowledgments — ARIA',
         'Linguagens, bibliotecas e serviços que tornam a ARIA possível.':
             'Languages, libraries and services that make ARIA possible.',
+        'Agradecimentos': 'Acknowledgments',
+        'Linguagens': 'Languages',
+        'Bibliotecas — bot': 'Bot libraries',
+        'Bibliotecas — API': 'API libraries',
+        'Site': 'Website',
+        'Serviços': 'Services',
+        'Obrigado a todo mundo por trás dessas libs e serviços. Sem vocês a ARIA não existiria — e eu também não teria como fazer isso ser possível no Discord.':
+            'Thank you to everyone behind these libraries and services. Without you, ARIA would not exist — and I could not make this possible on Discord.',
+        'Voltar ao site': 'Back to website',
+        'Política de Privacidade': 'Privacy Policy',
+        'Como eu cuido dos seus dados': 'How I handle your data',
+        'Versão: 05/10/2026 · clara, direta e sem juridiquês desnecessário.':
+            'Version: 10/05/2026 · clear, direct and without unnecessary legalese.',
+        'Escopo': 'Scope',
+        'O que eu posso guardar': 'What I may store',
+        'Pra que eu uso': 'What I use it for',
+        'Serviços externos': 'External services',
+        'Base legal': 'Legal basis',
+        'Retenção e exclusão': 'Retention and deletion',
+        'Segurança': 'Security',
+        'Seus direitos': 'Your rights',
+        'Um pedido de amiga': 'A small request',
+        'Alterações': 'Changes',
+        'Contato': 'Contact',
+        'Termos de Serviço': 'Terms of Service',
+        'As regrinhas do nosso uso': 'The rules for using ARIA',
+        'Aceitação': 'Acceptance',
+        'O que eu ofereço': 'What I offer',
+        'Uso permitido': 'Permitted use',
+        'Planos, pagamentos e cancelamento': 'Plans, payments and cancellation',
+        'Comandos, planos e permissões Discord': 'Commands, plans and Discord permissions',
+        'Disponibilidade e precisão': 'Availability and accuracy',
+        'Seu conteúdo': 'Your content',
+        'Limitação de responsabilidade': 'Limitation of liability',
+        'Suspensão': 'Suspension',
+        'Lei aplicável': 'Applicable law',
+        'Esta política explica como eu, a ARIA, trato seus dados quando você usa meus comandos, me menciona, conversa comigo, usa voz, envia anexos, abre tickets ou assina Aria Premium / Aria Server no Discord e no site.':
+            'This policy explains how I, ARIA, handle your data when you use my commands, mention me, chat with me, use voice, send attachments, open tickets or subscribe to Aria Premium / Aria Server on Discord and the website.',
+        'Eu vivo no Discord, então o uso também depende das regras e da infraestrutura do Discord e de serviços externos (IA, voz, mídia, busca e pagamentos com Asaas).':
+            'I live on Discord, so use also depends on Discord rules and infrastructure and on external services (AI, voice, media, search and Asaas payments).',
+        'Eu não vendo seus dados. Pra funcionar, posso enviar o necessário a serviços de IA, voz, busca, mídia, hospedagem, banco de dados, Discord e Asaas — só pra cumprir o pedido, garantir segurança ou atender obrigações legais.':
+            'I do not sell your data. To operate, I may send what is necessary to AI, voice, search, media, hosting, database, Discord and Asaas services — only to fulfill your request, keep things safe or meet legal obligations.',
+        'Você pode pedir acesso, correção, informação, exclusão ou bloqueio, conforme a legislação (incluindo a LGPD). Às vezes eu preciso confirmar sua identidade.':
+            'You may request access, correction, information, deletion or restriction as allowed by law (including the LGPD). I may sometimes need to verify your identity.',
+        'Ao me usar (no Discord e neste site), você concorda com estes Termos e com a Política de Privacidade. Se não concordar, é só parar de me usar — sem drama.':
+            'By using me (on Discord and this website), you agree to these Terms and the Privacy Policy. If you disagree, simply stop using me.',
+        'Posso ficar offline por manutenção ou falhas de terceiros. Às vezes eu troco as patinhas — revise respostas importantes antes de decidir.':
+            'I may go offline for maintenance or third-party failures. I can sometimes get things wrong — review important answers before making decisions.',
+        'O que você envia continua seu. Ao interagir, você autoriza o processamento técnico pra eu cumprir o pedido.':
+            'What you send remains yours. By interacting, you authorize the technical processing needed to fulfill your request.',
+        'Regidos pela legislação brasileira aplicável.':
+            'These terms are governed by applicable Brazilian law.',
         'Início': 'Home',
         'Recursos': 'Features',
         'Comandos': 'Commands',
@@ -77,6 +129,54 @@
         'O que significam as etiquetas': 'What the labels mean',
         'Grátis': 'Free',
         'Só no plano do servidor': 'Server plan only',
+        'ARIA Free — pode usar sem assinatura': 'ARIA Free — available without a subscription',
+        'Sua assinatura pessoal ou servidor com ARIA Server':
+            'Your personal subscription or a server with ARIA Server',
+        'Permissão: Gerenciar Mensagens': 'Permission: Manage Messages',
+        'Permissão: Gerenciar Canais': 'Permission: Manage Channels',
+        'Permissão: Administrador': 'Permission: Administrator',
+        'Converse com a ARIA': 'Chat with ARIA',
+        '<strong>Update:</strong> peça um lembrete informando data, hora e o que será lembrado; confirme em <strong>Criar</strong> e pronto.':
+            '<strong>Update:</strong> ask for a reminder with a date, time and what to remember; confirm with <strong>Create</strong> and you are done.',
+        'Mini-jogos': 'Mini-games',
+        'Cria uma embed': 'Create an embed',
+        'Abre um ticket': 'Open a ticket',
+        'Resume o canal': 'Summarize the channel',
+        'Revisa um texto': 'Review a text',
+        'Escolha meu estilo de fala': 'Choose my speaking style',
+        'Dá um aviso para um membro': 'Warn a member',
+        'Lista os avisos': 'List warnings',
+        'Limpa os avisos': 'Clear warnings',
+        'Apaga mensagens do canal': 'Delete channel messages',
+        'Ativa o modo lento': 'Enable slow mode',
+        'Tranca o canal': 'Lock the channel',
+        'Destranca o canal': 'Unlock the channel',
+        'Entro na call': 'Join the call',
+        'Saio da call': 'Leave the call',
+        'ARIA Server — pode usar sem assinatura': 'ARIA Server — server subscription required',
+        'Sem ferramentas avançadas de servidor': 'No advanced server tools',
+        'Comandos gerais, histórico básico e XP': 'General commands, basic history and XP',
+        'Comandos de moderação': 'Moderation commands',
+        'Utilidades Premium (lembretes, tradução, resumos, embeds, tickets, voz…)':
+            'Premium utilities (reminders, translation, summaries, embeds, tickets, voice…)',
+        'Personalização, mini-jogos e contexto ajustável':
+            'Customization, mini-games and adjustable context',
+        'Busca web e TTS mais caprichado quando der':
+            'Web search and enhanced TTS when available',
+        'Vai com você em qualquer servidor — sem precisar de ARIA Server':
+            'Follows you to any server — no ARIA Server required',
+        'Benefícios <strong>ARIA Premium</strong> pra <strong>todos</strong> os membros':
+            ' <strong>ARIA Premium</strong> benefits for <strong>all</strong> members',
+        'IA <strong>ilimitada</strong> no servidor': '<strong>Unlimited</strong> AI on the server',
+        'Ferramentas de admin e automação do servidor':
+            'Server admin and automation tools',
+        'Montagem, backup, restauração e reversão do servidor':
+            'Server setup, backup, restore and rollback',
+        'Boas-vindas, despedidas, boost e tom do servidor':
+            'Welcome messages, goodbyes, boosts and server tone',
+        'Assinatura mensal via Asaas (cartão), com renovação automática. Se cancelar no site, o acesso segue até o fim do período já pago; depois volta pro ARIA Free sem apagar histórico nem configs. Se o pagamento atrasar (<em>past_due</em>), o Premium pode seguir até o fim do período atual.':
+            'Monthly subscription via Asaas (card), with automatic renewal. If cancelled on the website, access continues until the paid period ends; then it returns to ARIA Free without deleting history or settings. If payment is late (<em>past_due</em>), Premium may continue until the current period ends.',
+        'Desenvolvida por': 'Developed by',
         'Busque um comando (ex: latencia, ticket, aviso)...':
             'Search for a command (e.g. latency, ticket, warning)…',
         'Geral': 'General',
@@ -141,6 +241,17 @@
         'Assine se…': 'Subscribe if…',
         'Assinatura mensal via Asaas (cartão), com renovação automática.':
             'Monthly subscription via Asaas (card), with automatic renewal.',
+        'Diferença do Free: IA ilimitada, memória maior, utilidades Premium e moderação. Sozinho ainda não libera as ferramentas de admin do servidor.':
+            'Difference from Free: unlimited AI, more memory, Premium utilities and moderation. It does not unlock server admin tools by itself.',
+        'Diferença do ARIA Premium: cobre o servidor inteiro + ferramentas de admin. Se é só pra você, o ARIA Premium já resolve.':
+            'Difference from ARIA Premium: covers the whole server plus admin tools. If it is just for you, ARIA Premium is enough.',
+        '6 mensagens de IA por usuário, por dia — ao estourar, 24h sem IA':
+            '6 AI messages per user per day — after that, AI is unavailable for 24 hours',
+        'Histórico de até 12 mensagens': 'History of up to 12 messages',
+        'Mensagens de IA ilimitadas': 'Unlimited AI messages',
+        'Contexto de até 100 mensagens': 'Context of up to 100 messages',
+        'Assine se… você fala bastante comigo e quer utilidades e jogos sem o limite diário do Free.':
+            'Subscribe if you chat with me often and want utilities and games without the Free daily limit.',
         'Assinatura individual: os benefícios vão com você em qualquer servidor onde eu estiver.':
             'Individual subscription: your benefits follow you to every server where I am.',
         'Assinar Premium': 'Subscribe to Premium',
@@ -167,6 +278,24 @@
         'Entre no nosso servidor': 'Join our server',
         'Acesso Premium até': 'Premium access until',
         'Indisponível': 'Unavailable',
+        'Online': 'Online',
+        'Offline': 'Offline',
+        'Atualizado às': 'Updated at',
+        'Sua sessão expirou. Entre com Discord e tente de novo.':
+            'Your session expired. Sign in with Discord and try again.',
+        'Tudo certo': 'All set',
+        'Algo deu errado': 'Something went wrong',
+        'Atenção': 'Attention',
+        'O pagamento está temporariamente indisponível. Estamos liberando os métodos de cobrança — tente de novo em instantes.':
+            'Payment is temporarily unavailable. We are enabling payment methods — try again shortly.',
+        'Houve um problema ao vincular seu cadastro de pagamento. Atualize a página e tente novamente — se persistir, fale com o suporte.':
+            'There was a problem linking your payment profile. Refresh and try again — if it persists, contact support.',
+        'O checkout está temporariamente fora do ar. Já estamos ajustando — tente novamente em breve.':
+            'Checkout is temporarily unavailable. We are fixing it — try again soon.',
+        'Muitas tentativas seguidas. Espere alguns segundos e tente de novo.':
+            'Too many attempts. Wait a few seconds and try again.',
+        'Algo deu errado ao processar o pagamento. Tente novamente.':
+            'Something went wrong while processing payment. Try again.',
         'Não foi possível atualizar os dados agora.': 'Unable to update the data right now.',
         'Não foi possível seguir com esse servidor. Confira se você é admin e se a ARIA já está nele.':
             'Unable to continue with this server. Check that you are an admin and ARIA is already there.',
@@ -208,6 +337,86 @@
     const originalAttributes = new WeakMap();
     let originalTitle = null;
     let current = null;
+    const fragmentTranslations = [
+        ['Permissão: Gerenciar Mensagens', 'Permission: Manage Messages'],
+        ['Permissão: Gerenciar Canais', 'Permission: Manage Channels'],
+        ['Permissão: Administrador', 'Permission: Administrator'],
+        ['ARIA Free — pode usar sem assinatura', 'ARIA Free — available without a subscription'],
+        ['Sua assinatura pessoal ou servidor com ARIA Server', 'Your personal subscription or a server with ARIA Server'],
+        ['Benefícios ', 'Benefits '],
+        [' pra ', ' for '],
+        [' todos ', ' all '],
+        [' membros', ' members'],
+        ['ilimitada', 'unlimited'],
+        ['no servidor', 'on the server'],
+        ['Ferramentas de admin', 'Admin tools'],
+        ['automação do servidor', 'server automation'],
+        ['Boas-vindas', 'Welcome messages'],
+        ['despedidas', 'goodbyes'],
+        ['Permissão', 'Permission'],
+        ['Atualizado em ', 'Updated on '],
+        ['Update:', 'Update:'],
+        ['peça um lembrete informando data, hora e o que será lembrado; confirme em ', 'ask for a reminder with a date, time and what to remember; confirm with '],
+        [' e pronto.', ' and you are done.'],
+        ['Assinatura mensal via Asaas (cartão), com renovação automática. Se cancelar no site, o acesso segue até o fim do período já pago; depois volta pro ARIA Free sem apagar histórico nem configs. Se o pagamento atrasar (', 'Monthly subscription via Asaas (card), with automatic renewal. If cancelled on the website, access continues until the paid period ends; then it returns to ARIA Free without deleting history or settings. If payment is late ('],
+        ['), o Premium pode seguir até o fim do período atual.', '), Premium may continue until the current period ends.'],
+        ['Desenvolvida por', 'Developed by'],
+        ['Servidor oficial no Discord', 'Official server on Discord'],
+        ['Servidor oficial', 'Official server'],
+        ['Documentos oficiais', 'Official documents'],
+        ['Informações', 'Information'],
+        ['Links', 'Links'],
+        ['privacidade', 'privacy'],
+        ['termos', 'terms'],
+        ['voltar-ao-site', 'back-to-site'],
+        ['agradecimentos', 'acknowledgments'],
+        ['online', 'online'],
+        ['Política de Privacidade', 'Privacy Policy'],
+        ['Como eu cuido dos seus dados', 'How I handle your data'],
+        ['Versão: ', 'Version: '],
+        ['clara, direta e sem juridiquês desnecessário.', 'clear, direct and without unnecessary legalese.'],
+        ['Escopo', 'Scope'],
+        ['O que eu posso guardar', 'What I may store'],
+        ['Pra que eu uso', 'What I use it for'],
+        ['Serviços externos', 'External services'],
+        ['Base legal', 'Legal basis'],
+        ['Retenção e exclusão', 'Retention and deletion'],
+        ['Segurança', 'Security'],
+        ['Seus direitos', 'Your rights'],
+        ['Um pedido de amiga', 'A small request'],
+        ['Alterações', 'Changes'],
+        ['Contato', 'Contact'],
+        ['Termos de Serviço', 'Terms of Service'],
+        ['As regrinhas do nosso uso', 'The rules for using ARIA'],
+        ['Aceitação', 'Acceptance'],
+        ['O que eu ofereço', 'What I offer'],
+        ['Uso permitido', 'Permitted use'],
+        ['Planos, pagamentos e cancelamento', 'Plans, payments and cancellation'],
+        ['Comandos, planos e permissões Discord', 'Commands, plans and Discord permissions'],
+        ['Disponibilidade e precisão', 'Availability and accuracy'],
+        ['Seu conteúdo', 'Your content'],
+        ['Limitação de responsabilidade', 'Limitation of liability'],
+        ['Suspensão', 'Suspension'],
+        ['Lei aplicável', 'Applicable law'],
+        ['Esta política explica como eu, a ', 'This policy explains how I, '],
+        ['trato seus dados quando você usa meus comandos, me menciona, conversa comigo, usa voz, envia anexos, abre tickets ou assina Aria Premium / Aria Server no Discord e no site.',
+            'handle your data when you use my commands, mention me, chat with me, use voice, send attachments, open tickets or subscribe to Aria Premium / Aria Server on Discord and the website.'],
+        ['Eu vivo no Discord, então o uso também depende das regras e da infraestrutura do Discord e de serviços externos (IA, voz, mídia, busca e pagamentos com Asaas).',
+            'I live on Discord, so use also depends on Discord rules and infrastructure and on external services (AI, voice, media, search and Asaas payments).'],
+        ['Eu não vendo seus dados. Pra funcionar, posso enviar o necessário a serviços de IA, voz, busca, mídia, hospedagem, banco de dados, Discord e Asaas — só pra cumprir o pedido, garantir segurança ou atender obrigações legais.',
+            'I do not sell your data. To operate, I may send what is necessary to AI, voice, search, media, hosting, database, Discord and Asaas services — only to fulfill your request, keep things safe or meet legal obligations.'],
+        ['Você pode pedir acesso, correção, informação, exclusão ou bloqueio, conforme a legislação (incluindo a LGPD). Às vezes eu preciso confirmar sua identidade.',
+            'You may request access, correction, information, deletion or restriction as allowed by law (including the LGPD). I may sometimes need to verify your identity.'],
+        ['Ao me usar (no Discord e neste site), você concorda com estes Termos e com a Política de Privacidade. Se não concordar, é só parar de me usar — sem drama.',
+            'By using me (on Discord and this website), you agree to these Terms and the Privacy Policy. If you disagree, simply stop using me.'],
+        ['Posso ficar offline por manutenção ou falhas de terceiros. Às vezes eu troco as patinhas — revise respostas importantes antes de decidir.',
+            'I may go offline for maintenance or third-party failures. I can sometimes get things wrong — review important answers before making decisions.'],
+        ['O que você envia continua seu. Ao interagir, você autoriza o processamento técnico pra eu cumprir o pedido.',
+            'What you send remains yours. By interacting, you authorize the technical processing needed to fulfill your request.'],
+        ['Regidos pela legislação brasileira aplicável.', 'These terms are governed by applicable Brazilian law.'],
+        ['Última atualização: ', 'Last updated: '],
+        ['Dúvidas? Fala com o programador:', 'Questions? Contact the developer:'],
+    ];
 
     function normalize(value) {
         return String(value || '').toLowerCase().startsWith('en') ? 'en' : 'pt';
@@ -227,8 +436,11 @@
         const value = text.trim();
         if (!value || locale === 'pt') return text;
         const translated = translations[value];
-        if (!translated) return text;
-        return text.replace(value, translated);
+        if (translated) return text.replace(value, translated);
+        return fragmentTranslations.reduce(
+            (result, [source, target]) => result.replaceAll(source, target),
+            text,
+        );
     }
 
     function apply(locale) {
@@ -267,7 +479,18 @@
             const active = button.dataset.locale === current;
             button.setAttribute('aria-pressed', String(active));
             button.toggleAttribute('data-active', active);
+            if (button.dataset.locale === 'pt') {
+                button.setAttribute('aria-label', current === 'en' ? 'Portuguese (Brazil)' : 'Português (Brasil)');
+                button.setAttribute('title', current === 'en' ? 'Portuguese (Brazil)' : 'Português (Brasil)');
+            } else {
+                button.setAttribute('aria-label', current === 'en' ? 'English (United States)' : 'Inglês (Estados Unidos)');
+                button.setAttribute('title', current === 'en' ? 'English (United States)' : 'Inglês (Estados Unidos)');
+            }
         });
+        const switcher = document.getElementById('ariaLangSwitch');
+        if (switcher) {
+            switcher.setAttribute('aria-label', current === 'en' ? 'Language' : 'Idioma');
+        }
         window.dispatchEvent(new CustomEvent('aria:localechange', {
             detail: { locale: locales[current] }
         }));

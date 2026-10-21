@@ -596,9 +596,9 @@ function setStatsUnavailable() {
     const statusValue = document.getElementById('ariaStatusValue');
     const statusText = statusValue?.querySelector('span:last-child');
     if (statusValue) statusValue.classList.remove('is-online', 'is-offline');
-    if (statusText) statusText.textContent = 'Indisponível';
+    if (statusText) statusText.textContent = siteT('Indisponível');
     const updated = document.getElementById('statsUpdated');
-    if (updated) updated.textContent = 'Não foi possível atualizar os dados agora.';
+    if (updated) updated.textContent = siteT('Não foi possível atualizar os dados agora.');
 }
 
 function renderAriaStats(payload) {
@@ -617,7 +617,7 @@ function renderAriaStats(payload) {
         statusValue.classList.toggle('is-online', stats.online === true);
         statusValue.classList.toggle('is-offline', stats.online === false);
     }
-    if (statusText) statusText.textContent = stats.online ? 'Online' : 'Offline';
+    if (statusText) statusText.textContent = stats.online ? siteT('Online') : siteT('Offline');
 
     const updated = document.getElementById('statsUpdated');
     if (updated) {
@@ -625,7 +625,7 @@ function renderAriaStats(payload) {
         const time = Number.isNaN(timestamp.getTime())
             ? new Date().toLocaleTimeString(window.ariaI18n?.locale || 'pt-BR', { hour: '2-digit', minute: '2-digit' })
             : timestamp.toLocaleTimeString(window.ariaI18n?.locale || 'pt-BR', { hour: '2-digit', minute: '2-digit' });
-        updated.textContent = `Atualizado às ${time}`;
+        updated.textContent = `${siteT('Atualizado às')} ${time}`;
     }
 }
 
@@ -662,53 +662,53 @@ function friendlyBillingError(err, fallback) {
     const text = raw.replace(/^(Stripe|Asaas):\s*/i, '');
 
     if (/401|unauthor|não autentic|not authenticated/i.test(text)) {
-        return 'Sua sessão expirou. Entre com Discord e tente de novo.';
+        return siteT('Sua sessão expirou. Entre com Discord e tente de novo.');
     }
     if (/403|sem permissão|não está presente|não encontrado ou sem permissão/i.test(text)) {
-        return 'Não foi possível seguir com esse servidor. Confira se você é admin e se a ARIA já está nele.';
+        return siteT('Não foi possível seguir com esse servidor. Confira se você é admin e se a ARIA já está nele.');
     }
     if (/409|já ativa|já possui assinatura|already/i.test(text)) {
-        return 'Essa assinatura já está ativa. Use “Cancelar assinatura” se quiser encerrar a renovação.';
+        return siteT('Essa assinatura já está ativa. Use “Cancelar assinatura” se quiser encerrar a renovação.');
     }
     if (/payment method types|compatible with your chosen currency|activated payment methods/i.test(text)) {
-        return 'O pagamento está temporariamente indisponível. Estamos liberando os métodos de cobrança — tente de novo em instantes.';
+        return siteT('O pagamento está temporariamente indisponível. Estamos liberando os métodos de cobrança — tente de novo em instantes.');
     }
     if (/no such price|price.*(invalid|not found)|valor asaas não configurado|ASAAS.*não configurad/i.test(text)) {
-        return 'Este plano ainda não está disponível para compra. Tente mais tarde ou fale com o suporte no servidor oficial.';
+        return siteT('Este plano ainda não está disponível para compra. Tente mais tarde ou fale com o suporte no servidor oficial.');
     }
     if (/campo customer.*(inválid|invalid)|customer.*(inválid|invalid|not found)/i.test(text)) {
-        return 'Houve um problema ao vincular seu cadastro de pagamento. Atualize a página e tente novamente — se persistir, fale com o suporte.';
+        return siteT('Houve um problema ao vincular seu cadastro de pagamento. Atualize a página e tente novamente — se persistir, fale com o suporte.');
     }
     if (/api key|invalid.?key|authentication.?error|not configured|misconfigured|secret|access_token/i.test(text)) {
-        return 'O checkout está temporariamente fora do ar. Já estamos ajustando — tente novamente em breve.';
+        return siteT('O checkout está temporariamente fora do ar. Já estamos ajustando — tente novamente em breve.');
     }
     if (/card.?declined|insufficient.?funds|incorrect.?cvc|expired.?card/i.test(text)) {
-        return 'Não conseguimos concluir o pagamento com esse cartão. Confira os dados ou use outro método.';
+        return siteT('Não conseguimos concluir o pagamento com esse cartão. Confira os dados ou use outro método.');
     }
     if (/rate.?limit|too many requests|429/i.test(text)) {
-        return 'Muitas tentativas seguidas. Espere alguns segundos e tente de novo.';
+        return siteT('Muitas tentativas seguidas. Espere alguns segundos e tente de novo.');
     }
     if (/502|503|504|bad gateway|service unavailable|gateway timeout/i.test(text)) {
-        return 'Não deu para abrir o pagamento agora. Tente novamente em alguns instantes.';
+        return siteT('Não deu para abrir o pagamento agora. Tente novamente em alguns instantes.');
     }
     if (/network|failed to fetch|load failed|networkerror/i.test(text)) {
-        return 'Não foi possível conectar. Verifique sua internet e tente de novo.';
+        return siteT('Não foi possível conectar. Verifique sua internet e tente de novo.');
     }
     if (/nenhuma assinatura|não encontramos|404/i.test(text) && /assinatura|cancel/i.test(text)) {
-        return 'Não encontramos uma assinatura ativa para cancelar.';
+        return siteT('Não encontramos uma assinatura ativa para cancelar.');
     }
     // Evita jogar jargão técnico (Asaas/API/IDs) na cara do usuário.
     if (/stripe|asaas|checkout session|payment_method|whsec|sk_live|sk_test|pk_live|price_|aact_/i.test(text)) {
-        return fallback || 'Não foi possível concluir o pagamento agora. Tente novamente em instantes.';
+        return siteT(fallback || 'Não foi possível concluir o pagamento agora. Tente novamente em instantes.');
     }
     if (/^HTTP\s*\d+/i.test(text) || /^\{/.test(text)) {
-        return fallback || 'Algo deu errado ao processar o pagamento. Tente novamente.';
+        return siteT(fallback || 'Algo deu errado ao processar o pagamento. Tente novamente.');
     }
     // Mensagens da API que já estão em português e são legíveis.
     if (text && text.length <= 180 && !/[A-Za-z]+Error|Traceback|Exception/i.test(text)) {
-        return text;
+        return siteT(text);
     }
-    return fallback || 'Não foi possível concluir. Tente novamente em instantes.';
+    return siteT(fallback || 'Não foi possível concluir. Tente novamente em instantes.');
 }
 
 function inferStatusTone(message) {
@@ -730,10 +730,10 @@ function inferStatusTone(message) {
 
 function statusTitleFor(tone, customTitle) {
     if (customTitle) return customTitle;
-    if (tone === 'success') return 'Tudo certo';
-    if (tone === 'error') return 'Algo deu errado';
-    if (tone === 'warn') return 'Atenção';
-    return 'Aviso';
+    if (tone === 'success') return siteT('Tudo certo');
+    if (tone === 'error') return siteT('Algo deu errado');
+    if (tone === 'warn') return siteT('Atenção');
+    return siteT('Aviso');
 }
 
 function statusIconFor(tone) {
