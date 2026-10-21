@@ -3523,3 +3523,48 @@ body.page-legal .bg-blobs .blob {
     .dc-message { grid-template-columns: 32px 1fr; gap: 0.65rem; }
     .dc-msg-avatar { width: 32px; height: 32px; }
 }
+
+/* Discreet PT/EN selector shared by the public pages. */
+.aria-lang-switch {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+    padding: 0.18rem;
+    border: 1px solid var(--border-glass);
+    border-radius: 999px;
+    background: rgba(12, 8, 20, 0.32);
+    flex: 0 0 auto;
+}
+.aria-lang-option {
+    display: inline-grid;
+    place-items: center;
+    width: 1.85rem;
+    height: 1.85rem;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    font-size: 1rem;
+    line-height: 1;
+    opacity: 0.55;
+    transition: opacity 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+.aria-lang-option:hover,
+.aria-lang-option:focus-visible,
+.aria-lang-option[data-active] {
+    opacity: 1;
+}
+.aria-lang-option[data-active] {
+    background: rgba(242, 117, 42, 0.2);
+    box-shadow: 0 0 0 1px rgba(242, 117, 42, 0.55);
+}
+.aria-lang-option:focus-visible {
+    outline: 2px solid var(--primary, #f2752a);
+    outline-offset: 2px;
+}
+@media (max-width: 768px) {
+    .aria-lang-switch { margin-inline: 0.1rem; }
+    .aria-lang-option { width: 1.7rem; height: 1.7rem; font-size: 0.9rem; }
+}

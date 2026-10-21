@@ -11,6 +11,10 @@
     } catch (_) { /* ignore */ }
 })();
 
+const siteT = (value) => window.ariaI18n && window.ariaI18n.t
+    ? window.ariaI18n.t(value)
+    : value;
+
 const cursor = document.getElementById('cursor');
 const prefersCoarse = window.matchMedia('(hover: none), (pointer: coarse)').matches;
 let mx = 0, my = 0;
@@ -255,13 +259,21 @@ function setMobileNav(open) {
     document.body.classList.toggle('nav-open', open);
     if (navToggle) {
         navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-        navToggle.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
+        navToggle.setAttribute('aria-label', siteT(open ? 'Fechar menu' : 'Abrir menu'));
     }
     if (navBackdrop) {
         navBackdrop.hidden = !open;
         navBackdrop.classList.toggle('is-open', open);
     }
 }
+window.addEventListener('aria:localechange', () => {
+    if (navToggle) {
+        navToggle.setAttribute(
+            'aria-label',
+            siteT(document.body.classList.contains('nav-open') ? 'Fechar menu' : 'Abrir menu')
+        );
+    }
+});
 
 if (navToggle) {
     navToggle.addEventListener('click', () => {
@@ -387,7 +399,7 @@ function animateStatValue(element, value) {
         : 0;
     const duration = 700;
     const startTime = performance.now();
-    const formatter = new Intl.NumberFormat('pt-BR');
+    const formatter = new Intl.NumberFormat(window.ariaI18n?.locale || 'pt-BR');
 
     element.dataset.value = String(value);
     element.dataset.target = String(value);
@@ -611,8 +623,8 @@ function renderAriaStats(payload) {
     if (updated) {
         const timestamp = stats.updatedAt ? new Date(stats.updatedAt) : new Date();
         const time = Number.isNaN(timestamp.getTime())
-            ? new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
-            : timestamp.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+            ? new Date().toLocaleTimeString(window.ariaI18n?.locale || 'pt-BR', { hour: '2-digit', minute: '2-digit' })
+            : timestamp.toLocaleTimeString(window.ariaI18n?.locale || 'pt-BR', { hour: '2-digit', minute: '2-digit' });
         updated.textContent = `Atualizado às ${time}`;
     }
 }
@@ -807,7 +819,7 @@ function setButtonLoading(btn, loading) {
         }
         btn.classList.add('is-loading');
         btn.setAttribute('aria-busy', 'true');
-        btn.innerHTML = '<span class="btn-spinner" aria-hidden="true"></span><span class="sr-only">Carregando…</span>';
+        btn.innerHTML = `<span class="btn-spinner" aria-hidden="true"></span><span class="sr-only">${siteT('Carregando…')}</span>`;
         return;
     }
     btn.classList.remove('is-loading');
@@ -856,9 +868,9 @@ function updateBillingCtas(state) {
         manageBtn.hidden = !(authenticated && isPremium);
         manageBtn.disabled = billingBusy || manageBtn.hidden;
         if (!billingBusy && !manageBtn.classList.contains('is-loading')) {
-            manageBtn.dataset.labelBackup = 'Cancelar assinatura';
+            manageBtn.dataset.labelBackup = siteT('Cancelar assinatura');
             if (!manageBtn.textContent.trim() || manageBtn.querySelector('.btn-spinner')) {
-                manageBtn.textContent = 'Cancelar assinatura';
+                manageBtn.textContent = siteT('Cancelar assinatura');
             }
         }
     }
@@ -875,8 +887,8 @@ function updateBillingCtas(state) {
             checkoutBtn.hidden = false;
             if (!billingBusy) {
                 setButtonLoading(checkoutBtn, false);
-                checkoutBtn.textContent = 'Assinar Premium';
-                checkoutBtn.dataset.labelBackup = 'Assinar Premium';
+                checkoutBtn.textContent = siteT('Assinar Premium');
+                checkoutBtn.dataset.labelBackup = siteT('Assinar Premium');
             }
             checkoutBtn.disabled = billingBusy;
         }
@@ -1481,7 +1493,7 @@ async function openBillingPortal(sourceBtnId) {
             try {
                 const d = new Date(until);
                 if (!Number.isNaN(d.getTime())) {
-                    msg += ` Acesso Premium até ${d.toLocaleDateString('pt-BR')}.`;
+                    msg += ` ${siteT('Acesso Premium até')} ${d.toLocaleDateString(window.ariaI18n?.locale || 'pt-BR')}.`;
                 }
             } catch (_) { /* ignore */ }
         }
