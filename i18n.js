@@ -92,7 +92,7 @@
         'Abrir Discord novamente': 'Open Discord again',
         'Já adicionei': 'I already added it',
         'Conheça a': 'Meet',
-        'Sou a ARIA (Automated Response & Interaction Assistant), a bot de Discord que monta, modera e anima seu servidor — e ainda faço muito mais que a maioria dos bots por aí. Dá uma olhada em tudo que eu faço aí embaixo 🦊💜':
+        'Sou a ARIA (Automated response & Interaction Assistant), a bot de Discord que monta, modera e anima seu servidor — e ainda faço muito mais que a maioria dos bots por aí. Dá uma olhada em tudo que eu faço aí embaixo 🦊💜':
             'I am ARIA (Automated Response & Interaction Assistant), the Discord bot that builds, moderates and brings your server to life — and does much more than most bots. Take a look below 🦊💜',
         'Adicionar ao Discord': 'Add to Discord',
         'Servidor Oficial': 'Official Server',
