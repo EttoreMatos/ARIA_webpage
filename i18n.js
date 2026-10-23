@@ -110,8 +110,8 @@
         'Converso com você de forma natural e me lembro do que já conversamos. Assim, cada conversa fica mais especial e contextual.':
             'I talk with you naturally and remember what we have discussed, making every conversation more personal and contextual.',
         'Utilidades pro Dia a Dia': 'Everyday Utilities',
-        'Lembretes, traduções, resumos de texto ou de canal inteiro, embeds e dentre outras funções que ajudam no seu dia a dia no Discord':
-            'Reminders, translations, text or channel summaries, embeds and other tools for your everyday Discord life.',
+        'Lembretes, traduções, resumos de canal, embeds e dentre outras funções que ajudam no seu dia a dia no Discord':
+            'Reminders, translations, channel summaries, embeds and other tools for your everyday Discord life.',
         'Montagem de Servidor': 'Server Setup',
         'Diga o tema do seu servidor e eu cuido do resto! Crio categorias, canais, cargos e organizo tudo automaticamente.':
             'Tell me your server theme and I will handle the rest. I create categories, channels, roles and organize everything automatically.',
@@ -157,8 +157,8 @@
         'Sem ferramentas avançadas de servidor': 'No advanced server tools',
         'Comandos gerais, histórico básico e XP': 'General commands, basic history and XP',
         'Comandos de moderação': 'Moderation commands',
-        'Utilidades Premium (lembretes, tradução, resumos, embeds, tickets, voz…)':
-            'Premium utilities (reminders, translation, summaries, embeds, tickets, voice…)',
+        'Utilidades Premium (lembretes, tradução, resumos de canal, embeds, tickets, voz…)':
+            'Premium utilities (reminders, translation, channel summaries, embeds, tickets, voice…)',
         'Personalização, mini-jogos e contexto ajustável':
             'Customization, mini-games and adjustable context',
         'Busca web e TTS mais caprichado quando der':
@@ -199,7 +199,6 @@
         'Troca o PIN do histórico': 'Change the history PIN',
         'Ajusta o tamanho do contexto': 'Adjust context size',
         'Traduz um texto': 'Translate text',
-        'Resume um texto': 'Summarize text',
         'Cria uma embed': 'Create an embed',
         'Abre um ticket': 'Open a ticket',
         'Resume o canal': 'Summarize the channel',
