@@ -242,13 +242,13 @@
             'Difference from Free: unlimited AI, more memory, Premium utilities and moderation. It does not unlock server admin tools by itself.',
         'Diferença do ARIA Premium: cobre o servidor inteiro + ferramentas de admin. Se é só pra você, o ARIA Premium já resolve.':
             'Difference from ARIA Premium: covers the whole server plus admin tools. If it is just for you, ARIA Premium is enough.',
-        '6 mensagens de IA por usuário, por dia — ao estourar, 24h sem IA':
-            '6 AI messages per user per day — after that, AI is unavailable for 24 hours',
+        '6 mensagens de IA por usuário, por servidor — ao estourar, 48h sem IA':
+            '6 AI messages per user per server — after that, AI is unavailable for 48 hours',
         'Histórico de até 12 mensagens': 'History of up to 12 messages',
         'Mensagens de IA ilimitadas': 'Unlimited AI messages',
         'Contexto de até 100 mensagens': 'Context of up to 100 messages',
-        'Assine se… você fala bastante comigo e quer utilidades e jogos sem o limite diário do Free.':
-            'Subscribe if you chat with me often and want utilities and games without the Free daily limit.',
+        'Assine se… você fala bastante comigo e quer utilidades e jogos sem o limite do Free.':
+            'Subscribe if you chat with me often and want utilities and games without the Free limit.',
         'Assinatura individual: os benefícios vão com você em qualquer servidor onde eu estiver.':
             'Individual subscription: your benefits follow you to every server where I am.',
         'Assinar Premium': 'Subscribe to Premium',
