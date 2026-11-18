@@ -134,7 +134,9 @@
             'Your personal subscription or a server with ARIA Server',
         'Permissão: Gerenciar Mensagens': 'Permission: Manage Messages',
         'Permissão: Gerenciar Canais': 'Permission: Manage Channels',
+        'Permissão: Gerenciar Servidor': 'Permission: Manage Server',
         'Permissão: Administrador': 'Permission: Administrator',
+        'Define o idioma da ARIA no servidor': "Set ARIA's language for the server",
         'Converse com a ARIA': 'Chat with ARIA',
         '<strong>Update:</strong> peça um lembrete informando data, hora e o que será lembrado; confirme em <strong>Criar</strong> e pronto.':
             '<strong>Update:</strong> ask for a reminder with a date, time and what to remember; confirm with <strong>Create</strong> and you are done.',
@@ -231,6 +233,7 @@
         '/latencia': '/latency',
         '/ajuda': '/help',
         '/servidor info': '/server info',
+        '/idioma': '/language',
         '/topico abrir': '/topic open',
         '/topico fechar': '/topic close',
         '/relembrar': '/remember',
@@ -288,8 +291,8 @@
             'Difference from Free: unlimited AI, more memory, Premium utilities and moderation. It does not unlock server admin tools by itself.',
         'Diferença do ARIA Premium: cobre o servidor inteiro + ferramentas de admin. Se é só pra você, o ARIA Premium já resolve.':
             'Difference from ARIA Premium: covers the whole server plus admin tools. If it is just for you, ARIA Premium is enough.',
-        '6 mensagens de IA por servidor — ao estourar, 48h sem IA':
-            '6 AI messages per server — after that, AI is unavailable for 48 hours',
+        '6 mensagens de IA por servidor — ao estourar, 72h sem IA':
+            '6 AI messages per server — after that, AI is unavailable for 72 hours',
         'Histórico de até 12 mensagens': 'History of up to 12 messages',
         'Mensagens de IA ilimitadas': 'Unlimited AI messages',
         'Contexto de até 100 mensagens': 'Context of up to 100 messages',
@@ -383,6 +386,7 @@
     const fragmentTranslations = [
         ['Permissão: Gerenciar Mensagens', 'Permission: Manage Messages'],
         ['Permissão: Gerenciar Canais', 'Permission: Manage Channels'],
+        ['Permissão: Gerenciar Servidor', 'Permission: Manage Server'],
         ['Permissão: Administrador', 'Permission: Administrator'],
         ['ARIA Free — pode usar sem assinatura', 'ARIA Free — available without a subscription'],
         ['Sua assinatura pessoal ou servidor com ARIA Server', 'Your personal subscription or a server with ARIA Server'],
